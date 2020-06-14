@@ -1,9 +1,9 @@
 .mat-input-element {
-  caret-color: $m-primary;
+  caret-color: $m-orange;
 }
 
 .mat-form-field-invalid .mat-input-element {
-  caret-color: $m-error;
+  caret-color: $m-dark-orange;
 }
 
 .mat-form-field{
@@ -11,10 +11,10 @@
   &.mat-focused {
 
     .mat-form-field-label {
-      color: $m-primary;
+      color: $m-orange;
     }
     .mat-form-field-ripple {
-      background-color: $m-primary;
+      background-color: $m-orange;
     }
 
   }
@@ -22,21 +22,35 @@
   &.mat-form-field-invalid {
 
     .mat-input-placeholder {
-      color: $m-error;
+      color: $m-dark-orange;
     }
 
     .mat-form-field-ripple {
-      background-color: $m-error;
+      background-color: $m-dark-orange;
     }
 
     .mat-form-field-label {
-      color: $m-error;
+      color: $m-dark-orange;
     }
 
   } 
 
   .mat-error {
-    color: $m-error;
+    display: flex;
+    align-items: flex-start;
+    
+    mat-icon {
+      color: $m-dark-orange;
+      margin-right: 2px;
+    }
+
+    span {
+      color: $m-dark-orange;
+    }
+  }
+
+  .mat-form-field-suffix {
+    margin-left: -21px;
   }
 
 }

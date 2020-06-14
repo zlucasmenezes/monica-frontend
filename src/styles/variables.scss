@@ -1,8 +1,10 @@
-$m-primary: #ff8801ff;
+$m-orange: #ff8801ff;
 
-$m-error: #fe500eff;
+$m-dark-orange: #fe500eff;
 
 $m-marley: #f7f7f7ff;
 
-$m-primary-gradient-90: linear-gradient(90deg, $m-primary, $m-error);
-$m-primary-gradient-180: linear-gradient(180deg, $m-primary, $m-error);
+$m-orange-gradient-90: linear-gradient(90deg, $m-orange, $m-dark-orange);
+$m-orange-gradient-180: linear-gradient(180deg, $m-orange, $m-dark-orange);
+
+$m-gray: #333333;
