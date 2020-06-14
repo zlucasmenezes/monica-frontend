@@ -1,0 +1,42 @@
+.mat-input-element {
+  caret-color: $m-primary;
+}
+
+.mat-form-field-invalid .mat-input-element {
+  caret-color: $m-error;
+}
+
+.mat-form-field{
+
+  &.mat-focused {
+
+    .mat-form-field-label {
+      color: $m-primary;
+    }
+    .mat-form-field-ripple {
+      background-color: $m-primary;
+    }
+
+  }
+
+  &.mat-form-field-invalid {
+
+    .mat-input-placeholder {
+      color: $m-error;
+    }
+
+    .mat-form-field-ripple {
+      background-color: $m-error;
+    }
+
+    .mat-form-field-label {
+      color: $m-error;
+    }
+
+  } 
+
+  .mat-error {
+    color: $m-error;
+  }
+
+}
