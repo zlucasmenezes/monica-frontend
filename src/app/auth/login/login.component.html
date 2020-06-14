@@ -10,19 +10,19 @@
       <form class="login-form" [formGroup]="form" (submit)="login()">
         
         <div class="login-form-field">
-          <mat-icon class="field-icon">email</mat-icon>
+          <mat-icon class="field-icon">face</mat-icon>
 
           <mat-form-field floatLabel='never'>
             <input
             matInput
-            formControlName="email"
-            type="email"
-            placeholder="email"
+            formControlName="username"
+            type="text"
+            placeholder="username"
             oninput="value = value.toLowerCase()">
             
-            <mat-error *ngIf="form.get('email').invalid">
+            <mat-error *ngIf="form.get('username').invalid">
               <mat-icon>info_outline</mat-icon>
-              <span>{{getError('email')}}</span>
+              <span>{{getError('username')}}</span>
             </mat-error>
 
           </mat-form-field>
