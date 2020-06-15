@@ -9,7 +9,7 @@ export const environment = {
   backend: {
     host: 'localhost',
     port: 3000,
-    path: '/api'
+    path: 'api'
   }
 };
 

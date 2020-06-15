@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, ValidationErrors } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { ILoginRequest } from '../../models/auth.interface';
 
 @Component({
   selector: 'm-login',
@@ -11,7 +13,7 @@ export class LoginComponent implements OnInit {
   public form: FormGroup;
   public hidePassword = true;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private authService: AuthService) {
     this.initForm();
   }
 
@@ -24,10 +26,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  public login(): void {
+  public async login(): Promise<void> {
     if (this.form.invalid){ return; }
 
-    console.log('login');
+    this.authService.login(this.form.value as ILoginRequest);
   }
 
   public getError(control: string): string {
@@ -36,7 +38,7 @@ export class LoginComponent implements OnInit {
     let error = `invalid ${control}`;
 
     if (!errors) { return error; }
-    if (errors.required) { error = `please enter a valid ${control}`; }
+    if (errors.required) { error = `${control} is required`; }
     if (errors.minlength) { error = `${control} must be at least ${errors.minlength.requiredLength} characters`; }
 
     return error.charAt(0).toUpperCase() + error.slice(1);
