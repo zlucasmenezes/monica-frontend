@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, ValidationErrors } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
-import { ILoginRequest } from '../../models/auth.interface';
+import { AuthService } from '../../../../services/auth.service';
+import { ILoginRequest } from '../../../../models/auth.interface';
 
 @Component({
   selector: 'm-login',

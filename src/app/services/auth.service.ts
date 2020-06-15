@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from '../../services/base.service';
+import { BaseService } from './base.service';
 import { IResponse } from 'src/app/models/backend.interface';
 import { ILoginRequest, IToken } from '../models/auth.interface';
 import { HttpClient } from '@angular/common/http';
