@@ -1,15 +1,17 @@
-<div class="login-page">
-  <div class="login-page-overlay">
+<div class="page">
+  <div class="page-overlay">
 
-    <div class="login-card">
+    <m-header></m-header>
 
-      <div class="login-card-header">
+    <div class="card">
+
+      <div class="card-header">
         <span>LOGIN</span>
       </div>
 
-      <form class="login-form" [formGroup]="form" (submit)="login()">
+      <form class="form" [formGroup]="form" (submit)="login()">
         
-        <div class="login-form-field">
+        <div class="form-field">
           <mat-icon class="field-icon">face</mat-icon>
 
           <mat-form-field floatLabel='never'>
@@ -28,7 +30,7 @@
           </mat-form-field>
         </div>
         
-        <div class="login-form-field">
+        <div class="form-field">
           <mat-icon class="field-icon">lock</mat-icon>
           <mat-form-field floatLabel='never'>
 
@@ -66,16 +68,8 @@
   
     </div>
 
-    <span class="image-credits">
-      PHOTO BY
-      <a
-      href="https://unsplash.com/@mebrooks01?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
-      target="_blank">MALACHI BROOKS</a>
-      ON 
-      <a
-      href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
-      target="_blank">UNSPLASH</a>
-    </span>
+
+    <m-footer></m-footer>
 
   </div>  
 </div>

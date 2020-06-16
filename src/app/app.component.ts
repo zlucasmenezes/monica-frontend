@@ -9,4 +9,8 @@ import { environment } from 'src/environments/environment';
 export class AppComponent {
   public name = environment.name;
   public version = environment.version;
+
+  public static getVersion(){
+    return environment.version;
+  }
 }

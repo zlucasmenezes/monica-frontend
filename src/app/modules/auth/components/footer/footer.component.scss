@@ -1,0 +1,32 @@
+@import '../../../../../styles/variables.scss';
+
+.container {
+  cursor: default;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  margin-top: 20px;
+
+  div {
+    width: calc(100vw/2);
+    color: $m-marley;
+    font-size: 10px;
+    font-weight: 300;
+    padding: 20px;
+
+    &.start {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      text-align: left;
+    }
+
+    &.end {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      text-align: right;
+    }
+  }
+}

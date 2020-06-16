@@ -1,0 +1,16 @@
+@import '../../../../../styles/variables.scss';
+
+.container {
+  cursor: default;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+
+  .name {
+    font-size: 20px;
+    font-weight: 300;
+    color: $m-marley;
+    padding: 20px;
+  }
+}
