@@ -1,76 +1,51 @@
 @import '../../../../../styles/variables.scss';
 
-.page {
-  background-image: url('../../../../../assets/images/malachi-brooks-4qigzcWjVqc-unsplash.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  min-width: 100vw;
-  min-height: 100vh;
+    
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 300px;
+  border-radius: 6px;
+  background-color: $m-marley;
+  -webkit-box-shadow: 0px 5px 20px -5px rgba(0,0,0,0.5);
+        -moz-box-shadow: 0px 5px 20px -5px rgba(0,0,0,0.5);
+            box-shadow: 0px 5px 20px -5px rgba(0,0,0,0.5);
 
-  .page-overlay {
+  .card-header {
+    display: flex;
+    justify-content: center;
+    margin: 10px -10px 40px -10px;
+    padding: 40px 40px;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 500;
+    background: $m-orange-gradient-90;
+    -webkit-box-shadow: 0px 5px 20px -5px rgba(0,0,0,0.5);
+        -moz-box-shadow: 0px 5px 20px -5px rgba(0,0,0,0.5);
+            box-shadow: 0px 5px 20px -5px rgba(0,0,0,0.5);
+
+    span {
+      color: $m-marley;
+      font-size: 20px;
+      font-weight: 300;
+    }
+  }
+
+  .form {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    min-width: 100vw;
-    min-height: 100vh;
-    background-color: rgba(#000, .7);
-    
-    .card {
+    padding: 0 40px 40px;
+
+    .form-field {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      width: 300px;
-      border-radius: 6px;
-      background-color: $m-marley;
-      -webkit-box-shadow: 0px 5px 20px -5px rgba(0,0,0,0.5);
-           -moz-box-shadow: 0px 5px 20px -5px rgba(0,0,0,0.5);
-                box-shadow: 0px 5px 20px -5px rgba(0,0,0,0.5);
+      flex-direction: row;
+      align-items: center;
 
-      .card-header {
-        display: flex;
-        justify-content: center;
-        margin: 10px -10px 40px -10px;
-        padding: 40px 40px;
-        border-radius: 3px;
-        font-size: 14px;
-        font-weight: 500;
-        background: $m-orange-gradient-90;
-        -webkit-box-shadow: 0px 5px 20px -5px rgba(0,0,0,0.5);
-           -moz-box-shadow: 0px 5px 20px -5px rgba(0,0,0,0.5);
-                box-shadow: 0px 5px 20px -5px rgba(0,0,0,0.5);
-
-        span {
-          color: $m-marley;
-          font-size: 20px;
-          font-weight: 300;
-        }
-      }
-
-      .form {
-        display: flex;
-        flex-direction: column;
-        padding: 0 40px 40px;
-
-        .form-field {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-
-          .field-icon {
-            margin: 0 10px 0 2.5px;
-            margin-right: 10px;
-          }
-        }
+      .field-icon {
+        margin: 0 10px 0 2.5px;
+        margin-right: 10px;
       }
     }
-  }  
-}
-
-m-header {
-  width: 100vw;
-}
-
-m-footer {
-  width: 100vw;
+  }
 }

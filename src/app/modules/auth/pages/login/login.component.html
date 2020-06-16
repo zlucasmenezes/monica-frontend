@@ -1,75 +1,68 @@
-<div class="page">
-  <div class="page-overlay">
+<m-page-container>
 
-    <m-header></m-header>
+  <div class="card">
 
-    <div class="card">
-
-      <div class="card-header">
-        <span>LOGIN</span>
-      </div>
-
-      <form class="form" [formGroup]="form" (submit)="login()">
-        
-        <div class="form-field">
-          <mat-icon class="field-icon">face</mat-icon>
-
-          <mat-form-field floatLabel='never'>
-            <input
-            matInput
-            formControlName="username"
-            type="text"
-            placeholder="username"
-            oninput="value = value.toLowerCase()">
-            
-            <mat-error *ngIf="form.get('username').invalid">
-              <mat-icon>info_outline</mat-icon>
-              <span>{{getError('username')}}</span>
-            </mat-error>
-
-          </mat-form-field>
-        </div>
-        
-        <div class="form-field">
-          <mat-icon class="field-icon">lock</mat-icon>
-          <mat-form-field floatLabel='never'>
-
-            <input
-            formControlName="password"
-            matInput
-            placeholder="password"
-            [type]="hidePassword ? 'password' : 'text'">
-
-            <button
-            type="button"
-            mat-icon-button
-            matSuffix
-            (click)="hidePassword = !hidePassword">
-              <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </button>
-
-            <mat-error *ngIf="form.get('password').invalid">
-              <mat-icon>info_outline</mat-icon>
-              <span>{{getError('password')}}</span>
-            </mat-error>
-
-          </mat-form-field>
-        </div>
-
-        <div class="m-btn-area">
-          <button
-          mat-button
-          type="submit">
-          LET'S GO
-          </button>
-        </div>        
-
-      </form>   
-  
+    <div class="card-header">
+      <span>LOGIN</span>
     </div>
 
+    <form class="form" [formGroup]="form" (submit)="login()">
+      
+      <div class="form-field">
+        <mat-icon class="field-icon">face</mat-icon>
 
-    <m-footer></m-footer>
+        <mat-form-field floatLabel='never'>
+          <input
+          matInput
+          formControlName="username"
+          type="text"
+          placeholder="username"
+          oninput="value = value.toLowerCase()">
+          
+          <mat-error *ngIf="form.get('username').invalid">
+            <mat-icon>info_outline</mat-icon>
+            <span>{{getError('username')}}</span>
+          </mat-error>
 
-  </div>  
-</div>
+        </mat-form-field>
+      </div>
+      
+      <div class="form-field">
+        <mat-icon class="field-icon">lock</mat-icon>
+        <mat-form-field floatLabel='never'>
+
+          <input
+          formControlName="password"
+          matInput
+          placeholder="password"
+          [type]="hidePassword ? 'password' : 'text'">
+
+          <button
+          type="button"
+          mat-icon-button
+          matSuffix
+          (click)="hidePassword = !hidePassword">
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+
+          <mat-error *ngIf="form.get('password').invalid">
+            <mat-icon>info_outline</mat-icon>
+            <span>{{getError('password')}}</span>
+          </mat-error>
+
+        </mat-form-field>
+      </div>
+
+      <div class="m-btn-area">
+        <button
+        mat-button
+        type="submit">
+        LET'S GO
+        </button>
+      </div>        
+
+    </form>   
+
+  </div>
+
+</m-page-container>

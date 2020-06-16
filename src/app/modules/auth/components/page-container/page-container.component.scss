@@ -1,0 +1,29 @@
+@import '../../../../../styles/variables.scss';
+
+.page {
+  background-image: url('../../../../../assets/images/malachi-brooks-4qigzcWjVqc-unsplash.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-width: 100vw;
+  min-height: 100vh;
+
+  .page-overlay {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 100vw;
+    min-height: 100vh;
+    background-color: rgba(#000, .7);
+
+    m-header {
+      width: 100vw;
+    }
+    
+    m-footer {
+      width: 100vw;
+    }    
+    
+  }
+
+}
