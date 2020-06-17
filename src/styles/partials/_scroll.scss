@@ -1,5 +1,5 @@
 ::-webkit-scrollbar {
-  width: 7px;
+  width: 6px;
   height: 0px;
 }
 ::-webkit-scrollbar-button {
@@ -9,12 +9,12 @@
 ::-webkit-scrollbar-thumb {
   background: $m-orange-gradient-180;
   border: none;
-  border-radius: 4px;
+  // border-radius: 4px;
 }
 ::-webkit-scrollbar-track {
   background: darken($m-marley, 20);
   border: none;
-  border-radius: 4px;
+  // border-radius: 4px;
 }
 ::-webkit-scrollbar-corner {
   background: transparent;

@@ -1,28 +1,22 @@
-@import '../../../../../styles/variables.scss';
+@import 'src/styles/styles.scss';
 
 .signup-container {
-  display: flex;
-  flex-direction: row;
+  @extend .m-flex-row;
+  @extend .m-box-shadow;
   justify-content: stretch;
-  width: 800px;
+  width: 640px;
   border-radius: $m-border-radius;
   background-color: $m-dark-orange;
-  -webkit-box-shadow: $m-shadow;
-     -moz-box-shadow: $m-shadow;
-          box-shadow: $m-shadow;
 
   .info-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    @extend .m-flex-column;
     width: calc(50% - 80px);
     padding: 40px;
     border-radius: $m-border-radius 0 0 $m-border-radius;
-    background: $m-orange-gradient-60;
+    background: $m-orange-gradient-90;
 
     .info{
-      display: flex;
-      flex-direction: row;
+      @extend .m-flex-row;
       justify-content: left;
       align-items: center;
       margin: 10px 0;
@@ -38,35 +32,27 @@
         color: $m-marley;
         font-weight: 300;
         font-size: 16px;
-      }
-      
+      }      
     }
-
   }
 
   .card {
     width: 50%;
-    display: flex;
-    flex-direction: column;
+    @extend .m-flex-column;
+    @extend .m-box-shadow;
     justify-content: stretch;
     background-color: $m-marley;
     border-radius: $m-border-radius;
-    -webkit-box-shadow: $m-shadow;
-       -moz-box-shadow: $m-shadow;
-            box-shadow: $m-shadow;
   
     .card-header {
-      display: flex;
-      justify-content: center;
+      @extend .m-flex-row;
+      @extend .m-box-shadow;
       margin: 10px -10px 20px -10px;
       padding: 40px 40px;
       border-radius: $m-mini-border-radius;
       font-size: 14px;
       font-weight: 500;
-      background: $m-orange-gradient-90;
-      -webkit-box-shadow: $m-shadow;
-          -moz-box-shadow: $m-shadow;
-              box-shadow: $m-shadow;
+      background: $m-orange-gradient-60;
   
       span {
         color: $m-marley;
@@ -76,11 +62,25 @@
     }
   
     .form {
-      display: flex;
-      flex-direction: column;
+      @extend .m-flex-column;
       padding: 0 40px 20px;
     }
   }
 }
 
-    
+@media screen and (max-width: $breakpoint-phone) {
+  .signup-container {
+    background-color: transparent;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+
+    .info-container {
+      display: none;
+    }
+
+    .card {
+      width: 100%;
+    }
+  }
+}

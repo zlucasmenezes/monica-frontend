@@ -1,11 +1,9 @@
-@import '../../../../../styles/variables.scss';
+@import 'src/styles/styles.scss';
 
 .container {
   cursor: default;
-  display: flex;
-  flex-direction: row;
+  @extend .m-flex-row;
   align-items: stretch;
-  justify-content: center;
   margin-top: 20px;
 
   div {
@@ -16,14 +14,14 @@
     padding: 20px;
 
     &.start {
-      display: flex;
+      @extend .m-flex-row;
       justify-content: flex-start;
       align-items: center;
       text-align: left;
     }
 
     &.end {
-      display: flex;
+      @extend .m-flex-row;
       justify-content: flex-end;
       align-items: center;
       text-align: right;

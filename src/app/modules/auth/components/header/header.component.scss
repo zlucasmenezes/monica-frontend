@@ -1,9 +1,9 @@
-@import '../../../../../styles/variables.scss';
+@import 'src/styles/styles.scss';
 
 .container {
   cursor: default;
-  display: flex;
-  flex-direction: row;
+  @extend .m-flex-row;
+  justify-content: flex-start;
   align-items: center;
   margin-bottom: 20px;
 
