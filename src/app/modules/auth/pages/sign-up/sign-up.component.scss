@@ -1,1 +1,86 @@
 @import '../../../../../styles/variables.scss';
+
+.signup-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+  width: 800px;
+  border-radius: $m-border-radius;
+  background-color: $m-dark-orange;
+  -webkit-box-shadow: $m-shadow;
+     -moz-box-shadow: $m-shadow;
+          box-shadow: $m-shadow;
+
+  .info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: calc(50% - 80px);
+    padding: 40px;
+    border-radius: $m-border-radius 0 0 $m-border-radius;
+    background: $m-orange-gradient-60;
+
+    .info{
+      display: flex;
+      flex-direction: row;
+      justify-content: left;
+      align-items: center;
+      margin: 10px 0;
+
+      mat-icon {
+        height: 100%;
+        width: auto;
+        margin-right: 10px;
+        font-size: 60px;
+      }
+      
+      span {
+        color: $m-marley;
+        font-weight: 300;
+        font-size: 16px;
+      }
+      
+    }
+
+  }
+
+  .card {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    background-color: $m-marley;
+    border-radius: $m-border-radius;
+    -webkit-box-shadow: $m-shadow;
+       -moz-box-shadow: $m-shadow;
+            box-shadow: $m-shadow;
+  
+    .card-header {
+      display: flex;
+      justify-content: center;
+      margin: 10px -10px 20px -10px;
+      padding: 40px 40px;
+      border-radius: $m-mini-border-radius;
+      font-size: 14px;
+      font-weight: 500;
+      background: $m-orange-gradient-90;
+      -webkit-box-shadow: $m-shadow;
+          -moz-box-shadow: $m-shadow;
+              box-shadow: $m-shadow;
+  
+      span {
+        color: $m-marley;
+        font-size: 20px;
+        font-weight: 300;
+      }
+    }
+  
+    .form {
+      display: flex;
+      flex-direction: column;
+      padding: 0 40px 20px;
+    }
+  }
+}
+
+    

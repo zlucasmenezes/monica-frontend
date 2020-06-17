@@ -7,6 +7,11 @@
 }
 
 .mat-form-field{
+  width: 100%;
+
+  .mat-form-field-wrapper {
+    width: 100%;
+  }
 
   &.mat-focused {
 
@@ -53,4 +58,15 @@
     margin-left: -21px;
   }
 
+}
+
+.m-form-field {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .m-field-icon {
+    margin: 0 10px 0 0;
+    margin-right: 10px;
+  }
 }

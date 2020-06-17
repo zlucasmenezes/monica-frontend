@@ -8,8 +8,8 @@
 
     <form class="form" [formGroup]="form" (submit)="login()">
       
-      <div class="form-field">
-        <mat-icon class="field-icon">face</mat-icon>
+      <div class="m-form-field">
+        <mat-icon class="m-field-icon">face</mat-icon>
 
         <mat-form-field floatLabel='never'>
           <input
@@ -23,14 +23,13 @@
             <mat-icon>info_outline</mat-icon>
             <span>{{getError('username')}}</span>
           </mat-error>
-
         </mat-form-field>
       </div>
       
-      <div class="form-field">
-        <mat-icon class="field-icon">lock</mat-icon>
-        <mat-form-field floatLabel='never'>
+      <div class="m-form-field">
+        <mat-icon class="m-field-icon">lock</mat-icon>
 
+        <mat-form-field floatLabel='never'>
           <input
           formControlName="password"
           matInput
@@ -49,7 +48,6 @@
             <mat-icon>info_outline</mat-icon>
             <span>{{getError('password')}}</span>
           </mat-error>
-
         </mat-form-field>
       </div>
 
