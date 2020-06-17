@@ -7,6 +7,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { PageContainerComponent } from './components/page-container/page-container.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { AuthRoutes } from './auth.routes';
+import { CardComponent } from './components/card/card.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { AuthRoutes } from './auth.routes';
     HeaderComponent,
     FooterComponent,
     PageContainerComponent,
-    SignUpComponent
+    SignUpComponent,
+    CardComponent
   ],
   imports: [
     SharedModule,

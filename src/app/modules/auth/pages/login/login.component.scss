@@ -1,31 +1,10 @@
 @import 'src/styles/styles.scss';
-    
-.card {
-  @extend .m-flex-column;
-  @extend .m-box-shadow;
+
+m-card {
   width: 300px;
-  border-radius: $m-border-radius;
-  background-color: $m-marley;
-
-  .card-header {
-    @extend .m-flex-row;
-    @extend .m-box-shadow;
-    margin: 10px -10px 40px -10px;
-    padding: 40px 40px;
-    border-radius: $m-mini-border-radius;
-    font-size: 14px;
-    font-weight: 500;
-    background: $m-orange-gradient-90;
-
-    span {
-      color: $m-marley;
-      font-size: 20px;
-      font-weight: 300;
-    }
-  }
-
-  .form {
-    @extend .m-flex-column;
-    padding: 0 40px 40px;
-  }
+}
+    
+.form {
+  padding: 0 40px 40px;
+  @extend .m-flex-column;
 }

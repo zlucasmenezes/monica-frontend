@@ -36,31 +36,9 @@
     }
   }
 
-  .card {
+  m-card {
     width: 50%;
-    @extend .m-flex-column;
-    @extend .m-box-shadow;
-    justify-content: stretch;
-    background-color: $m-marley;
-    border-radius: $m-border-radius;
-  
-    .card-header {
-      @extend .m-flex-row;
-      @extend .m-box-shadow;
-      margin: 10px -10px 20px -10px;
-      padding: 40px 40px;
-      border-radius: $m-mini-border-radius;
-      font-size: 14px;
-      font-weight: 500;
-      background: $m-orange-gradient-60;
-  
-      span {
-        color: $m-marley;
-        font-size: 20px;
-        font-weight: 300;
-      }
-    }
-  
+
     .form {
       @extend .m-flex-column;
       padding: 0 40px 20px;
@@ -79,7 +57,7 @@
       display: none;
     }
 
-    .card {
+    m-card {
       width: 100%;
     }
   }

@@ -1,8 +1,8 @@
 <m-page-container>
 
   <div class="signup-container">
-    <div class="info-container">
 
+    <div class="info-container">
       <div class="info">
         <mat-icon>domain</mat-icon>
         <span>Create a project to contain all your things</span>
@@ -29,12 +29,8 @@
       </div>
     </div>
 
-    <div class="card">
+    <m-card [title]="'sign up'">
 
-      <div class="card-header">
-        <span>SIGN UP</span>
-      </div>
-  
       <form class="form" [formGroup]="form" (submit)="signup()">
         
         <div class="m-form-field">
@@ -165,9 +161,10 @@
           </button>
         </div>        
   
-      </form>   
+      </form>  
+
+    </m-card>
   
-    </div>
   </div>
 
   

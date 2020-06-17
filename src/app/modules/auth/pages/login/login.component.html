@@ -1,10 +1,6 @@
 <m-page-container>
 
-  <div class="card">
-
-    <div class="card-header">
-      <span>LOGIN</span>
-    </div>
+  <m-card [title]="'login'">
 
     <form class="form" [formGroup]="form" (submit)="login()">
       
@@ -59,8 +55,8 @@
         </button>
       </div>        
 
-    </form>   
+    </form>
 
-  </div>
+  </m-card>
 
 </m-page-container>
