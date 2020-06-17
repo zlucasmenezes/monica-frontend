@@ -5,19 +5,20 @@ import { LoginComponent } from './pages/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { PageContainerComponent } from './components/page-container/page-container.component';
+import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import { AuthRoutes } from './auth.routes';
 
 @NgModule({
   declarations: [
     LoginComponent,
     HeaderComponent,
     FooterComponent,
-    PageContainerComponent
+    PageContainerComponent,
+    SignUpComponent
   ],
   imports: [
-    SharedModule
-  ],
-  exports: [
-    LoginComponent
+    SharedModule,
+    AuthRoutes
   ]
 })
 export class AuthModule { }
