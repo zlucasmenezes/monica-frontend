@@ -13,7 +13,6 @@ export class SignUpComponent implements OnInit {
 
   public form: FormGroup;
   public hidePassword = true;
-  public hidePasswordConfirmation = true;
 
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.initForm();
@@ -28,7 +27,6 @@ export class SignUpComponent implements OnInit {
       email: [null, [Validators.required, Validators.email]],
       username: [null, [Validators.required, Validators.minLength(4)]],
       password: [null, [Validators.required, Validators.minLength(6)]],
-      confirmPassword: [null, [Validators.required, Validators.minLength(6)]],
     });
   }
 

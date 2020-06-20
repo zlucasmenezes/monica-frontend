@@ -13,4 +13,15 @@
     color: $m-marley;
     padding: 20px;
   }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  .links {
+    @extend .m-flex-row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px;
+  }
 }

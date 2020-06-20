@@ -127,31 +127,6 @@
             </mat-error>
           </mat-form-field>
         </div>
-
-        <div class="m-form-field">
-          <mat-icon class="m-field-icon">vpn_key</mat-icon>
-  
-          <mat-form-field floatLabel='never'>
-            <input
-            formControlName="confirmPassword"
-            matInput
-            placeholder="confirm password"
-            [type]="hidePasswordConfirmation ? 'password' : 'text'">
-  
-            <button
-            type="button"
-            mat-icon-button
-            matSuffix
-            (click)="hidePasswordConfirmation = !hidePasswordConfirmation">
-              <mat-icon>{{ hidePasswordConfirmation ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </button>
-  
-            <mat-error *ngIf="form.get('confirmPassword').invalid">
-              <mat-icon>info_outline</mat-icon>
-              <span>{{getError('confirmPassword')}}</span>
-            </mat-error>
-          </mat-form-field>
-        </div>
   
         <div class="m-btn-area">
           <button
@@ -166,7 +141,5 @@
     </m-card>
   
   </div>
-
-  
 
 </m-page-container>

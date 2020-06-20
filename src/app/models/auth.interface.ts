@@ -5,6 +5,8 @@ export interface ILoginRequest {
 
 export interface IToken {
   token: string;
+  userId: string;
+  exp: number;
 }
 
 export interface ISignUpRequest {
