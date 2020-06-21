@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient, HttpHandler } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { IResponse } from '../models/backend.interface';
+import { IResponse } from '../models/backend.model';
 
 @Injectable()
 export abstract class BaseService {
@@ -17,4 +17,5 @@ export abstract class BaseService {
   public async test(): Promise<IResponse> {
     return await (await this.http.get<IResponse>(this.baseUrl).toPromise()).data;
   }
+
 }

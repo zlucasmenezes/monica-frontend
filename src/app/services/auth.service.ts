@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
-import { IResponse } from 'src/app/models/backend.interface';
-import { ILoginRequest, IToken, ISignUpRequest } from '../models/auth.interface';
+import { IResponse } from 'src/app/models/backend.model';
+import { ILoginRequest, IToken, ISignUpRequest } from '../models/auth.model';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { SocketIOService } from './socket-io.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService extends BaseService {
 
-  constructor(http: HttpClient, private router: Router) {
+  constructor(
+    http: HttpClient,
+    private router: Router,
+    private socketIOService: SocketIOService
+    ) {
     super('users/auth', http);
   }
 
@@ -22,6 +27,7 @@ export class AuthService extends BaseService {
 
       const token: IToken = response.data as IToken;
       this.saveAuthData(token);
+      this.socketIOService.connect(token);
 
       this.router.navigate(['/']);
     }
