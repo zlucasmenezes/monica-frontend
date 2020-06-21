@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
 
 import { AuthService } from 'src/app/services/auth.service';
-import { ISignUpRequest } from 'src/app/models/auth.interface';
+import { ISignUpRequest } from 'src/app/models/auth.model';
 
 @Component({
   selector: 'm-sign-up',

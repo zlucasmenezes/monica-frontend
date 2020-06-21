@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from './base.service';
-import { IResponse } from 'src/app/models/backend.interface';
-import { ILoginRequest, IToken, ISignUpRequest } from '../models/auth.interface';
+import { IResponse } from 'src/app/models/backend.model';
+import { ILoginRequest, IToken, ISignUpRequest } from '../models/auth.model';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { SocketIOService } from './socket-io.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,11 @@ export class AuthService extends BaseService {
   private tokenData: IToken;
   private expirationTimer: any;
 
-  constructor(http: HttpClient, private router: Router) {
+  constructor(
+    http: HttpClient,
+    private router: Router,
+    private socketIOService: SocketIOService
+    ) {
     super('users/auth', http);
   }
 
@@ -28,6 +33,8 @@ export class AuthService extends BaseService {
       this.tokenData = tokenData;
       this.saveCredentials(tokenData);
       this.setExpirationTimer(tokenData.exp - Math.ceil(new Date().getTime() / 1000));
+
+      this.socketIOService.connect(tokenData);
 
       this.router.navigate(['/']);
     }
@@ -52,8 +59,9 @@ export class AuthService extends BaseService {
   public logout(): void {
     this.tokenData = null;
     this.clearCredentials();
-
     clearTimeout(this.expirationTimer);
+
+    this.socketIOService.disconnect();
 
     this.router.navigate(['/auth/login']);
   }
@@ -66,8 +74,9 @@ export class AuthService extends BaseService {
     const expirationTime = tokenData.exp - Math.ceil(new Date().getTime() / 1000);
     if (expirationTime > 0) {
       this.tokenData = tokenData;
-
       this.setExpirationTimer(expirationTime);
+
+      this.socketIOService.connect(tokenData);
 
       this.router.navigate(['/']);
     }
