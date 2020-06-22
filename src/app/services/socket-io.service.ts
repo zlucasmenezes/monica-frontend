@@ -40,4 +40,9 @@ export class SocketIOService {
     }
   }
 
+  public isConnected(): boolean {
+    if (!this.socket) { return false; }
+    return this.socket.connected;
+  }
+
 }

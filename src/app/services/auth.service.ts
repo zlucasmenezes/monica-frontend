@@ -35,6 +35,7 @@ export class AuthService extends BaseService {
       this.setExpirationTimer(tokenData.exp - Math.ceil(new Date().getTime() / 1000));
 
       this.socketIOService.connect(tokenData);
+      this.auth = true;
 
       this.router.navigate(['/']);
     }
@@ -62,6 +63,7 @@ export class AuthService extends BaseService {
     clearTimeout(this.expirationTimer);
 
     this.socketIOService.disconnect();
+    this.auth = false;
 
     this.router.navigate(['/auth/login']);
   }
@@ -77,8 +79,7 @@ export class AuthService extends BaseService {
       this.setExpirationTimer(expirationTime);
 
       this.socketIOService.connect(tokenData);
-
-      this.router.navigate(['/']);
+      this.auth = true;
     }
     else {
       this.logout();
