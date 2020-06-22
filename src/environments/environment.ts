@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   name: 'Monica',
-  version: '0.0.0',
+  version: '0.0.1',
   backend: {
     host: 'localhost',
     port: 3000,
