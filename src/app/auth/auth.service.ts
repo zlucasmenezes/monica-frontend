@@ -4,7 +4,7 @@ import { IResponse } from 'src/app/shared/models/backend.model';
 import { ILoginRequest, IToken, ISignUpRequest } from './auth.model';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { SocketIOService } from 'src/app/shared/services/socket-io.service';
+import { SocketIOService } from 'src/app/shared/socket-io/socket-io.service';
 
 @Injectable({
   providedIn: 'root'

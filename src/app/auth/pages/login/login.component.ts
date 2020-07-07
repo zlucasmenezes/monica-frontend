@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
   public async login(): Promise<void> {
     if (this.form.invalid){ return; }
 
-    this.authService.login(this.form.value as ILoginRequest);
+    this.authService.login(this.form.value as ILoginRequest).catch(e => {});
   }
 
   public getError(control: string): string {
