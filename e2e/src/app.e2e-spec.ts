@@ -8,11 +8,6 @@ describe('workspace-project App', () => {
     page = new AppPage();
   });
 
-  it('should display app name and version', async () => {
-    page.navigateTo();
-    expect(page.getAppContent()).toEqual(`${await page.getAppName()} v${await page.getAppVersion()}`);
-  });
-
   afterEach(async () => {
     // Assert that there are no errors emitted from the browser
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);

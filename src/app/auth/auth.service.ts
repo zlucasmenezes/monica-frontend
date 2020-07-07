@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from './base.service';
-import { IResponse } from 'src/app/models/backend.model';
-import { ILoginRequest, IToken, ISignUpRequest } from '../models/auth.model';
+import { BaseService } from 'src/app/shared/services/base.service';
+import { IResponse } from 'src/app/shared/models/backend.model';
+import { ILoginRequest, IToken, ISignUpRequest } from './auth.model';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { SocketIOService } from './socket-io.service';
+import { SocketIOService } from 'src/app/shared/services/socket-io.service';
 
 @Injectable({
   providedIn: 'root'

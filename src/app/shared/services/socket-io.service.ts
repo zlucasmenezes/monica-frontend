@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
-import { IToken } from '../models/auth.model';
+import { IToken } from 'src/app/auth/auth.model';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { SocketIOEvent } from '../models/socket-io.model';

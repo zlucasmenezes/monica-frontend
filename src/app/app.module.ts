@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthModule } from './modules/auth/auth.module';
-import { SharedModule } from './shared/shared.module';
+import { AuthModule } from 'src/app/auth/auth.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { AppRoutes } from './app.routes';
 
 @NgModule({
