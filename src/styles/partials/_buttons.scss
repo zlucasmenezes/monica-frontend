@@ -10,6 +10,14 @@
   }
 }
 
+.m-btn-secondary {
+  .mat-button-wrapper {
+    color: $m-orange;
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
+
 a.mat-button {
   color: $m-marley;
   font-weight: 300;

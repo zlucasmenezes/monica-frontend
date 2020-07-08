@@ -11,6 +11,9 @@ import { HttpErrorInterceptor } from './error-dialog/http-error.interceptor';
   declarations: [
     ErrorDialogComponent
   ],
+  imports: [
+    AngularMaterialModule
+  ],
   exports: [
     CommonModule,
     AngularMaterialModule,

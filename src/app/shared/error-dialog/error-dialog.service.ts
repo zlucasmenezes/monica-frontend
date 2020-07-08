@@ -16,7 +16,10 @@ export class ErrorDialogService {
     if (this.isOpen) { return; }
 
     this.isOpen = true;
-    const dialogRef = this.dialog.open(ErrorDialogComponent, {data});
+    const dialogRef = this.dialog.open(ErrorDialogComponent, {
+      data,
+      panelClass: 'm-dialog'
+    });
 
     dialogRef.afterClosed().subscribe(() => {
       this.isOpen = false;

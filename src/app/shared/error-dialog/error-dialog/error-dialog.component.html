@@ -1,6 +1,9 @@
-<p>
-    Something went wrong!
-</p>
-<p>
-    {{data.error?.message ? data.error.message : 'An unexpected error occurred!'}}
-</p>
+<h2 mat-dialog-title>Something went wrong!</h2>
+
+<div mat-dialog-content>
+    <span>{{data.error?.message ? data.error.message : 'An unexpected error occurred!'}}</span>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button class="m-btn-secondary" mat-button [mat-dialog-close]="true" cdkFocusInitial>OK</button>
+</div>
