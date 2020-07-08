@@ -1,5 +1,7 @@
 .m-btn-area {
-  margin: 20px auto 0;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 
   .mat-button {
     .mat-button-wrapper {
