@@ -13,6 +13,7 @@ export class SignUpComponent implements OnInit {
 
   public form: FormGroup;
   public hidePassword = true;
+  public loading = false;
 
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.initForm();
@@ -33,7 +34,10 @@ export class SignUpComponent implements OnInit {
   public async signup(): Promise<void> {
     if (this.form.invalid){ return; }
 
-    this.authService.signup(this.form.value as ISignUpRequest);
+    this.loading = true;
+
+    this.authService.signup(this.form.value as ISignUpRequest)
+    .finally(() => { this.loading = false; });
   }
 
   public getError(control: string): string {

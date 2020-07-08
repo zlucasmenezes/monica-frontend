@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
 
   public form: FormGroup;
   public hidePassword = true;
+  public loading = false;
 
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.initForm();
@@ -29,7 +30,10 @@ export class LoginComponent implements OnInit {
   public async login(): Promise<void> {
     if (this.form.invalid){ return; }
 
-    this.authService.login(this.form.value as ILoginRequest).catch(e => {});
+    this.loading = true;
+
+    this.authService.login(this.form.value as ILoginRequest)
+    .finally(() => { this.loading = false; });
   }
 
   public getError(control: string): string {
