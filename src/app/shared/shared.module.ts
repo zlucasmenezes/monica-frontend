@@ -6,12 +6,21 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from './modules/material.module';
 import { ErrorDialogComponent } from './error-dialog/error-dialog/error-dialog.component';
 import { HttpErrorInterceptor } from './error-dialog/http-error.interceptor';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { CardComponent } from './card/card.component';
+import { PageContainerComponent } from './page-container/page-container.component';
 
 @NgModule({
   declarations: [
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    HeaderComponent,
+    FooterComponent,
+    CardComponent,
+    PageContainerComponent
   ],
   imports: [
+    CommonModule,
     AngularMaterialModule
   ],
   exports: [
@@ -19,6 +28,10 @@ import { HttpErrorInterceptor } from './error-dialog/http-error.interceptor';
     AngularMaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
+    CardComponent,
+    PageContainerComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   entryComponents: [
     ErrorDialogComponent

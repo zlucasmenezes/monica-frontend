@@ -3,11 +3,11 @@ import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'm-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  selector: 'm-auth-header',
+  templateUrl: './auth-header.component.html',
+  styleUrls: ['./auth-header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class AuthHeaderComponent implements OnInit {
 
   public name = environment.name;
   public link: string;
@@ -32,5 +32,6 @@ export class HeaderComponent implements OnInit {
         return 'log in';
     }
   }
+
 
 }

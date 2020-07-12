@@ -3,18 +3,15 @@
 .card {
   @extend .m-flex-column;
   @extend .m-box-shadow;
-  width: 100%;
   border-radius: $m-border-radius;
   background-color: $m-marley;
 
   .card-header {
     @extend .m-flex-row;
     @extend .m-box-shadow;
-    margin: 10px -10px 40px -10px;
+    margin: -20px 10px 40px 10px;
     padding: 40px 40px;
     border-radius: $m-mini-border-radius;
-    font-size: 14px;
-    font-weight: 500;
     background: $m-orange-gradient-90;
 
     span {

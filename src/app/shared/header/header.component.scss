@@ -1,0 +1,28 @@
+@import 'src/styles/styles.scss';
+
+.container {
+  cursor: default;
+  @extend .m-flex-row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 20px;
+  background: $m-orange-gradient-60;
+
+  .name {
+    font-size: 20px;
+    font-weight: 300;
+    color: $m-marley;
+    padding: 20px;
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  .links {
+    @extend .m-flex-row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px;
+  }
+}

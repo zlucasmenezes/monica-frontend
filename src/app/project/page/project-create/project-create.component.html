@@ -1,0 +1,50 @@
+<m-page-container>
+
+  <m-card [title]="'new project'" [icon]="'domain'">
+
+    <form class="form" [formGroup]="form" (submit)="save()">
+        
+      <!-- <div class="m-form-field">
+        <mat-icon class="m-field-icon">domain</mat-icon>
+    
+        <mat-form-field floatLabel='never'>
+          <input
+          matInput
+          formControlName="name"
+          type="text"
+          placeholder="name">
+          
+          <mat-error *ngIf="form.get('name').invalid">
+            <mat-icon>info_outline</mat-icon>
+            <span>{{getError('name')}}</span>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    
+      <div class="m-form-field">
+        <mat-icon class="m-field-icon">note</mat-icon>
+    
+        <mat-form-field floatLabel='never'>
+          <textarea
+          matInput
+          formControlName="description"
+          placeholder="description"></textarea>
+          
+          <mat-error *ngIf="form.get('description').invalid">
+            <mat-icon>info_outline</mat-icon>
+            <span>{{getError('description')}}</span>
+          </mat-error>
+        </mat-form-field>
+      </div> -->
+    
+      <!-- <div class="m-btn-area">
+        <button *ngIf="!loading" mat-button type="submit">CREATE</button>
+        <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+      </div>         -->
+    
+    </form>
+
+  </m-card>
+  
+</m-page-container>
+ 

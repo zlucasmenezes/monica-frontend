@@ -8,8 +8,11 @@ const routes: Routes = [
     loadChildren: './auth/auth.routes#AuthRoutes',
     canActivate: [ NoAuthGuard ]
   },
+  {
+    path: 'project',
+    loadChildren: './project/project.routes#ProjectRoutes',
+  },
 ];
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

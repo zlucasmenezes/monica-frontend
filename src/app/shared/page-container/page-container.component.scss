@@ -1,0 +1,26 @@
+@import 'src/styles/styles.scss';
+
+.page {
+  min-width: 100vw;
+  min-height: 100vh;
+
+  .page-overlay {
+    @extend .m-flex-column;
+    justify-content: flex-start;
+    min-width: 100vw;
+    min-height: 100vh;
+    background-color: $m-marley;
+
+    m-header {
+      width: 100vw;
+    }
+    
+    m-footer {
+      width: 100vw;
+      position: fixed;
+      bottom: 0;
+    } 
+    
+  }
+
+}

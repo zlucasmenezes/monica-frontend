@@ -2,21 +2,21 @@ import { NgModule } from '@angular/core';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 import { LoginComponent } from './pages/login/login.component';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { PageContainerComponent } from './components/page-container/page-container.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { AuthRoutes } from './auth.routes';
-import { CardComponent } from './components/card/card.component';
+import { AuthCardComponent } from './components/auth-card/auth-card.component';
+import { AuthHeaderComponent } from './components/auth-header/auth-header.component';
+import { AuthFooterComponent } from './components/auth-footer/auth-footer.component';
+import { AuthPageContainerComponent } from './components/auth-page-container/auth-page-container.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
-    HeaderComponent,
-    FooterComponent,
-    PageContainerComponent,
     SignUpComponent,
-    CardComponent
+    AuthCardComponent,
+    AuthHeaderComponent,
+    AuthFooterComponent,
+    AuthPageContainerComponent,
   ],
   imports: [
     SharedModule,

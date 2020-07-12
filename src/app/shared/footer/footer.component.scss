@@ -1,0 +1,15 @@
+@import 'src/styles/styles.scss';
+
+.container {
+  cursor: default;
+  @extend .m-flex-row;
+  align-items: stretch;
+  margin-top: 20px;
+
+  div {
+    color: $m-gray;
+    font-size: 10px;
+    font-weight: 300;
+    padding: 20px;
+  }
+}
