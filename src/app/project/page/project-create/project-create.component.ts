@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import formUtils from 'src/app/shared/utils/form-utils';
 
 @Component({
   selector: 'm-project-create',
@@ -20,8 +21,8 @@ export class ProjectCreateComponent implements OnInit {
 
   private initForm(): void {
     this.form = this.fb.group({
-      name: [null, [Validators.required]],
-      description: [null],
+      name: [null, [Validators.required, Validators.minLength(4), Validators.maxLength(64)]],
+      description: [null, Validators.maxLength(240)],
       admin: [null, [Validators.required]],
       privacy: [null, [Validators.required]],
       users: [null],
@@ -29,18 +30,16 @@ export class ProjectCreateComponent implements OnInit {
   }
 
   public getError(control: string): string {
-    const errors: ValidationErrors = this.form.get(control).errors;
+    return formUtils.getError(this.form, control);
+  }
 
-    let error = `invalid ${control}`;
-
-    if (!errors) { return error; }
-    if (errors.required) { error = `${control} is required`; }
-    if (errors.minlength) { error = `${control} must be at least ${errors.minlength.requiredLength} characters`; }
-
-    return error.charAt(0).toUpperCase() + error.slice(1);
+  public resizeTextArea(textarea: any, control: AbstractControl) {
+    return formUtils.resizeTextArea(textarea, control);
   }
 
   public async save() {
+    if (this.form.invalid){ return; }
+
     console.log(this.form.value);
   }
 

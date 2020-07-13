@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, ValidationErrors } from '@angular/forms';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ILoginRequest } from 'src/app/auth/auth.model';
+import formUtils from 'src/app/shared/utils/form-utils';
 
 @Component({
   selector: 'm-login',
@@ -22,8 +23,8 @@ export class LoginComponent implements OnInit {
 
   private initForm(): void {
     this.form = this.fb.group({
-      username: [null, [Validators.required, Validators.minLength(4)]],
-      password: [null, [Validators.required, Validators.minLength(6)]],
+      username: [null, [Validators.required, Validators.minLength(4), Validators.maxLength(24)]],
+      password: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(48)]],
     });
   }
 
@@ -37,15 +38,7 @@ export class LoginComponent implements OnInit {
   }
 
   public getError(control: string): string {
-    const errors: ValidationErrors = this.form.get(control).errors;
-
-    let error = `invalid ${control}`;
-
-    if (!errors) { return error; }
-    if (errors.required) { error = `${control} is required`; }
-    if (errors.minlength) { error = `${control} must be at least ${errors.minlength.requiredLength} characters`; }
-
-    return error.charAt(0).toUpperCase() + error.slice(1);
+    return formUtils.getError(this.form, control);
   }
 
 }

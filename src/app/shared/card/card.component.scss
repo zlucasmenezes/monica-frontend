@@ -3,8 +3,7 @@
 .card {
   @extend .m-flex-column;
   @extend .m-box-shadow;
-  // width: 100%;
-  margin: 40px 20px;
+  margin: 20px;
   padding-bottom: 40px;
   border-radius: $m-border-radius;
   background-color: $m-marley;
