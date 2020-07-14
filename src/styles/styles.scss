@@ -15,6 +15,7 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   color: $m-gray;
+  cursor: default;
 }
 
 .m-flex-column {
@@ -30,9 +31,9 @@ body {
 }
 
 .m-box-shadow {
-  -webkit-box-shadow: $m-shadow;
-     -moz-box-shadow: $m-shadow;
-          box-shadow: $m-shadow;
+  -webkit-box-shadow: $m-shadow-1;
+     -moz-box-shadow: $m-shadow-1;
+          box-shadow: $m-shadow-1;
 }
 
 .m-dialog {  

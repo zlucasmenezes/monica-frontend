@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import formUtils from 'src/app/shared/utils/form-utils';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'm-project-create',
@@ -12,7 +13,9 @@ export class ProjectCreateComponent implements OnInit {
   public form: FormGroup;
   public loading = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService) {
     this.initForm();
   }
 
@@ -23,7 +26,7 @@ export class ProjectCreateComponent implements OnInit {
     this.form = this.fb.group({
       name: [null, [Validators.required, Validators.minLength(4), Validators.maxLength(64)]],
       description: [null, Validators.maxLength(240)],
-      admin: [null, [Validators.required]],
+      admin: [this.authService.getTokenData().userId, [Validators.required]],
       privacy: [null, [Validators.required]],
       users: [null],
     });
@@ -37,10 +40,17 @@ export class ProjectCreateComponent implements OnInit {
     return formUtils.resizeTextArea(textarea, control);
   }
 
-  public async save() {
-    if (this.form.invalid){ return; }
-
+  public save() {
     console.log(this.form.value);
+
+    if (!this.validate()) { return; }
+  }
+
+  private validate(): boolean {
+    this.form.get('privacy').markAsDirty();
+
+    if (this.form.valid){ return false; }
+    return true;
   }
 
 }

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { AngularMaterialModule } from './modules/material.module';
 import { ErrorDialogComponent } from './error-dialog/error-dialog/error-dialog.component';
@@ -31,7 +32,8 @@ import { PageContainerComponent } from './page-container/page-container.componen
     CardComponent,
     PageContainerComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    FormsModule
   ],
   entryComponents: [
     ErrorDialogComponent
