@@ -63,12 +63,11 @@
             <mat-label>{{ userList.length === 0 ? 'there are no users' : 'users' }}</mat-label>        
             <mat-select
             formControlName="users"
-            multiple
-            [disabled]="userList.length === 0">
+            multiple>
               <mat-select-trigger>
-                {{form.get('users').value ? form.get('users').value[0] : ''}}
+                {{ form.get('users').value ? getUsername(form.get('users').value[0]) : '' }}
                 <span *ngIf="form.get('users').value?.length > 1" class="additional-selection">
-                  (+{{form.get('users').value.length - 1}} {{form.get('users').value?.length === 2 ? 'other' : 'others'}})
+                  (+{{ form.get('users').value.length - 1 }} {{ form.get('users').value?.length === 2 ? 'other' : 'others' }})
                 </span>
               </mat-select-trigger>
 

@@ -15,7 +15,7 @@ class FormUtils {
     return error.charAt(0).toUpperCase() + error.slice(1);
   }
 
-  public resizeTextArea(textarea: any, control: AbstractControl): void {
+  public resizeTextArea(textarea: any, control: AbstractControl) {
     if (textarea.value.length === 0) {
       control.setValue(null);
     } else {

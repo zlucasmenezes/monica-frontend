@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+
 import formUtils from 'src/app/shared/utils/form-utils';
 import { AuthService } from 'src/app/auth/auth.service';
 import { IUser } from 'src/app/auth/auth.model';
+import { UserService } from 'src/app/auth/user.service';
 
 @Component({
   selector: 'm-project-create',
@@ -18,14 +20,15 @@ export class ProjectCreateComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private userService: UserService) { }
+
+  async ngOnInit() {
+    this.userList = await this.userService.getUsers();
     this.initForm();
   }
 
-  ngOnInit(): void {
-  }
-
-  private initForm(): void {
+  private initForm() {
     this.form = this.fb.group({
       name: [null, [Validators.required, Validators.minLength(4), Validators.maxLength(64)]],
       description: [null, Validators.maxLength(240)],
@@ -33,6 +36,8 @@ export class ProjectCreateComponent implements OnInit {
       privacy: [null, [Validators.required]],
       users: [null],
     });
+
+    if (this.userList.length === 0) { this.form.get('users').disable(); }
   }
 
   public getError(control: string): string {
@@ -41,6 +46,12 @@ export class ProjectCreateComponent implements OnInit {
 
   public resizeTextArea(textarea: any, control: AbstractControl) {
     return formUtils.resizeTextArea(textarea, control);
+  }
+
+  public getUsername(id: string): string {
+    const user = this.userList.filter(u => u._id === id);
+
+    return user[0] ? user[0].username : '';
   }
 
   public save() {
