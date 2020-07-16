@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import formUtils from 'src/app/shared/utils/form-utils';
 import { AuthService } from 'src/app/auth/auth.service';
+import { IUser } from 'src/app/auth/auth.model';
 
 @Component({
   selector: 'm-project-create',
@@ -12,6 +13,8 @@ export class ProjectCreateComponent implements OnInit {
 
   public form: FormGroup;
   public loading = false;
+
+  public userList: IUser[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -44,6 +47,10 @@ export class ProjectCreateComponent implements OnInit {
     console.log(this.form.value);
 
     if (!this.validate()) { return; }
+
+    if (this.form.get('privacy').value === 'public') {
+      this.form.get('users').setValue(null);
+    }
   }
 
   private validate(): boolean {

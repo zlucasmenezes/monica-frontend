@@ -52,7 +52,32 @@
           <span>{{getError('privacy')}}</span>
         </mat-error>
       </mat-radio-group>
-    
+
+      <ng-container *ngIf="form.get('privacy').value === 'private'">
+        <h4>USERS</h4>
+
+        <div class="m-form-field" style="margin-top: -15px;">
+          <mat-icon class="m-field-icon">person_add_alt_1</mat-icon>
+
+          <mat-form-field floatLabel='never'>
+            <mat-label>{{ userList.length === 0 ? 'there are no users' : 'users' }}</mat-label>        
+            <mat-select
+            formControlName="users"
+            multiple
+            [disabled]="userList.length === 0">
+              <mat-select-trigger>
+                {{form.get('users').value ? form.get('users').value[0] : ''}}
+                <span *ngIf="form.get('users').value?.length > 1" class="additional-selection">
+                  (+{{form.get('users').value.length - 1}} {{form.get('users').value?.length === 2 ? 'other' : 'others'}})
+                </span>
+              </mat-select-trigger>
+
+              <mat-option *ngFor="let user of userList" [value]="user._id">{{ user.username }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </ng-container>
+
       <div class="m-btn-area">
         <button *ngIf="!loading" mat-button type="submit">CREATE</button>
         <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>

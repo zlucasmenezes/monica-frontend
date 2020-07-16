@@ -144,7 +144,7 @@ mat-radio-group {
   mat-error {
     @extend .m-flex-row;
     align-items: center;
-    margin-top: 5px;
+    margin: 5px 0 10px;
     padding: 5px;
     max-width: 200px;
     border: 1px solid $m-dark-orange;
@@ -184,4 +184,12 @@ mat-radio-group {
       font-size: 10px;
     }
   }
+}
+
+.mat-select-panel {
+  background: $m-marley;
+  box-shadow: $m-shadow-2;
+  border-radius: $m-mini-border-radius;
+  max-height: 210px !important;
+  overflow: scroll;
 }
