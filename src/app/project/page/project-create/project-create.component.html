@@ -2,7 +2,7 @@
 
   <m-card [title]="'new project'" [icon]="'domain'">
 
-    <form [formGroup]="form" (submit)="save()">
+    <form *ngIf="form" [formGroup]="form" (submit)="save()">
         
       <div class="m-form-field">
         <mat-icon class="m-field-icon">domain</mat-icon>
@@ -70,6 +70,11 @@
                   (+{{ form.get('users').value.length - 1 }} {{ form.get('users').value?.length === 2 ? 'other' : 'others' }})
                 </span>
               </mat-select-trigger>
+
+              <div class="mat-option" (click)="toogleSelectAllUsers()">
+                <mat-icon>{{ isAllUsersSelected() ? 'check_box' : ( form.get('users').value?.length > 0 ? 'indeterminate_check_box' : 'check_box_outline_blank' ) }}</mat-icon>
+                <span>select all</span>
+              </div>
 
               <mat-option *ngFor="let user of userList" [value]="user._id">{{ user.username }}</mat-option>
             </mat-select>

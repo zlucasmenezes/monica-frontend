@@ -40,20 +40,6 @@ export class ProjectCreateComponent implements OnInit {
     if (this.userList.length === 0) { this.form.get('users').disable(); }
   }
 
-  public getError(control: string): string {
-    return formUtils.getError(this.form, control);
-  }
-
-  public resizeTextArea(textarea: any, control: AbstractControl) {
-    return formUtils.resizeTextArea(textarea, control);
-  }
-
-  public getUsername(id: string): string {
-    const user = this.userList.filter(u => u._id === id);
-
-    return user[0] ? user[0].username : '';
-  }
-
   public save() {
     console.log(this.form.value);
 
@@ -69,6 +55,32 @@ export class ProjectCreateComponent implements OnInit {
 
     if (this.form.valid){ return false; }
     return true;
+  }
+
+  public getError(control: string): string {
+    return formUtils.getError(this.form, control);
+  }
+
+  public resizeTextArea(textarea: any, control: AbstractControl) {
+    return formUtils.resizeTextArea(textarea, control);
+  }
+
+  public getUsername(id: string): string {
+    const user = this.userList.filter(u => u._id === id);
+
+    return user[0] ? user[0].username : '';
+  }
+
+  public toogleSelectAllUsers() {
+    if (!this.isAllUsersSelected()) {
+      this.form.get('users').setValue(this.userList.map(user => user._id));
+    } else {
+      this.form.get('users').setValue(null);
+    }
+  }
+
+  public isAllUsersSelected() {
+    return this.userList.length === this.form.get('users').value?.length;
   }
 
 }
