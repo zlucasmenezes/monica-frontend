@@ -191,6 +191,9 @@ mat-radio-group {
   box-shadow: $m-shadow-2;
   border-radius: $m-mini-border-radius;
   max-height: 210px !important;
+  min-width: unset !important;
+  max-width: 90vw !important;
+  width: 100% !important;
   overflow: scroll;
 }
 
@@ -206,4 +209,24 @@ mat-radio-group {
   &.mat-selected:not(.mat-option-disabled) {
     color: $m-gray;
   }
+
+  .m-select-icon {
+    font-size: 21.5px;
+    height: 21.5px;
+    width: 21.5px;
+    margin: 0 6px 0 -3px;
+    color: $m-orange;
+  }
+
+  &.m-select-search {
+    height: 4rem;
+
+    .m-form-field {
+      width: 100%;
+    }
+  }
+}
+
+.mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+  color: $m-orange;
 }

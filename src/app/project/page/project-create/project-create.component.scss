@@ -13,12 +13,6 @@ form {
   }
 }
 
-.mat-option {
-  mat-icon {
-    font-size: 21.5px;
-    height: 21.5px;
-    width: 21.5px;
-    margin: 0 6px 0 -3px;
-    color: $m-orange;
-  }
-}
+// ::ng-deep .mat-select-panel {
+//   max-height: 232px !important;
+// }

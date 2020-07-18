@@ -72,11 +72,38 @@
               </mat-select-trigger>
 
               <div class="mat-option" (click)="toogleSelectAllUsers()">
-                <mat-icon>{{ isAllUsersSelected() ? 'check_box' : ( form.get('users').value?.length > 0 ? 'indeterminate_check_box' : 'check_box_outline_blank' ) }}</mat-icon>
+                <mat-icon class="m-select-icon">{{ isAllUsersSelected() ? 'check_box' : ( form.get('users').value?.length > 0 ? 'indeterminate_check_box' : 'check_box_outline_blank' ) }}</mat-icon>
                 <span>select all</span>
               </div>
 
-              <mat-option *ngFor="let user of userList" [value]="user._id">{{ user.username }}</mat-option>
+              <!-- <div class="mat-option m-select-search">
+                <div class="m-form-field">
+                  <mat-icon class="m-field-icon">search</mat-icon>
+              
+                  <mat-form-field floatLabel='never'>
+                    <input
+                    matInput
+                    type="text"
+                    placeholder="search"
+                    [formControl]="userFilter">
+
+                    <button
+                    type="button"
+                    mat-icon-button
+                    matSuffix
+                    (click)="userFilter.setValue(null); filterUsers('')">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </div>
+              </div> -->
+
+              <div class="mat-option" *ngIf="(userFilteredList$ | async).length === 0">
+                <mat-icon class="m-select-icon">info_outline</mat-icon>
+                <span>No users found</span>
+              </div>
+
+              <mat-option *ngFor="let user of userFilteredList$ | async" [value]="user._id">{{ user.username }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
