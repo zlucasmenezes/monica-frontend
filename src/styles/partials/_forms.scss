@@ -230,3 +230,12 @@ mat-radio-group {
 .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
   color: $m-orange;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
