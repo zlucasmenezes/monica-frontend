@@ -25,7 +25,7 @@ export class AuthService extends BaseService {
 
   public async login(credentials: ILoginRequest): Promise<void> {
     try {
-      const response = await this.http.post<IResponse>(`${this.url}login`, credentials).toPromise();
+      const response = await this.http.post<IResponse>(`${this.getUrl()}/login`, credentials).toPromise();
 
       if (response.error) { throw response.error; }
 
@@ -46,7 +46,7 @@ export class AuthService extends BaseService {
 
   public async signup(newUser: ISignUpRequest): Promise<void> {
     try {
-      const response = await this.http.post<IResponse>(`${this.url}signup`, newUser).toPromise();
+      const response = await this.http.post<IResponse>(`${this.getUrl()}/signup`, newUser).toPromise();
 
       if (response.error) { throw response.error; }
 

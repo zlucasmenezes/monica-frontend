@@ -15,12 +15,12 @@ export class ThingService extends BaseService {
     http: HttpClient,
     private router: Router
     ) {
-    super('project', http);
+    super('project/:0/thing', http);
   }
 
   public async createThing(thing: IThing): Promise<void> {
     try {
-      const createdThing = await this.http.post<IResponse>(`${this.url}${thing.project}/thing`, thing).toPromise();
+      const createdThing = await this.http.post<IResponse>(`${this.getUrl(thing.project)}`, thing).toPromise();
       console.log(createdThing);
       // this.router.navigate([`/project/${thing.project}/thing/${(createdThing.data as IThing)._id}/sensor/create`]);
     }
@@ -31,7 +31,7 @@ export class ThingService extends BaseService {
 
   public async getTypes(projectId: string): Promise<string[]> {
     try {
-      const types = await this.http.get<IResponse>(`${this.url}${projectId}/thing/types`).toPromise();
+      const types = await this.http.get<IResponse>(`${this.getUrl(projectId)}/types`).toPromise();
       return types.data;
     }
     catch (e) {
