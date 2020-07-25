@@ -15,7 +15,7 @@ export class ProjectService extends BaseService {
     http: HttpClient,
     private router: Router
     ) {
-    super('projects', http);
+    super('project', http);
   }
 
   public async createProject(project: IProject): Promise<void> {

@@ -13,7 +13,7 @@ export class UserService extends BaseService {
   constructor(
     http: HttpClient,
     ) {
-    super('users', http);
+    super('user', http);
   }
 
   public async getUsers(): Promise<IUser[]> {

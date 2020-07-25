@@ -20,7 +20,7 @@ export class AuthService extends BaseService {
     private router: Router,
     private socketIOService: SocketIOService
     ) {
-    super('users/auth', http);
+    super('user/auth', http);
   }
 
   public async login(credentials: ILoginRequest): Promise<void> {
