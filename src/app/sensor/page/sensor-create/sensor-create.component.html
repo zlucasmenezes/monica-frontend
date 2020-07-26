@@ -21,40 +21,50 @@
         </mat-form-field>
       </div>
 
-      <div class="m-form-field">
-        <mat-icon class="m-field-icon">fiber_pin</mat-icon>
-    
-        <mat-form-field floatLabel='never'>
-          <input
-          matInput
-          formControlName="pin"
-          type="number"
-          min="1"
-          placeholder="pin">
-          
-          <mat-error *ngIf="form.get('pin').invalid">
-            <mat-icon>info_outline</mat-icon>
-            <span>{{getError('pin')}}</span>
-          </mat-error>
-        </mat-form-field>
+      <div class="m-half-form-field">
+        <div class="m-first-field">
+          <div class="m-form-field">
+            <mat-icon class="m-field-icon">fiber_pin</mat-icon>
+        
+            <mat-form-field floatLabel='never'>
+              <input
+              matInput
+              formControlName="pin"
+              type="number"
+              min="1"
+              placeholder="pin">
+              
+              <mat-error *ngIf="form.get('pin').invalid">
+                <mat-icon>info_outline</mat-icon>
+                <span>{{getError('pin')}}</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="m-last-field">
+          <div class="m-form-field">
+            <mat-icon class="m-field-icon">update</mat-icon>
+        
+            <mat-form-field floatLabel='never'>
+              <input
+              matInput
+              formControlName="pollTime"
+              type="number"
+              min="1000"
+              placeholder="poll time (ms)">
+              
+              <mat-error *ngIf="form.get('pollTime').invalid">
+                <mat-icon>info_outline</mat-icon>
+                <span>{{getError('pollTime')}}</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
       </div>
 
       <div class="m-form-field">
-        <mat-icon class="m-field-icon">update</mat-icon>
-    
-        <mat-form-field floatLabel='never'>
-          <input
-          matInput
-          formControlName="pollTime"
-          type="number"
-          min="1000"
-          placeholder="poll time (ms)">
-          
-          <mat-error *ngIf="form.get('pollTime').invalid">
-            <mat-icon>info_outline</mat-icon>
-            <span>{{getError('pollTime')}}</span>
-          </mat-error>
-        </mat-form-field>
+        <mat-icon class="m-field-icon">save</mat-icon>
+        <mat-checkbox formControlName="store" [labelPosition]="'before'">store data</mat-checkbox>
       </div>
 
       <h4>CONFIGURATION</h4>

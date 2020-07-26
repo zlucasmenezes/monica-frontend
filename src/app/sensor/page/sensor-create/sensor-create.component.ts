@@ -45,6 +45,7 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
       type: [null, [Validators.required]],
       pin: [null, [Validators.required, Validators.min(1)]],
       pollTime: [null, [Validators.required, Validators.min(1000)]],
+      store: [true, [Validators.required]],
       thing: [this.getThingId(), [Validators.required]]
     });
   }
