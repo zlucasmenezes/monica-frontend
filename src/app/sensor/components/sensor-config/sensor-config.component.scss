@@ -1,0 +1,13 @@
+@import 'src/styles/styles.scss';
+
+form {
+  margin: 20px 0 0 35px;
+
+  .m-btn-area {
+    margin-top: 40px;
+  }
+}
+
+::ng-deep .mat-select-panel {
+  max-height: 232px !important;
+}

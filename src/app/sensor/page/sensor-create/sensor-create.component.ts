@@ -46,7 +46,9 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
       pin: [null, [Validators.required, Validators.min(1)]],
       pollTime: [null, [Validators.required, Validators.min(1000)]],
       store: [true, [Validators.required]],
-      thing: [this.getThingId(), [Validators.required]]
+      thing: [this.getThingId(), [Validators.required]],
+      function: [null],
+      config: this.fb.array([])
     });
   }
 
@@ -73,6 +75,12 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
     const type = this.types.filter(t => t._id === id);
 
     return type[0] ? type[0].type : '';
+  }
+
+  public getType(id: string): ISensorType {
+    const type = this.types.filter(t => t._id === id);
+
+    return type[0] ? type[0] : null;
   }
 
   public save() {
