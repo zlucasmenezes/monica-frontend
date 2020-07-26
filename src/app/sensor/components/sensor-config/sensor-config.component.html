@@ -2,4 +2,25 @@
 
   <h4>CONFIGURATION</h4>
 
+  <div
+  class="m-form-field"
+  formArrayName="config"
+  *ngFor="let control of getFormArray().controls; let i = index;">
+    <mat-icon class="m-field-icon">settings</mat-icon>
+
+    <mat-form-field [formGroupName]="i">
+      <mat-label>{{ getFormArray().at(i).get('parameter').value }} ( {{ sensorType.config[i]?.description }} )</mat-label>
+      <input
+      matInput
+      formControlName="value"
+      type="number"
+      placeholder="value">
+      
+      <mat-error *ngIf="this.getFormArray().at(i).invalid">
+        <mat-icon>info_outline</mat-icon>
+        <span>{{getError(i, 'value')}}</span>
+      </mat-error>
+    </mat-form-field>
+  </div>
+
 </form>
