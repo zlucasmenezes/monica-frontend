@@ -18,9 +18,20 @@
       
       <mat-error *ngIf="this.getFormArray().at(i).invalid">
         <mat-icon>info_outline</mat-icon>
-        <span>{{getError(i, 'value')}}</span>
+        <span>{{getError('value', i)}}</span>
       </mat-error>
     </mat-form-field>
+  </div>
+
+  <div *ngIf="form && (sensorType.config.length === 0)">
+    function getValue(value, resolution) {{ '{' }}
+    <m-code [code]="form.get('function')"></m-code>
+    {{ '}' }}
+
+    <mat-error class="m-error" *ngIf="form.get('function').invalid">
+      <mat-icon>info_outline</mat-icon>
+      <span>{{getError('function')}}</span>
+    </mat-error>
   </div>
 
 </form>

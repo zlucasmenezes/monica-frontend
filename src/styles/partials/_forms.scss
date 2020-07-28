@@ -176,50 +176,6 @@ mat-radio-group {
     }
         
   }
-
-  mat-error {
-    @extend .m-flex-row;
-    align-items: center;
-    margin: 5px 0 10px;
-    padding: 5px;
-    max-width: 200px;
-    border: 1px solid $m-dark-orange;
-    border-radius: $m-mini-border-radius;
-    box-shadow: $m-shadow-2;
-    animation-name: animation;
-    animation-iteration-count: 1;
-    animation-timing-function: linear;
-    animation-duration: .5s;
-
-    @keyframes animation {
-      0% {
-        opacity: 0;
-        margin-top: 0px;
-      }
-      50% {
-        opacity: 1;
-        margin-top: 2.5px;
-      }
-      100% {
-        margin-top: 5px;
-      }
-    }
-
-    @media screen and (max-width: $breakpoint-phone) {
-      max-width: 100%;
-    } 
-
-    mat-icon {
-      width: 13.5px;
-      height: 13.5px;
-      font-size: 12px;
-      margin-right: 1px;
-    }
-
-    span {
-      font-size: 10px;
-    }
-  }
 }
 
 .mat-select-panel {
@@ -317,4 +273,48 @@ input[type=number] {
     stroke: $m-orange !important;
   }
 
+}
+
+mat-radio-group > mat-error, mat-error.m-error {
+  @extend .m-flex-row;
+  align-items: center;
+  margin: 5px 0 10px;
+  padding: 5px;
+  max-width: 200px;
+  border: 1px solid $m-dark-orange;
+  border-radius: $m-mini-border-radius;
+  box-shadow: $m-shadow-2;
+  animation-name: animation;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  animation-duration: .5s;
+
+  @keyframes animation {
+    0% {
+      opacity: 0;
+      margin-top: 0px;
+    }
+    50% {
+      opacity: 1;
+      margin-top: 2.5px;
+    }
+    100% {
+      margin-top: 5px;
+    }
+  }
+
+  @media screen and (max-width: $breakpoint-phone) {
+    max-width: 100%;
+  } 
+
+  mat-icon {
+    width: 13.5px;
+    height: 13.5px;
+    font-size: 12px;
+    margin-right: 1px;
+  }
+
+  span {
+    font-size: 10px;
+  }
 }

@@ -5,12 +5,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 
 import { AngularMaterialModule } from './modules/material.module';
-import { ErrorDialogComponent } from './error-dialog/error-dialog/error-dialog.component';
-import { HttpErrorInterceptor } from './error-dialog/http-error.interceptor';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
-import { CardComponent } from './card/card.component';
-import { PageContainerComponent } from './page-container/page-container.component';
+import { ErrorDialogComponent } from './components/error-dialog/error-dialog/error-dialog.component';
+import { HttpErrorInterceptor } from './components/error-dialog/http-error.interceptor';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { CardComponent } from './components/card/card.component';
+import { PageContainerComponent } from './components/page-container/page-container.component';
+import { CodeComponent } from './components/code/code.component';
 
 @NgModule({
   declarations: [
@@ -18,11 +19,13 @@ import { PageContainerComponent } from './page-container/page-container.componen
     HeaderComponent,
     FooterComponent,
     CardComponent,
-    PageContainerComponent
+    PageContainerComponent,
+    CodeComponent
   ],
   imports: [
     CommonModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    FormsModule
   ],
   exports: [
     CommonModule,
@@ -33,7 +36,8 @@ import { PageContainerComponent } from './page-container/page-container.componen
     PageContainerComponent,
     HeaderComponent,
     FooterComponent,
-    FormsModule
+    FormsModule,
+    CodeComponent
   ],
   entryComponents: [
     ErrorDialogComponent
