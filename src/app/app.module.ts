@@ -8,6 +8,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { AppRoutes } from './app.routes';
 import { ProjectModule } from './project/project.module';
 import { ThingModule } from './thing/thing.module';
+import { SensorModule } from './sensor/sensor.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ThingModule } from './thing/thing.module';
     SharedModule,
     AppRoutes,
     ProjectModule,
-    ThingModule
+    ThingModule,
+    SensorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

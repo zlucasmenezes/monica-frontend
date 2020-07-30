@@ -22,7 +22,7 @@ export abstract class BaseService {
     let url = this.url;
 
     for (let index = 0; index < params.length; index++) {
-      url = this.url.replace(`:${index}`, params[index]);
+      url = url.replace(`:${index}`, params[index]);
     }
 
     return `${this.baseUrl}/${url}`;

@@ -4,25 +4,26 @@ import { Router } from '@angular/router';
 
 import { BaseService } from 'src/app/shared/services/base.service';
 import { IResponse } from '../shared/models/backend.model';
-import { IThing } from './thing.model';
+import { ISensor } from './sensor.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ThingService extends BaseService {
+export class SensorService extends BaseService {
 
   constructor(
     http: HttpClient,
     private router: Router
     ) {
-    super('project/:0/thing', http);
+    super('project/:0/thing/:1/sensor', http);
   }
 
-  public async createThing(thing: IThing): Promise<void> {
+  public async createSensor(projectId: string, sensor: ISensor): Promise<void> {
     try {
-      const createdThing = await this.http.post<IResponse>(`${this.getUrl(thing.project)}`, thing).toPromise();
-      console.log(createdThing);
-      this.router.navigate([`/project/${thing.project}/thing/${(createdThing.data as IThing)._id}/sensor/create`]);
+      console.log(sensor);
+      console.log(this.getUrl(projectId, sensor.thing));
+      // const createdSensor = await this.http.post<IResponse>(`${this.getUrl(projectId, sensor.thing)}`, sensor).toPromise();
+      // console.log(createdSensor);
     }
     catch (e) {
       throw e;
