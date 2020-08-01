@@ -6,3 +6,7 @@ export interface IThing extends IDocument {
   type: string;
   project: IProject['_id'];
 }
+
+export interface IBoard extends IDocument {
+  password: string;
+}

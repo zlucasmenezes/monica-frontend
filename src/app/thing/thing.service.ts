@@ -4,7 +4,9 @@ import { Router } from '@angular/router';
 
 import { BaseService } from 'src/app/shared/services/base.service';
 import { IResponse } from '../shared/models/backend.model';
-import { IThing } from './thing.model';
+import { IThing, IBoard } from './thing.model';
+import { MatDialog } from '@angular/material/dialog';
+import { BoardCredentialsDialogComponent } from './components/board-credentials-dialog/board-credentials-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -13,16 +15,25 @@ export class ThingService extends BaseService {
 
   constructor(
     http: HttpClient,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
     ) {
     super('project/:0/thing', http);
   }
 
   public async createThing(thing: IThing): Promise<void> {
     try {
-      const createdThing = await this.http.post<IResponse>(`${this.getUrl(thing.project)}`, thing).toPromise();
-      console.log(createdThing);
-      this.router.navigate([`/project/${thing.project}/thing/${(createdThing.data as IThing)._id}/sensor/create`]);
+      const board = await this.http.post<IResponse>(`${this.getUrl(thing.project)}`, thing).toPromise();
+
+      const dialogRef = this.dialog.open(BoardCredentialsDialogComponent, {
+        data: board?.data,
+        panelClass: 'm-dialog',
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(() => {
+        this.router.navigate([`/project/${thing.project}/thing/${(board.data as IBoard)._id}/sensor/create`]);
+      });
     }
     catch (e) {
       throw e;

@@ -18,7 +18,7 @@ export class ErrorDialogService {
     this.isOpen = true;
     const dialogRef = this.dialog.open(ErrorDialogComponent, {
       data,
-      panelClass: 'm-dialog'
+      panelClass: 'm-error-dialog'
     });
 
     dialogRef.afterClosed().subscribe(() => {
