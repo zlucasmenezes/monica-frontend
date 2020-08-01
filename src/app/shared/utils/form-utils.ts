@@ -11,6 +11,8 @@ class FormUtils {
     if (errors.required) { error = `${control} is required`; }
     if (errors.minlength) { error = `${control} must be at least ${errors.minlength.requiredLength} characters`; }
     if (errors.maxlength) { error = `${control} must contain maximum ${errors.maxlength.requiredLength} characters`; }
+    if (errors.min) { error = `minimum ${control} is ${errors.min.min}`; }
+    if (errors.max) { error = `maximum ${control} is ${errors.max.max}`; }
 
     return error.charAt(0).toUpperCase() + error.slice(1);
   }

@@ -12,6 +12,14 @@ const routes: Routes = [
     path: 'project',
     loadChildren: './project/project.routes#ProjectRoutes',
   },
+  {
+    path: 'project/:projectId/thing',
+    loadChildren: './thing/thing.routes#ThingRoutes',
+  },
+  {
+    path: 'project/:projectId/thing/:thingId/sensor',
+    loadChildren: './sensor/sensor.routes#SensorRoutes',
+  },
 ];
 
 @NgModule({

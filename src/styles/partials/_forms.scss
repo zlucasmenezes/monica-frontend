@@ -74,6 +74,42 @@
     resize: none;
     overflow: hidden;
   }
+
+  mat-checkbox {
+    margin: 20px 0;
+  }
+}
+
+.m-half-form-field {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  .m-first-field {
+    width: 50%;
+    padding-right: 10px;
+  }
+  .m-last-field {
+    width: 50%;
+    padding-left: 10px;
+  }
+}
+
+@media screen and (max-width: $breakpoint-phone) {
+  .m-half-form-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .m-first-field {
+      width: 100%;
+      padding-right: 0;
+    }
+    .m-last-field {
+      width: 100%;
+      padding-left: 0;
+    }
+  }
 }
 
 mat-radio-group {
@@ -140,50 +176,6 @@ mat-radio-group {
     }
         
   }
-
-  mat-error {
-    @extend .m-flex-row;
-    align-items: center;
-    margin: 5px 0 10px;
-    padding: 5px;
-    max-width: 200px;
-    border: 1px solid $m-dark-orange;
-    border-radius: $m-mini-border-radius;
-    box-shadow: $m-shadow-2;
-    animation-name: animation;
-    animation-iteration-count: 1;
-    animation-timing-function: linear;
-    animation-duration: .5s;
-
-    @keyframes animation {
-      0% {
-        opacity: 0;
-        margin-top: 0px;
-      }
-      50% {
-        opacity: 1;
-        margin-top: 2.5px;
-      }
-      100% {
-        margin-top: 5px;
-      }
-    }
-
-    @media screen and (max-width: $breakpoint-phone) {
-      max-width: 100%;
-    } 
-
-    mat-icon {
-      width: 13.5px;
-      height: 13.5px;
-      font-size: 12px;
-      margin-right: 1px;
-    }
-
-    span {
-      font-size: 10px;
-    }
-  }
 }
 
 .mat-select-panel {
@@ -229,4 +221,100 @@ mat-radio-group {
 
 .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
   color: $m-orange;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+::ng-deep .mat-checkbox {
+
+  &:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+    background-color: $m-orange !important;
+  }
+    
+  .mat-checkbox-frame {
+    border-radius: $m-mini-border-radius;
+    border: none;
+    box-shadow: $m-shadow-2;
+    background-color: transparent;
+  }
+
+  .mat-checkbox-layout {
+    align-items: flex-start;
+  }
+
+  .mat-checkbox-inner-container {
+    margin-left: 10px !important;
+    height: 18px;
+    width: 18px;
+  }
+
+  .mat-checkbox-background {
+    height: 18px;
+    width: 18px;
+  }
+
+  .mat-checkbox-label {
+    text-align: left;
+    white-space: normal;      
+  }
+
+  .mat-checkbox-background {
+    background-color: transparent !important;
+  }
+
+  .mat-checkbox-checkmark-path {
+    stroke: $m-orange !important;
+  }
+
+}
+
+mat-radio-group > mat-error, mat-error.m-error {
+  @extend .m-flex-row;
+  align-items: center;
+  margin: 5px 0 10px;
+  padding: 5px;
+  max-width: 200px;
+  border: 1px solid $m-dark-orange;
+  border-radius: $m-mini-border-radius;
+  box-shadow: $m-shadow-2;
+  animation-name: animation;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  animation-duration: .5s;
+
+  @keyframes animation {
+    0% {
+      opacity: 0;
+      margin-top: 0px;
+    }
+    50% {
+      opacity: 1;
+      margin-top: 2.5px;
+    }
+    100% {
+      margin-top: 5px;
+    }
+  }
+
+  @media screen and (max-width: $breakpoint-phone) {
+    max-width: 100%;
+  } 
+
+  mat-icon {
+    width: 13.5px;
+    height: 13.5px;
+    font-size: 12px;
+    margin-right: 1px;
+  }
+
+  span {
+    font-size: 10px;
+  }
 }

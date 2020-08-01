@@ -13,12 +13,12 @@ export class UserService extends BaseService {
   constructor(
     http: HttpClient,
     ) {
-    super('users', http);
+    super('user', http);
   }
 
   public async getUsers(): Promise<IUser[]> {
     try {
-      return (await this.http.get<IResponse>(`${this.url}`).toPromise()).data as IUser[];
+      return (await this.http.get<IResponse>(`${this.getUrl()}`).toPromise()).data as IUser[];
     }
     catch (e) {
       throw e;

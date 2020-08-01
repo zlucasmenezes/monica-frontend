@@ -15,13 +15,13 @@ export class ProjectService extends BaseService {
     http: HttpClient,
     private router: Router
     ) {
-    super('projects', http);
+    super('project', http);
   }
 
   public async createProject(project: IProject): Promise<void> {
     try {
-      await this.http.post<IResponse>(`${this.url}`, project).toPromise();
-      this.router.navigate(['/project']);
+      const createdProject = await this.http.post<IResponse>(`${this.getUrl()}`, project).toPromise();
+      this.router.navigate([`/project/${(createdProject.data as IProject)._id}/thing/create`]);
     }
     catch (e) {
       throw e;

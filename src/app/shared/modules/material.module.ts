@@ -8,6 +8,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 @NgModule({
   exports: [
@@ -18,7 +21,10 @@ import { MatSelectModule } from '@angular/material/select';
     MatToolbarModule,
     MatDialogModule,
     MatRadioModule,
-    MatSelectModule
+    MatSelectModule,
+    MatAutocompleteModule,
+    MatCheckboxModule,
+    ClipboardModule
   ]
 })
 export class AngularMaterialModule { }

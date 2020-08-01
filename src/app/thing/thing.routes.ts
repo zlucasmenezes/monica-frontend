@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ProjectCreateComponent } from './pages/project-create/project-create.component';
+import { ThingCreateComponent } from './page/thing-create/thing-create.component';
+
 
 const routes: Routes = [
   {
     path: 'create',
-    component: ProjectCreateComponent
-  }
+    component: ThingCreateComponent
+  },
 ];
 
 @NgModule({
@@ -15,4 +16,4 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ]
 })
-export class ProjectRoutes { }
+export class ThingRoutes { }
