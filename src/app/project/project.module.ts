@@ -4,9 +4,13 @@ import { ProjectCreateComponent } from './pages/project-create/project-create.co
 import { ProjectRoutes } from './project.routes';
 import { SharedModule } from '../shared/shared.module';
 import { AuthModule } from '../auth/auth.module';
+import { ProjectListComponent } from './pages/project-list/project-list.component';
 
 @NgModule({
-  declarations: [ProjectCreateComponent],
+  declarations: [
+    ProjectCreateComponent,
+    ProjectListComponent
+  ],
   imports: [
     SharedModule,
     ProjectRoutes,

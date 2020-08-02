@@ -1,0 +1,23 @@
+<m-page-container>
+
+  <div class="m-page-title">
+    <mat-icon>folder</mat-icon>
+    <h1>MY PROJECTS</h1>
+  </div>
+
+  <m-card *ngFor="let item of projects"
+  [title]="item.name" [icon]="'domain'">
+    <div class="card-body">
+
+      <!-- <p >{{ item.description }}</p>
+      <p >{{ item.admin.fullName }}</p>
+      <p >{{ item.privacy }}</p>
+      <p >{{ getDate(item.updatedAt).toLocaleDateString() }}</p>
+      <p >{{ item.users?.length }} users</p>
+      <p >{{ item.things?.length }} things</p> -->
+
+    </div>    
+  </m-card>
+
+</m-page-container>
+ 

@@ -7,5 +7,5 @@ export interface IResponse {
 export interface IDocument {
   _id: string;
   createdAt: Date;
-  updadedAt: Date;
+  updatedAt: Date;
 }

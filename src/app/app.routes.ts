@@ -20,6 +20,11 @@ const routes: Routes = [
     path: 'project/:projectId/thing/:thingId/sensor',
     loadChildren: './sensor/sensor.routes#SensorRoutes',
   },
+  {
+    path: '',
+    redirectTo: 'project',
+    pathMatch: 'full'
+  }
 ];
 
 @NgModule({
