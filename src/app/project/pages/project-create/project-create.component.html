@@ -44,8 +44,14 @@
       <mat-radio-group formControlName="privacy">
         <h4>PRIVACY</h4>
 
-        <mat-radio-button [value]="'public'">public</mat-radio-button>
-        <mat-radio-button [value]="'private'">private</mat-radio-button>
+        <mat-radio-button [value]="'public'">
+          <mat-icon>public</mat-icon>
+          public
+        </mat-radio-button>
+        <mat-radio-button [value]="'private'">
+          <mat-icon>lock</mat-icon>
+          private
+        </mat-radio-button>
 
         <mat-error *ngIf="form.get('privacy').invalid && form.get('privacy').dirty">
           <mat-icon>info_outline</mat-icon>

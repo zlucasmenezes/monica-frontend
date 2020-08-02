@@ -122,11 +122,17 @@ mat-radio-group {
     ::ng-deep {   
 
       .mat-radio-label {
-        align-items: flex-start;
+        align-items: center;
   
         .mat-radio-label-content {
+          display: flex;
+          align-items: center;
           text-align: left;
           white-space: normal;
+
+          mat-icon {
+            margin-right: 5px;
+          }
         }
   
       }
