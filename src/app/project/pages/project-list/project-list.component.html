@@ -9,12 +9,54 @@
   [title]="item.name" [icon]="'domain'">
     <div class="card-body">
 
-      <!-- <p >{{ item.description }}</p>
-      <p >{{ item.admin.fullName }}</p>
-      <p >{{ item.privacy }}</p>
-      <p >{{ getDate(item.updatedAt).toLocaleDateString() }}</p>
-      <p >{{ item.users?.length }} users</p>
-      <p >{{ item.things?.length }} things</p> -->
+      
+
+      <div class="item">
+        <div>
+          <mat-icon>today</mat-icon>
+          <h4>CREATED</h4>
+          <span>{{ getDate(item.createdAt).toLocaleDateString() }}</span>
+        </div>
+      </div>
+
+      <div class="item">
+        <div>
+          <mat-icon>{{ item.privacy === 'public' ? 'public' : 'lock' }}</mat-icon>
+          <h4>{{ item.privacy | uppercase}}</h4>
+        </div>
+      </div>
+
+      <div class="item">
+        <div>
+          <mat-icon>face</mat-icon>
+          <h4>ADMIN</h4>
+          <span>{{ item.admin.username | lowercase }}</span>
+        </div>
+      </div>
+
+      <div class="item">
+        <div>
+          <mat-icon>emoji_symbols</mat-icon>
+          <h4>THINGS</h4>
+          <span>{{ item.things?.length }} {{ item.things?.length === 1 ? 'THING' : 'THINGS' }}</span>
+        </div>
+      </div>
+
+      <div class="item" *ngIf="item.privacy === 'private'">
+        <div>
+          <mat-icon>person</mat-icon>
+          <h4>USERS</h4>
+          <!-- <span><span *ngFor="let user of item.users">{{user.username}} </span></span> -->
+          <span>{{ item.users?.length }} {{ item.users?.length === 1 ? 'USER' : 'USERS' }}</span>
+        </div>
+      </div>
+
+      <div class="item description" *ngIf="item.description">
+        <div style="margin-top: 20px;">
+          <h4 class="margin">DESCRIPTION</h4>
+          <span>{{ item.description }}</span>
+        </div>
+      </div>
 
     </div>    
   </m-card>
