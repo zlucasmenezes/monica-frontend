@@ -1,14 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
 import { ReplaySubject, Subject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { takeUntil } from 'rxjs/operators';
 
 import formUtils from 'src/app/shared/utils/form-utils';
 import arrayUtils from 'src/app/shared/utils/array-utils';
 import { AuthService } from 'src/app/auth/auth.service';
 import { IUser } from 'src/app/auth/auth.model';
 import { UserService } from 'src/app/auth/user.service';
-import { takeUntil } from 'rxjs/operators';
-import { IProject } from '../../project.model';
+import { IProject, IProjectPopulated } from '../../project.model';
 import { ProjectService } from '../../project.service';
 
 @Component({
@@ -26,28 +27,43 @@ export class ProjectCreateComponent implements OnInit, OnDestroy {
   public userFilteredList$: ReplaySubject<IUser[]> = new ReplaySubject<IUser[]>(1);
   public userFilter = new FormControl();
 
+  public projectId: IProject['_id'];
+
   private onDestroy: Subject<void> = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private userService: UserService,
-    private projectService: ProjectService) { }
+    private projectService: ProjectService,
+    private activatedRoute: ActivatedRoute) { }
 
   async ngOnInit() {
     this.userFilteredList$.next(this.userList = arrayUtils.orderBy(await this.userService.getUsers(), 'ASC', 'username'));
-
-    this.initForm();
+    this.initForm(
+      await this.getProject(
+        this.projectId = this.getProjectId()
+        )
+      );
     this.subscribeForm();
   }
 
-  private initForm() {
+  private getProjectId(): string {
+    return this.activatedRoute.snapshot.paramMap.get('projectId');
+  }
+
+  private async getProject(projectId: string): Promise<IProjectPopulated> {
+    if (!projectId) { return; }
+    return await this.projectService.getProject(projectId);
+  }
+
+  private initForm(project: IProjectPopulated) {
     this.form = this.fb.group({
-      name: [null, [Validators.required, Validators.minLength(4), Validators.maxLength(64)]],
-      description: [null, Validators.maxLength(240)],
+      name: [project ? project.name : null, [Validators.required, Validators.minLength(4), Validators.maxLength(64)]],
+      description: [project ? project.description : null, Validators.maxLength(240)],
       admin: [this.authService.getTokenData().userId, [Validators.required]],
-      privacy: [null, [Validators.required]],
-      users: [null],
+      privacy: [project ? project.privacy : null, [Validators.required]],
+      users: [project ? project.users ? project.users.map((user: IUser) => user._id) : null : null],
     });
 
     if (this.userList.length === 0) { this.form.get('users').disable(); }
@@ -69,7 +85,14 @@ export class ProjectCreateComponent implements OnInit, OnDestroy {
       this.form.get('users').setValue(null);
     }
 
-    this.projectService.createProject(this.form.value as IProject).finally(() => {
+    let save: Promise<void>;
+    if (this.projectId) {
+      save = this.projectService.editProject(this.projectId, this.form.value as IProject);
+    } else {
+      save = this.projectService.createProject(this.form.value as IProject);
+    }
+
+    save.finally(() => {
       this.loading = false;
     });
   }

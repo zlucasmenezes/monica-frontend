@@ -38,4 +38,24 @@ export class ProjectService extends BaseService {
     }
   }
 
+  public async getProject(projectId: string): Promise<IProjectPopulated> {
+    try {
+      const project = await this.http.get<IResponse>(`${this.getUrl()}/${projectId}`).toPromise();
+      return project.data as IProjectPopulated;
+    }
+    catch (e) {
+      throw e;
+    }
+  }
+
+  public async editProject(projectId: string, project: IProject): Promise<void> {
+    try {
+      const editedProject = await this.http.put<IResponse>(`${this.getUrl()}/${projectId}`, project).toPromise();
+      this.router.navigate([`/project`]);
+    }
+    catch (e) {
+      throw e;
+    }
+  }
+
 }

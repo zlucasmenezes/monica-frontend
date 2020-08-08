@@ -9,7 +9,23 @@
   [title]="item.name" [icon]="'domain'">
     <div class="card-body">
 
-      
+      <div class="m-actions">
+        <div class="edit">
+          <button mat-icon-button (click)="edit(item)" matTooltip="EDIT" matTooltipClass="m-tooltip">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <div class="delete">
+          <button mat-icon-button (click)="remove(item)" matTooltip="REMOVE" matTooltipClass="m-tooltip" disabled>
+            <mat-icon>delete</mat-icon>
+          </button>          
+        </div>
+        <div class="go-to">
+          <button mat-icon-button (click)="goTo(item)" matTooltip="SEE DETAILS" matTooltipClass="m-tooltip" disabled>
+            <mat-icon>forward</mat-icon>
+          </button>
+        </div>
+      </div>
 
       <div class="item">
         <div>
@@ -47,7 +63,7 @@
           <mat-icon>person</mat-icon>
           <h4>USERS</h4>
           <!-- <span><span *ngFor="let user of item.users">{{user.username}} </span></span> -->
-          <span>{{ item.users?.length }} {{ item.users?.length === 1 ? 'USER' : 'USERS' }}</span>
+          <span>{{ item.users?.length ? item.users.length : 0 }} {{ item.users?.length === 1 ? 'USER' : 'USERS' }}</span>
         </div>
       </div>
 

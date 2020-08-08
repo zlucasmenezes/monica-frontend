@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   exports: [
@@ -24,7 +25,8 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
     MatSelectModule,
     MatAutocompleteModule,
     MatCheckboxModule,
-    ClipboardModule
+    ClipboardModule,
+    MatTooltipModule
   ]
 })
 export class AngularMaterialModule { }

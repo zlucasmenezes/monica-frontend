@@ -85,3 +85,30 @@ body {
     margin: 0;
   }
 }
+
+.m-actions {
+  @extend .m-flex-row;
+  margin: 0 0 30px;
+  box-shadow: $m-shadow-2;
+
+  div {
+    &.edit {
+      color: $m-green;
+    }
+    &.delete {
+      color: $m-dark-orange;
+    }
+    &.go-to {
+      color: $m-purple;
+    }
+  }
+}
+
+.m-tooltip {
+  padding: 5px;
+  font-size: 12px;
+  font-weight: 300;
+  background: linear-gradient(60deg, rgba($m-gray, .7), rgba($m-gray, .8));
+  box-shadow: $m-shadow-1;
+  border-radius: $m-mini-border-radius;
+}
