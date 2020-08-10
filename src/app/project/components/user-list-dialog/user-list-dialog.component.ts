@@ -5,11 +5,11 @@ import { IUser } from 'src/app/auth/auth.model';
 import arrayUtils from 'src/app/shared/utils/array-utils';
 
 @Component({
-  selector: 'm-user-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss']
+  selector: 'm-user-list-dialog',
+  templateUrl: './user-list-dialog.component.html',
+  styleUrls: ['./user-list-dialog.component.scss']
 })
-export class UserListComponent implements OnInit {
+export class UserListDialogComponent implements OnInit {
 
   public users: IUser[];
 

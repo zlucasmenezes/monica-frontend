@@ -6,7 +6,7 @@ import { ProjectService } from '../../project.service';
 import { IProjectPopulated } from '../../project.model';
 import arrayUtils from 'src/app/shared/utils/array-utils';
 import { AuthService } from 'src/app/auth/auth.service';
-import { UserListComponent } from '../../components/user-list/user-list.component';
+import { UserListDialogComponent } from '../../components/user-list-dialog/user-list-dialog.component';
 
 @Component({
   selector: 'm-project-list',
@@ -52,7 +52,7 @@ export class ProjectListComponent implements OnInit {
   }
 
   public openUserListDialog(project: IProjectPopulated) {
-    this.dialog.open(UserListComponent, {
+    this.dialog.open(UserListDialogComponent, {
       data: project?.users,
       panelClass: 'm-dialog',
       disableClose: true
