@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ProjectCreateComponent } from './pages/project-create/project-create.component';
 import { ProjectListComponent } from './pages/project-list/project-list.component';
+import { IsAdminGuard } from './is-admin.guard';
 
 const routes: Routes = [
   {
@@ -15,7 +16,8 @@ const routes: Routes = [
   },
   {
     path: 'edit/:projectId',
-    component: ProjectCreateComponent
+    component: ProjectCreateComponent,
+    canActivate: [ IsAdminGuard ]
   }
 ];
 

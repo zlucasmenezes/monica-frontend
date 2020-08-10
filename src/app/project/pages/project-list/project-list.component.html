@@ -11,7 +11,7 @@
 
       <div class="m-actions">
         <div class="edit">
-          <button mat-icon-button (click)="edit(item)" matTooltip="EDIT" matTooltipClass="m-tooltip">
+          <button mat-icon-button (click)="edit(item)" matTooltip="EDIT" matTooltipClass="m-tooltip" [disabled]="!isAdmin(item)">
             <mat-icon>edit</mat-icon>
           </button>
         </div>
