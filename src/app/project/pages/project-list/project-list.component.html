@@ -58,12 +58,14 @@
         </div>
       </div>
 
-      <div class="item" *ngIf="item.privacy === 'private'">
+      <div class="item users" *ngIf="item.privacy === 'private'">
         <div>
           <mat-icon>person</mat-icon>
           <h4>USERS</h4>
-          <!-- <span><span *ngFor="let user of item.users">{{user.username}} </span></span> -->
-          <span>{{ item.users?.length ? item.users.length : 0 }} {{ item.users?.length === 1 ? 'USER' : 'USERS' }}</span>
+          <div (click)="openUserListDialog(item)">
+            <span>{{ item.users?.length ? item.users.length : 0 }} {{ item.users?.length === 1 ? 'USER' : 'USERS' }}</span>
+            <mat-icon>launch</mat-icon>
+          </div>
         </div>
       </div>
 

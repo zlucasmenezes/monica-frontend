@@ -1,7 +1,6 @@
 @import 'src/styles/styles.scss';
 
 m-card {
-  width: 99%;
 
   .card-body {
     padding: 0 125px;
@@ -34,6 +33,28 @@ m-card {
 
           h4 {
             min-width: 100px;
+          }
+        }
+      }
+
+      &.users {
+        div {
+          div {
+            @extend .m-flex-row;
+            align-items: center;
+
+            mat-icon {
+              margin-left: 5px;
+              width: 18px;
+              height: 18px;
+              font-size: 18px;
+              line-height: 18px;
+            }
+          }
+
+          div:hover > * {
+            cursor: pointer;
+            color: $m-orange;
           }
         }
       }

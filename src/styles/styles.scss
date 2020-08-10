@@ -37,6 +37,7 @@ body {
 }
 
 .m-dialog {  
+  position: relative !important;
   max-width: 80vw;
   max-height: 80vh;
 
@@ -49,6 +50,27 @@ body {
 
     h2 {
       margin-top: 0;
+    }
+
+    .mat-dialog-content {
+      margin: 0 -20px;
+    }
+  }
+
+  .m-dialog-close.mat-icon-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 36px;
+    width: 36px;
+    line-height: 36px;
+
+    mat-icon {
+      height: 18px;
+      width:  18px;
+      font-size: 18px;
+      margin-top: -9px;
+      color: rgba($m-gray, .5);
     }
   }
 }
