@@ -142,8 +142,8 @@ mat-radio-group {
       }
       
       .mat-radio-outer-circle {
+        @extend .m-box-shadow-2;
         border: none;
-        box-shadow: $m-shadow-2;
       }
     }
   
@@ -152,8 +152,8 @@ mat-radio-group {
       ::ng-deep {
   
         .mat-radio-outer-circle {
+          @extend .m-box-shadow-2;
           border: .5px solid $m-orange;
-          box-shadow: $m-shadow-2;
         }
   
         .mat-radio-inner-circle{
@@ -185,8 +185,8 @@ mat-radio-group {
 }
 
 .mat-select-panel {
+  @extend .m-box-shadow-2;
   background: $m-marley;
-  box-shadow: $m-shadow-2;
   border-radius: $m-mini-border-radius;
   max-height: 210px !important;
   min-width: unset !important;
@@ -245,9 +245,9 @@ input[type=number] {
   }
     
   .mat-checkbox-frame {
+    @extend .m-box-shadow-2;
     border-radius: $m-mini-border-radius;
     border: none;
-    box-shadow: $m-shadow-2;
     background-color: transparent;
   }
 
@@ -282,14 +282,13 @@ input[type=number] {
 }
 
 mat-radio-group > mat-error, mat-error.m-error {
-  @extend .m-flex-row;
+  @extend .m-flex-row, .m-box-shadow-2;
   align-items: center;
   margin: 5px 0 10px;
   padding: 5px;
   max-width: 200px;
   border: 1px solid $m-dark-orange;
   border-radius: $m-mini-border-radius;
-  box-shadow: $m-shadow-2;
   animation-name: animation;
   animation-iteration-count: 1;
   animation-timing-function: linear;

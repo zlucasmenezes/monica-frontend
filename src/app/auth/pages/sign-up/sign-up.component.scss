@@ -1,8 +1,7 @@
 @import 'src/styles/styles.scss';
 
 .signup-container {
-  @extend .m-flex-row;
-  @extend .m-box-shadow;
+  @extend .m-flex-row, .m-box-shadow-1;
   justify-content: stretch;
   width: 640px;
   border-radius: $m-border-radius;

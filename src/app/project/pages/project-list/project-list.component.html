@@ -10,7 +10,33 @@
     </div>
   </div>
 
-  <m-card *ngFor="let item of projects"
+  <div class="search">
+    <div class="m-form-field">
+      <mat-icon class="m-field-icon">search</mat-icon>
+  
+      <mat-form-field floatLabel='never'>
+        <input
+        matInput
+        type="text"
+        placeholder="search"
+        [formControl]="projectsFilter">
+  
+        <button
+        type="button"
+        mat-icon-button
+        matSuffix
+        (click)="projectsFilter.setValue(null); filterProjects('')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="no-projects" *ngIf="(projectsFiltered$ | async) && (projectsFiltered$ | async).length === 0">
+    <span>NO PROJECTS FOUND</span>
+  </div>
+
+  <m-card *ngFor="let item of (projectsFiltered$ | async)"
   [title]="item.name" [icon]="'domain'">
     <div class="card-body">
 

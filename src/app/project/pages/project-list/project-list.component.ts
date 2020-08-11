@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { ReplaySubject, Subject } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
 
 import { ProjectService } from '../../project.service';
 import { IProjectPopulated } from '../../project.model';
@@ -17,18 +20,31 @@ export class ProjectListComponent implements OnInit {
 
   projects: IProjectPopulated[];
 
+  public projectsFiltered$: ReplaySubject<IProjectPopulated[]> = new ReplaySubject<IProjectPopulated[]>(1);
+  public projectsFilter = new FormControl();
+
+  private onDestroy: Subject<void> = new Subject<void>();
+
   constructor(
     private authService: AuthService,
     private projectService: ProjectService,
     private router: Router,
-    public dialog: MatDialog) { }
+    private dialog: MatDialog) { }
 
   async ngOnInit() {
-    this.projects = arrayUtils.orderBy(await this.getProjects(), 'DESC', 'updatedAt');
+    this.projectsFiltered$.next(this.projects = arrayUtils.orderBy(await this.getProjects(), 'DESC', 'updatedAt'));
+    this.subscribeForm();
   }
 
   private async getProjects(): Promise<IProjectPopulated[]> {
     return await this.projectService.getProjects();
+  }
+
+  private async subscribeForm() {
+    this.projectsFilter.valueChanges.pipe(takeUntil(this.onDestroy))
+    .subscribe((value: string) => {
+      this.filterProjects(value);
+    });
   }
 
   public goTo(project: IProjectPopulated) {
@@ -53,6 +69,11 @@ export class ProjectListComponent implements OnInit {
 
   public isAdmin(project: IProjectPopulated): boolean {
     return project.admin._id === this.authService.getTokenData().userId;
+  }
+
+  public filterProjects(filter: string) {
+    const fields = ['name', 'admin.username', 'privacy'];
+    this.projectsFiltered$.next(arrayUtils.filter(this.projects, filter, fields));
   }
 
   public openUserListDialog(project: IProjectPopulated) {

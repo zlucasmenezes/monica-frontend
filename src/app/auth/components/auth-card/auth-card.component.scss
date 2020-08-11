@@ -1,14 +1,12 @@
 @import 'src/styles/styles.scss';
     
 .card {
-  @extend .m-flex-column;
-  @extend .m-box-shadow;
+  @extend .m-flex-column, .m-box-shadow-1;
   border-radius: $m-border-radius;
   background-color: $m-marley;
 
   .card-header {
-    @extend .m-flex-row;
-    @extend .m-box-shadow;
+    @extend .m-flex-row, .m-box-shadow-1;
     margin: -20px 10px 40px 10px;
     padding: 40px 40px;
     border-radius: $m-mini-border-radius;

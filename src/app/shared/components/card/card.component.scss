@@ -1,8 +1,7 @@
 @import 'src/styles/styles.scss';
     
 .card {
-  @extend .m-flex-column;
-  @extend .m-box-shadow;
+  @extend .m-flex-column, .m-box-shadow-1;
   margin: 20px;
   padding-bottom: 40px;
   border-radius: $m-border-radius;
@@ -15,7 +14,7 @@
     margin-bottom: 40px;
 
     .card-icon {
-      @extend .m-box-shadow;
+      @extend .m-box-shadow-1;
       margin: -10px 20px -10px 20px;
       padding: 25px;
       border-radius: $m-mini-border-radius;
@@ -29,7 +28,7 @@
     }
 
     .card-title {
-      padding: 20px 20px 20px 0;
+      // padding: 20px 20px 20px 0;
 
       span {
         color: $m-gray;
