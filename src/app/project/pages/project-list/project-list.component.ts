@@ -35,6 +35,10 @@ export class ProjectListComponent implements OnInit {
     console.log(`project/${project._id}`);
   }
 
+  public add() {
+    this.router.navigate([`project/create`]);
+  }
+
   public edit(project: IProjectPopulated) {
     this.router.navigate([`project/edit/${project._id}`]);
   }
@@ -54,8 +58,9 @@ export class ProjectListComponent implements OnInit {
   public openUserListDialog(project: IProjectPopulated) {
     this.dialog.open(UserListDialogComponent, {
       data: project?.users,
-      panelClass: 'm-dialog',
-      disableClose: true
+      panelClass: 'm-big-dialog',
+      disableClose: true,
+      autoFocus: false
     });
   }
 

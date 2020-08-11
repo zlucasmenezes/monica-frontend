@@ -39,27 +39,44 @@ body {
 
 .m-page-title {
   @extend .m-flex-row;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   padding: 10px;
   margin-bottom: 20px;
 
-  mat-icon {
-    padding: 5px;
-    margin-right: 10px;
-    width: 30px;
-    height: 30px;
-    font-size: 30px;
-    background: $m-orange-gradient-180;
-    color: $m-marley;
-    box-shadow: $m-shadow-2;
-    border-radius: $m-mini-border-radius;    
+  .title {
+    @extend .m-flex-row;
+    justify-content: flex-start;
+    align-items: center;
+
+    mat-icon {
+      padding: 5px;
+      margin-right: 10px;
+      width: 30px;
+      height: 30px;
+      font-size: 30px;
+      background: $m-orange-gradient-180;
+      color: $m-marley;
+      box-shadow: $m-shadow-2;
+      border-radius: $m-mini-border-radius;    
+    }
+  
+    h1 {
+      font-weight: 300;
+      margin: 0;
+    }
   }
 
-  h1 {
-    font-weight: 300;
-    margin: 0;
+  .actions {
+    @extend .m-flex-row;
+    justify-content: flex-end;
+    align-items: center;
+
+    button {
+      margin-right: 10px;
+    }
   }
+
 }
 
 .m-actions {

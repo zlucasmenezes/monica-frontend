@@ -1,8 +1,13 @@
 <m-page-container>
 
   <div class="m-page-title">
-    <mat-icon>folder</mat-icon>
-    <h1>MY PROJECTS</h1>
+    <div class="title">
+      <mat-icon>folder</mat-icon>
+      <h1>MY PROJECTS</h1>
+    </div>
+    <div class="actions">
+      <button mat-button class="m-btn-primary" (click)="add()">NEW</button>
+    </div>
   </div>
 
   <m-card *ngFor="let item of projects"

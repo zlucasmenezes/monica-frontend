@@ -12,6 +12,16 @@
   }
 }
 
+.m-btn-primary {
+  background: $m-orange-gradient-180;
+
+  .mat-button-wrapper {
+    color: $m-marley;
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
+
 .m-btn-secondary {
   .mat-button-wrapper {
     color: $m-orange;
