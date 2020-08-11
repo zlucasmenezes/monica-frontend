@@ -6,6 +6,7 @@
 @import './partials/fonts';
 @import './partials/scroll';
 @import './partials/loading';
+@import './partials/dialog';
 
 html, body { 
   height: 100%;
@@ -34,53 +35,6 @@ body {
   -webkit-box-shadow: $m-shadow-1;
      -moz-box-shadow: $m-shadow-1;
           box-shadow: $m-shadow-1;
-}
-
-.m-dialog {  
-  position: relative !important;
-  max-width: 80vw;
-  max-height: 80vh;
-
-  .mat-dialog-container {
-    @extend .m-box-shadow;
-    padding: 20px 20px 24px;
-    border-left: 5px solid $m-orange;    
-    border-radius: $m-border-radius;
-    background-color: $m-marley;
-
-    h2 {
-      margin-top: 0;
-    }
-
-    .mat-dialog-content {
-      margin: 0 -20px;
-    }
-  }
-
-  .m-dialog-close.mat-icon-button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 36px;
-    width: 36px;
-    line-height: 36px;
-
-    mat-icon {
-      height: 18px;
-      width:  18px;
-      font-size: 18px;
-      margin-top: -9px;
-      color: rgba($m-gray, .5);
-    }
-  }
-}
-
-.m-error-dialog {
-  @extend .m-dialog;
-
-  .mat-dialog-container {
-    border-left: 5px solid $m-dark-orange;    
-  }
 }
 
 .m-page-title {
