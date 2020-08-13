@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 import { ThingCreateComponent } from './page/thing-create/thing-create.component';
+import { MRoute } from '../shared/models/angular.model';
 
 
-const routes: Routes = [
+const routes: MRoute[] = [
   {
     path: 'create',
     component: ThingCreateComponent

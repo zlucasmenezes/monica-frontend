@@ -8,11 +8,20 @@
   margin-bottom: 20px;
   background: $m-orange-gradient-60;
 
+  .back {
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 300;
+    color: $m-marley;
+    margin: 0 -10px 0 20px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
   .name {
     font-size: 20px;
     font-weight: 300;
     color: $m-marley;
-    padding: 20px;
+    padding: 30px 20px;
   }
 
   .spacer {
@@ -23,6 +32,6 @@
     @extend .m-flex-row;
     justify-content: flex-end;
     align-items: center;
-    padding: 20px;
+    margin-left: 20px;
   }
 }

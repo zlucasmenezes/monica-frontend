@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 import { AuthService } from 'src/app/auth/auth.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'm-header',
@@ -12,9 +13,20 @@ export class HeaderComponent implements OnInit {
 
   public name = environment.name;
 
-  constructor(private authService: AuthService) { }
+  public backRoute: string;
 
-  ngOnInit(): void {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) { }
+
+  ngOnInit() {
+    this.backRoute = this.activatedRoute.snapshot.data.backRoute;
+  }
+
+  back() {
+    this.router.navigate([this.backRoute]);
+  }
 
   logout() {
     this.authService.logout();

@@ -1,23 +1,30 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 import { ProjectCreateComponent } from './pages/project-create/project-create.component';
 import { ProjectListComponent } from './pages/project-list/project-list.component';
 import { IsAdminGuard } from './is-admin.guard';
+import { MRoute } from '../shared/models/angular.model';
 
-const routes: Routes = [
+const routes: MRoute[] = [
   {
     path: '',
     component: ProjectListComponent
   },
   {
     path: 'create',
-    component: ProjectCreateComponent
+    component: ProjectCreateComponent,
+    data: {
+      backRoute: 'project'
+    }
   },
   {
     path: 'edit/:projectId',
     component: ProjectCreateComponent,
-    canActivate: [ IsAdminGuard ]
+    canActivate: [ IsAdminGuard ],
+    data: {
+      backRoute: 'project'
+    }
   }
 ];
 

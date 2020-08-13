@@ -1,4 +1,8 @@
 <div class="container">
+  <div class="back" *ngIf="backRoute" (click)="back()">
+    <mat-icon>arrow_back_ios</mat-icon>
+  </div>
+
   <div class="name">
     <span>{{ name | uppercase }}</span>
   </div>

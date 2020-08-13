@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { NoAuthGuard } from 'src/app/auth/no-auth.guard';
 import { AuthGuard } from './auth/auth.guard';
+import { MRoute } from './shared/models/angular.model';
 
-const routes: Routes = [
+const routes: MRoute[] = [
   {
     path: 'auth',
     loadChildren: './auth/auth.routes#AuthRoutes',
