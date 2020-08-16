@@ -4,23 +4,25 @@
   background-image: url('src/assets/images/malachi-brooks-4qigzcWjVqc-unsplash.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  min-width: 100vw;
+  min-width: 100%;
+  max-width: 100%;
   min-height: 100vh;
 
   .page-overlay {
     @extend .m-flex-column;
     justify-content: space-between;
     align-items: center;
-    min-width: 100vw;
+    min-width: 100%;
+    max-width: 100%;
     min-height: 100vh;
     background-color: rgba(#000, .7);
 
     m-auth-header {
-      width: 100vw;
+      width: 100%;
     }
     
     m-auth-footer {
-      width: 100vw;
+      width: 100%;
     }    
     
   }
