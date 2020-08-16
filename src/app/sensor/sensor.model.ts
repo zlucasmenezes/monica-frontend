@@ -8,7 +8,6 @@ export interface ISensor {
   pin: number;
   pollTime: number;
   store: boolean;
-  decimalPlaces: number;
   function: string;
   config: ISensorParameters[];
 }

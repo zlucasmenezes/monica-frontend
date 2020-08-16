@@ -20,10 +20,7 @@ export class SensorService extends BaseService {
 
   public async createSensor(projectId: string, sensor: ISensor): Promise<void> {
     try {
-      console.log(sensor);
-      console.log(this.getUrl(projectId, sensor.thing));
-      // const createdSensor = await this.http.post<IResponse>(`${this.getUrl(projectId, sensor.thing)}`, sensor).toPromise();
-      // console.log(createdSensor);
+      await this.http.post<IResponse>(`${this.getUrl(projectId, sensor.thing)}`, sensor).toPromise();
     }
     catch (e) {
       throw e;
