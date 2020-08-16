@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { BaseService } from 'src/app/shared/services/base.service';
 import { IResponse } from '../shared/models/backend.model';
-import { IThing, IBoard } from './thing.model';
+import { IThing, IBoard, IThingPopulated } from './thing.model';
 import { MatDialog } from '@angular/material/dialog';
 import { BoardCredentialsDialogComponent } from './components/board-credentials-dialog/board-credentials-dialog.component';
 
@@ -34,6 +34,36 @@ export class ThingService extends BaseService {
       dialogRef.afterClosed().subscribe(() => {
         this.router.navigate([`/project/${thing.project}/thing/${(board.data as IBoard)._id}/sensor/create`]);
       });
+    }
+    catch (e) {
+      throw e;
+    }
+  }
+
+  public async getThings(projectId: string): Promise<IThingPopulated[]> {
+    try {
+      const things = await this.http.get<IResponse>(`${this.getUrl(projectId)}`).toPromise();
+      return things.data as IThingPopulated[];
+    }
+    catch (e) {
+      throw e;
+    }
+  }
+
+  public async getThing(projectId: string, thingId: string): Promise<IThingPopulated> {
+    try {
+      const thing = await this.http.get<IResponse>(`${this.getUrl(projectId)}/${thingId}`).toPromise();
+      return thing.data as IThingPopulated;
+    }
+    catch (e) {
+      throw e;
+    }
+  }
+
+  public async editThing(thingId: string, thing: IThing): Promise<void> {
+    try {
+      const editedThing = await this.http.put<IResponse>(`${this.getUrl(thing.project)}/${thingId}`, thing).toPromise();
+      this.router.navigate([`/project/${thing.project}/thing`]);
     }
     catch (e) {
       throw e;

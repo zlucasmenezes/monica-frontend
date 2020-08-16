@@ -48,7 +48,7 @@ export class ProjectListComponent implements OnInit {
   }
 
   public goTo(project: IProjectPopulated) {
-    console.log(`project/${project._id}`);
+    this.router.navigate([`project/${project._id}/thing`]);
   }
 
   public add() {

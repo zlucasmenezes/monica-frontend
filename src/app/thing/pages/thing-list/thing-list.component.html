@@ -1,0 +1,86 @@
+<m-page-container>
+
+  <div class="m-page-title">
+    <div class="title">
+      <h1>{{ project?.name | uppercase }}</h1>
+    </div>
+  </div>
+
+  <div class="m-page-title">
+    <div class="title">
+      <mat-icon>emoji_symbols</mat-icon>
+      <h1>THINGS</h1>
+    </div>
+    <div class="actions">
+      <button *ngIf="isAdmin()" mat-button class="m-btn-primary" (click)="add()">NEW</button>
+    </div>
+  </div>
+
+  <div class="search">
+    <div class="m-form-field">
+      <mat-icon class="m-field-icon">search</mat-icon>
+  
+      <mat-form-field floatLabel='never'>
+        <input
+        matInput
+        type="text"
+        placeholder="search"
+        [formControl]="thingsFilter">
+  
+        <button
+        type="button"
+        mat-icon-button
+        matSuffix
+        (click)="thingsFilter.setValue(null); filterThings('')">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="no-things" *ngIf="(thingsFiltered$ | async) && (thingsFiltered$ | async).length === 0">
+    <span>NO THINGS FOUND</span>
+  </div>
+
+  <m-card *ngFor="let item of (thingsFiltered$ | async)"
+  [title]="item.name" [icon]="'emoji_symbols'">
+    <div class="card-body">
+
+      <div class="m-actions">
+        <div class="edit">
+          <button mat-icon-button (click)="edit(item)" matTooltip="EDIT" matTooltipClass="m-tooltip" [disabled]="!isAdmin()">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <div class="delete">
+          <button mat-icon-button (click)="remove(item)" matTooltip="REMOVE" matTooltipClass="m-tooltip" disabled>
+            <mat-icon>delete</mat-icon>
+          </button>          
+        </div>
+        <div class="go-to">
+          <button mat-icon-button (click)="goTo(item)" matTooltip="SEE DETAILS" matTooltipClass="m-tooltip">
+            <mat-icon>forward</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="item">
+        <div>
+          <mat-icon>today</mat-icon>
+          <h4>CREATED</h4>
+          <span>{{ getDate(item.createdAt).toLocaleDateString() }}</span>
+        </div>
+      </div>
+
+      <div class="item">
+        <div>
+          <mat-icon>category</mat-icon>
+          <h4>{{ item.type | uppercase }}</h4>
+        </div>
+      </div>
+
+    </div>    
+  </m-card>
+
+</m-page-container>
+ 

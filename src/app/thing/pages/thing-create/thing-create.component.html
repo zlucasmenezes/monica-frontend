@@ -1,6 +1,6 @@
 <m-page-container>
 
-  <m-card [title]="'new thing'" [icon]="'emoji_symbols'">
+  <m-card [title]="thingId ? 'edit thing' : 'new thing'" [icon]="'emoji_symbols'">
 
     <form *ngIf="form" [formGroup]="form" (submit)="save()">
         
@@ -46,7 +46,7 @@
       </div>
 
       <div class="m-btn-area">
-        <button *ngIf="!loading" mat-button type="submit">CREATE</button>
+        <button *ngIf="!loading" mat-button type="submit">{{ thingId ? 'UPDATE' : 'CREATE' }}</button>
         <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
       </div>        
     
