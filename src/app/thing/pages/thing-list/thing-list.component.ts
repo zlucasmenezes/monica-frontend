@@ -18,9 +18,9 @@ import { IProjectPopulated } from 'src/app/project/project.model';
 })
 export class ThingListComponent implements OnInit {
 
-  project: IProjectPopulated;
+  public project: IProjectPopulated;
 
-  things: IThingPopulated[];
+  public things: IThingPopulated[];
 
   public thingsFiltered$: ReplaySubject<IThingPopulated[]> = new ReplaySubject<IThingPopulated[]>(1);
   public thingsFilter = new FormControl();
@@ -41,9 +41,12 @@ export class ThingListComponent implements OnInit {
     this.subscribeForm();
   }
 
+  private getProjectId(): string {
+    return this.activatedRoute.snapshot.paramMap.get('projectId');
+  }
+
   private async getProject(): Promise<IProjectPopulated> {
-    const projectId = this.activatedRoute.snapshot.paramMap.get('projectId');
-    return await this.projectService.getProject(projectId);
+    return await this.projectService.getProject(this.getProjectId());
   }
 
   private async getThings(projectId: string): Promise<IThingPopulated[]> {

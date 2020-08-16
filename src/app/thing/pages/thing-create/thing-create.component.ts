@@ -1,9 +1,10 @@
+import { ProjectService } from './../../../project/project.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 import formUtils from 'src/app/shared/utils/form-utils';
 import { ThingService } from '../../thing.service';
-import { IProject } from 'src/app/project/project.model';
+import { IProjectPopulated } from 'src/app/project/project.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { takeUntil, startWith } from 'rxjs/operators';
 import { IThing, IThingPopulated } from '../../thing.model';
@@ -23,6 +24,8 @@ export class ThingCreateComponent implements OnInit, OnDestroy {
   public types: string[] = [];
   public filteredTypes$: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
 
+  public project: IProjectPopulated;
+
   public thingId: IThing['_id'];
 
   private onDestroy: Subject<void> = new Subject<void>();
@@ -30,10 +33,12 @@ export class ThingCreateComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private thingService: ThingService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private projectService: ProjectService
     ) { }
 
   async ngOnInit() {
+    this.project = await this.getProject();
     this.filteredTypes$.next(this.types = arrayUtils.orderBy(await this.getTypes(), 'ASC'));
     this.initForm(
       await this.getThing(
@@ -46,6 +51,10 @@ export class ThingCreateComponent implements OnInit, OnDestroy {
 
   private getProjectId(): string {
     return this.activatedRoute.snapshot.paramMap.get('projectId');
+  }
+
+  private async getProject(): Promise<IProjectPopulated> {
+    return await this.projectService.getProject(this.getProjectId());
   }
 
   private getThingId(): string {

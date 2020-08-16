@@ -1,5 +1,12 @@
 <m-page-container>
 
+  <div class="m-parent-page-title">
+    <div class="title">
+      <mat-icon>domain</mat-icon>
+      <h1>{{ project?.name | uppercase }}</h1>
+    </div>
+  </div>
+
   <m-card [title]="thingId ? 'edit thing' : 'new thing'" [icon]="'emoji_symbols'">
 
     <form *ngIf="form" [formGroup]="form" (submit)="save()">
