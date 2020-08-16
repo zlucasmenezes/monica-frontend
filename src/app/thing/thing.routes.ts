@@ -22,7 +22,7 @@ const routes: MRoute[] = [
     component: ThingCreateComponent,
     canActivate: [ IsAdminGuard ],
     data: {
-      backRoute: 'project/:projectId'
+      backRoute: 'project/:projectId/thing'
     }
   },
   {
@@ -30,7 +30,7 @@ const routes: MRoute[] = [
     component: ThingCreateComponent,
     canActivate: [ IsAdminGuard ],
     data: {
-      backRoute: 'project/:projectId'
+      backRoute: 'project/:projectId/thing'
     }
   },
 ];

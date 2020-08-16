@@ -52,6 +52,8 @@ export class ThingService extends BaseService {
 
   public async getThing(projectId: string, thingId: string): Promise<IThingPopulated> {
     try {
+      if (!thingId) { return; }
+
       const thing = await this.http.get<IResponse>(`${this.getUrl(projectId)}/${thingId}`).toPromise();
       return thing.data as IThingPopulated;
     }
