@@ -21,14 +21,31 @@ export class HeaderComponent implements OnInit {
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.backRoute = this.activatedRoute.snapshot.data.backRoute;
+    this.backRoute = this.setRouteParams(this.getBackRoute());
   }
 
-  back() {
+  private getBackRoute(): string {
+    return this.activatedRoute.snapshot.data.backRoute;
+  }
+
+  private setRouteParams(route: string): string {
+    if (!route) { return; }
+
+    const params = route.split('/');
+    params.forEach(param => {
+      if (param.includes(':')) {
+        route = route.replace(param, this.activatedRoute.snapshot.paramMap.get(param.replace(':', '')));
+      }
+    });
+
+    return route;
+  }
+
+  public back() {
     this.router.navigate([this.backRoute]);
   }
 
-  logout() {
+  public logout() {
     this.authService.logout();
   }
 
