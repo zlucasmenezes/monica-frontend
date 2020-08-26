@@ -13,6 +13,7 @@ class FormUtils {
     if (errors.maxlength) { error = `${control} must contain maximum ${errors.maxlength.requiredLength} characters`; }
     if (errors.min) { error = `minimum ${control} is ${errors.min.min}`; }
     if (errors.max) { error = `maximum ${control} is ${errors.max.max}`; }
+    if (errors.code) { error = `${errors.error}`; }
 
     return error.charAt(0).toUpperCase() + error.slice(1);
   }

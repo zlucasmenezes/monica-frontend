@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ISensorType } from '../../sensor.model';
 import formUtils from 'src/app/shared/utils/form-utils';
+import { codeValidator } from 'src/app/shared/validators/code.validator';
 
 @Component({
   selector: 'm-sensor-config',
@@ -37,7 +38,7 @@ export class SensorConfigComponent implements OnInit {
 
     if (sensorType.config.length === 0) {
       this.form.get('function').setValue(defaultCode);
-      this.form.get('function').setValidators([Validators.required]);
+      this.form.get('function').setValidators([Validators.required, codeValidator]);
     }
   }
 
