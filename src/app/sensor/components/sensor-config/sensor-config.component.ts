@@ -71,4 +71,5 @@ const defaultCode = `/*
   It\'s possible to create variables and use all javascript features on this editor.
 */
 
-const result = (value / resolution) * 100;`;
+const result = (value / resolution) * 100;
+return result;`;
