@@ -9,34 +9,83 @@
 
   .card-header {
     @extend .m-flex-row;
-    justify-content: flex-start;
-    align-items: center;
+    justify-content: space-between;
+    align-items: flex-start;
     margin-bottom: 40px;
 
-    .card-icon {
-      @extend .m-box-shadow-1;
-      margin: -10px 20px -10px 20px;
-      padding: 25px;
-      border-radius: $m-mini-border-radius;
-      background: $m-orange-gradient-90;
-
-      .mat-icon {
-        height: 35px;
-        width: 35px;
-        font-size: 35px;
-      }
-    }
-
     .card-title {
-      // padding: 20px 20px 20px 0;
+      @extend .m-flex-row;
+      align-items: flex-start;
+      padding-top: 10px;
 
-      span {
-        color: $m-gray;
-        font-size: 20px;
-        font-weight: 300;
+      .icon {
+        @extend .m-box-shadow-1;
+        margin: -20px 20px -10px 20px;
+        padding: 25px;
+        border-radius: $m-mini-border-radius;
+        background: $m-orange-gradient-90;
+  
+        .mat-icon {
+          height: 35px;
+          width: 35px;
+          font-size: 35px;
+        }
+      }
+
+      .title {
+        margin: auto 0;
+        padding-bottom: 10px;
+
+        span {
+          color: $m-gray;
+          font-size: 20px;
+          font-weight: 300;
+          word-break: break-word;
+        }
+      }      
+    }
+
+    .card-actions {
+      @extend .m-flex-row, .m-box-shadow-2;
+      justify-content: space-evenly;
+      align-items: center;
+      margin: 15px -10px 0 20px;
+      background-color: $m-marley;
+
+      div {
+        &.go-to {
+          color: $m-purple;
+          order: 3;
+        }
+        &.edit {
+          color: $m-green;
+          order: 2;
+        }
+        &.delete {
+          order: 1;
+          color: $m-dark-orange;
+        }
       }
     }
 
+    @media screen and (max-width: $breakpoint-phone) {
+      .card-actions {
+        flex-direction: column;
+        margin: -10px 15px 0 20px;
+  
+        div {
+          &.go-to {
+            order: 1;
+          }
+          &.edit {
+            order: 2;
+          }
+          &.delete {
+            order: 3;
+          }
+        }
+      }
+    }
 
   }
 }

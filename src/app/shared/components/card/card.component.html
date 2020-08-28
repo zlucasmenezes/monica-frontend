@@ -1,11 +1,31 @@
 <div class="card">
 
   <div class="card-header">
-    <div class="card-icon">
-      <mat-icon>{{ icon }}</mat-icon>
-    </div>
     <div class="card-title">
-      <span>{{ title | uppercase }}</span>
+      <div class="icon">
+        <mat-icon>{{ icon }}</mat-icon>
+      </div>
+      <div class="title">
+        <span>{{ title | uppercase }}</span>
+      </div>
+    </div>
+    
+    <div class="card-actions" *ngIf="actions">
+        <div class="edit">
+          <button mat-icon-button (click)="edit()" matTooltip="EDIT" matTooltipClass="m-tooltip" [disabled]="disableEdit">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <div class="delete">
+          <button mat-icon-button (click)="remove()" matTooltip="REMOVE" matTooltipClass="m-tooltip" [disabled]="disableRemove">
+            <mat-icon>delete</mat-icon>
+          </button>          
+        </div>
+        <div class="go-to">
+          <button mat-icon-button (click)="goTo()" matTooltip="SEE DETAILS" matTooltipClass="m-tooltip" [disabled]="disableGoTo">
+            <mat-icon>forward</mat-icon>
+          </button>
+        </div>
     </div>
   </div>
 

@@ -45,26 +45,10 @@
   </div>
 
   <m-card *ngFor="let item of (thingsFiltered$ | async)"
-  [title]="item.name" [icon]="'emoji_symbols'">
+  [title]="item.name" [icon]="'emoji_symbols'" [actions]="true"
+  [disableEdit]="!isAdmin()" [disableRemove]="true"
+  (goTo)="goTo(item)" (edit)="edit(item)" (remove)="remove(item)">
     <div class="card-body">
-
-      <div class="m-actions">
-        <div class="edit">
-          <button mat-icon-button (click)="edit(item)" matTooltip="EDIT" matTooltipClass="m-tooltip" [disabled]="!isAdmin()">
-            <mat-icon>edit</mat-icon>
-          </button>
-        </div>
-        <div class="delete">
-          <button mat-icon-button (click)="remove(item)" matTooltip="REMOVE" matTooltipClass="m-tooltip" disabled>
-            <mat-icon>delete</mat-icon>
-          </button>          
-        </div>
-        <div class="go-to">
-          <button mat-icon-button (click)="goTo(item)" matTooltip="SEE DETAILS" matTooltipClass="m-tooltip">
-            <mat-icon>forward</mat-icon>
-          </button>
-        </div>
-      </div>
 
       <div class="item">
         <div>
