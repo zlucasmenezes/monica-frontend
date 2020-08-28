@@ -5,10 +5,11 @@ import { SharedModule } from '../shared/shared.module';
 import { ThingRoutes } from './thing.routes';
 import { BoardCredentialsDialogComponent } from './components/board-credentials-dialog/board-credentials-dialog.component';
 import { ThingListComponent } from './pages/thing-list/thing-list.component';
+import { ThingDetailsComponent } from './pages/thing-details/thing-details.component';
 
 
 @NgModule({
-  declarations: [ThingCreateComponent, BoardCredentialsDialogComponent, ThingListComponent],
+  declarations: [ThingCreateComponent, BoardCredentialsDialogComponent, ThingListComponent, ThingDetailsComponent],
   imports: [
     SharedModule,
     ThingRoutes

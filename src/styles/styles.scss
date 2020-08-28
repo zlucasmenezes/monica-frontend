@@ -96,25 +96,6 @@ body {
   margin-bottom: 0;
 }
 
-.m-actions {
-  @extend .m-flex-row, .m-box-shadow-2;
-  justify-content: space-evenly;
-  align-items: center;
-  margin: 0 0 30px;
-
-  div {
-    &.edit {
-      color: $m-green;
-    }
-    &.delete {
-      color: $m-dark-orange;
-    }
-    &.go-to {
-      color: $m-purple;
-    }
-  }
-}
-
 .m-tooltip {
   padding: 5px;
   font-size: 12px;
