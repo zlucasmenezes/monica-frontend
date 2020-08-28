@@ -47,6 +47,7 @@
   <m-card *ngFor="let item of (thingsFiltered$ | async)"
   [title]="item.name" [icon]="'emoji_symbols'" [actions]="true"
   [disableEdit]="!isAdmin()" [disableRemove]="true"
+  [hideAdd]="true"
   (goTo)="goTo(item)" (edit)="edit(item)" (remove)="remove(item)">
     <div class="card-body">
 

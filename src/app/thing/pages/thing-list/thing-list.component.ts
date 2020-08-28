@@ -61,8 +61,7 @@ export class ThingListComponent implements OnInit {
   }
 
   public goTo(thing: IThingPopulated) {
-    console.log(`project/${this.project._id}/thing/${thing._id}`);
-    // this.router.navigate([`project/${this.project._id}/thing/${thing._id}`]);
+    this.router.navigate([`project/${this.project._id}/thing/${thing._id}`]);
   }
 
   public add() {

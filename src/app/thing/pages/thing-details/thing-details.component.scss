@@ -1,0 +1,36 @@
+@import 'src/styles/styles.scss';
+
+m-card {
+
+  .card-body {
+    padding: 0 125px;
+
+    .item {
+      margin-bottom: 10px;
+
+      div {
+        @extend .m-flex-row;
+        justify-content: flex-start;
+        align-items: center;
+
+        mat-icon {
+          margin: 0 10px 0 -2px;
+          color: $m-gray;
+        }
+
+        h4 {
+          font-weight: 300;
+          margin: 0 10px 0 0;
+          min-width: 70px;
+        }
+      }
+
+    }
+  }
+
+  @media screen and (max-width: $breakpoint-phone) {
+    .card-body {
+      padding: 0 40px;
+    }
+  }
+}

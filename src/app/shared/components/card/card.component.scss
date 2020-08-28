@@ -55,6 +55,10 @@
       div {
         &.go-to {
           color: $m-purple;
+          order: 4;
+        }
+        &.add {
+          color: $m-blue;
           order: 3;
         }
         &.edit {
@@ -64,7 +68,7 @@
         &.delete {
           order: 1;
           color: $m-dark-orange;
-        }
+        }        
       }
     }
 
@@ -77,11 +81,15 @@
           &.go-to {
             order: 1;
           }
-          &.edit {
+          &.add {
+            color: $m-blue;
             order: 2;
           }
-          &.delete {
+          &.edit {
             order: 3;
+          }
+          &.delete {
+            order: 4;
           }
         }
       }
