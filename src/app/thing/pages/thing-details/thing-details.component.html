@@ -15,5 +15,18 @@
     </div>
   </div>
 
+  <m-card [title]="'sensors'" [icon]="'visibility'"
+  [actions]="true"
+  [hideGoTo]="true" [hideEdit]="true" [hideRemove]="true"
+  [showEditMenu]="true" [editMenuItems]="sensorsMenuItems"
+  [showRemoveMenu]="true" [removeMenuItems]="sensorsMenuItems"
+  [disableAdd]="!isAdmin()" [disableEdit]="!isAdmin()" [disableRemove]="true"
+  (add)="addSensor()" (editMenu)="editSensor($event)">
+    <div class="card-body">
+
+      <!-- {{ sensors | json }} -->
+
+    </div>
+  </m-card>
+
 </m-page-container>
- 

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { BaseService } from 'src/app/shared/services/base.service';
 import { IResponse } from '../shared/models/backend.model';
-import { ISensor } from './sensor.model';
+import { ISensor, ISensorPopulated } from './sensor.model';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +31,16 @@ export class SensorService extends BaseService {
     try {
       const types = await this.http.get<IResponse>(`${this.getUrl(projectId)}/types`).toPromise();
       return types.data;
+    }
+    catch (e) {
+      throw e;
+    }
+  }
+
+  public async getSensors(projectId: string, thingId: string): Promise<ISensorPopulated[]> {
+    try {
+      const sensors = await this.http.get<IResponse>(`${this.getUrl(projectId, thingId)}`).toPromise();
+      return sensors.data;
     }
     catch (e) {
       throw e;

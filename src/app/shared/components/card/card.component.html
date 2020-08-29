@@ -11,21 +11,42 @@
     </div>
     
     <div class="card-actions" *ngIf="actions">
-        <div class="edit" *ngIf="!hideEdit">
+        <div class="edit" *ngIf="!hideEdit && !showEditMenu">
           <button mat-icon-button (click)="edit()" matTooltip="EDIT" matTooltipClass="m-tooltip" [disabled]="disableEdit">
             <mat-icon>edit</mat-icon>
           </button>
         </div>
-        <div class="delete" *ngIf="!hideRemove">
+
+        <div class="edit" *ngIf="hideEdit && showEditMenu">
+          <button mat-icon-button [matMenuTriggerFor]="editMatMenu" matTooltip="EDIT" matTooltipClass="m-tooltip" [disabled]="disableEdit">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <mat-menu #editMatMenu="matMenu">
+            <button mat-menu-item *ngFor="let item of editMenuItems" (click)="editMenu(item._id)">{{ item.label }}</button>
+          </mat-menu>
+        </div>       
+
+        <div class="delete" *ngIf="!hideRemove && !showRemoveMenu">
           <button mat-icon-button (click)="remove()" matTooltip="REMOVE" matTooltipClass="m-tooltip" [disabled]="disableRemove">
             <mat-icon>delete</mat-icon>
-          </button>          
+          </button>         
         </div>
+
+        <div class="delete" *ngIf="hideRemove && showRemoveMenu">
+          <button mat-icon-button [matMenuTriggerFor]="removeMatMenu" matTooltip="REMOVE" matTooltipClass="m-tooltip" [disabled]="disableRemove">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <mat-menu #removeMatMenu="matMenu">
+            <button mat-menu-item *ngFor="let item of removeMenuItems" (click)="removeMenu(item._id)">{{ item.label }}</button>
+          </mat-menu>      
+        </div>
+
         <div class="add" *ngIf="!hideAdd">
           <button mat-icon-button (click)="add()" matTooltip="ADD" matTooltipClass="m-tooltip" [disabled]="disableAdd">
             <mat-icon>add</mat-icon>
           </button>
         </div>
+
         <div class="go-to" *ngIf="!hideGoTo">
           <button mat-icon-button (click)="goTo()" matTooltip="SEE DETAILS" matTooltipClass="m-tooltip" [disabled]="disableGoTo">
             <mat-icon>forward</mat-icon>
