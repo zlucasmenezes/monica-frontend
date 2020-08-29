@@ -65,11 +65,24 @@ export class ThingDetailsComponent implements OnInit {
   public getSensorsMenuItems(): ICardMenuItem[] {
     if (!this.sensors) { return []; }
 
-    return arrayUtils.orderBy(
-      this.sensors.map((s: ISensorPopulated) => {
-        return { _id: s._id, label: `${s.type.type}: ${s.name}` };
-      }),
-      'ASC', 'label');
+    const sensors = {};
+    this.sensors.forEach(s => {
+      if (!sensors[s.type.type]) { sensors[s.type.type] = {}; }
+      sensors[s.type.type][s.name] = s._id;
+    });
+
+    const items: ICardMenuItem[] = [];
+    Object.keys(sensors).forEach(item => {
+      const subItems = [];
+
+      Object.keys(sensors[item]).forEach(subItem => {
+        subItems.push({ label: subItem, _id: sensors[item][subItem] });
+      });
+
+      items.push({ label: item, items: arrayUtils.orderBy(subItems, 'ASC', 'label') });
+    });
+
+    return arrayUtils.orderBy(items, 'ASC', 'label');
   }
 
   public isAdmin(): boolean {

@@ -1,4 +1,5 @@
 export interface ICardMenuItem {
-  _id: string;
+  _id?: string;
   label: string;
+  items?: ICardMenuItem[];
 }

@@ -21,9 +21,6 @@
           <button mat-icon-button [matMenuTriggerFor]="editMatMenu" matTooltip="EDIT" matTooltipClass="m-tooltip" [disabled]="disableEdit">
             <mat-icon>edit</mat-icon>
           </button>
-          <mat-menu #editMatMenu="matMenu">
-            <button mat-menu-item *ngFor="let item of editMenuItems" (click)="editMenu(item._id)">{{ item.label }}</button>
-          </mat-menu>
         </div>       
 
         <div class="delete" *ngIf="!hideRemove && !showRemoveMenu">
@@ -35,10 +32,7 @@
         <div class="delete" *ngIf="hideRemove && showRemoveMenu">
           <button mat-icon-button [matMenuTriggerFor]="removeMatMenu" matTooltip="REMOVE" matTooltipClass="m-tooltip" [disabled]="disableRemove">
             <mat-icon>delete</mat-icon>
-          </button>
-          <mat-menu #removeMatMenu="matMenu">
-            <button mat-menu-item *ngFor="let item of removeMenuItems" (click)="removeMenu(item._id)">{{ item.label }}</button>
-          </mat-menu>      
+          </button>    
         </div>
 
         <div class="add" *ngIf="!hideAdd">
@@ -52,6 +46,24 @@
             <mat-icon>forward</mat-icon>
           </button>
         </div>
+
+        <mat-menu #editMatMenu="matMenu">          
+          <ng-container *ngFor="let item of editMenuItems">
+            <button mat-menu-item [matMenuTriggerFor]="editSubMatMenu">{{ item.label }}</button>
+            <mat-menu #editSubMatMenu="matMenu">
+              <button mat-menu-item *ngFor="let subItem of item.items" (click)="editMenu(subItem._id)">{{ subItem.label }}</button>
+            </mat-menu>  
+          </ng-container>
+        </mat-menu>
+
+        <mat-menu #removeMatMenu="matMenu">          
+          <ng-container *ngFor="let item of removeMenuItems">
+            <button mat-menu-item [matMenuTriggerFor]="removeSubMatMenu">{{ item.label }}</button>
+            <mat-menu #removeSubMatMenu="matMenu">
+              <button mat-menu-item *ngFor="let subItem of item.items" (click)="removeMenu(subItem._id)">{{ subItem.label }}</button>
+            </mat-menu>  
+          </ng-container>
+        </mat-menu>
     </div>
   </div>
 
