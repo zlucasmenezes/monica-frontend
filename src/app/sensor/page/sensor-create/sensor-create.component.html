@@ -16,7 +16,7 @@
           
           <mat-error *ngIf="form.get('name').invalid">
             <mat-icon>info_outline</mat-icon>
-            <span>{{getError('name')}}</span>
+            <span>{{ getError('name') }}</span>
           </mat-error>
         </mat-form-field>
       </div>
@@ -36,7 +36,7 @@
               
               <mat-error *ngIf="form.get('pin').invalid">
                 <mat-icon>info_outline</mat-icon>
-                <span>{{getError('pin')}}</span>
+                <span>{{ getError('pin') }}</span>
               </mat-error>
             </mat-form-field>
           </div>
@@ -55,7 +55,7 @@
               
               <mat-error *ngIf="form.get('pollTime').invalid">
                 <mat-icon>info_outline</mat-icon>
-                <span>{{getError('pollTime')}}</span>
+                <span>{{ getError('pollTime') }}</span>
               </mat-error>
             </mat-form-field>
           </div>
@@ -67,7 +67,7 @@
         <mat-checkbox formControlName="store" [labelPosition]="'before'">store data</mat-checkbox>
       </div>
       
-      <div class="m-form-field">
+      <div class="m-form-field" [class.disabled]="form.get('type').disabled">
         <mat-icon class="m-field-icon">widgets</mat-icon>
 
         <mat-form-field floatLabel='never'>
@@ -110,7 +110,7 @@
 
           <mat-error *ngIf="form.get('type').invalid && form.get('type').touched">
             <mat-icon>info_outline</mat-icon>
-            <span>{{getError('type')}}</span>
+            <span>{{ getError('type') }}</span>
           </mat-error>
         </mat-form-field>
       </div>
@@ -118,7 +118,7 @@
       <m-sensor-config
       *ngIf="form.get('type').value"
       [form]="form"
-      [configuration]="getType(form.get('type').value)"></m-sensor-config>
+      [type]="getType(form.get('type').value)"></m-sensor-config>
 
       <div class="m-btn-area">
         <button *ngIf="!loading" mat-button type="submit">{{ sensorId ? 'EDIT' : 'ADD' }}</button>

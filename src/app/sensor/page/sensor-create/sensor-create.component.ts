@@ -1,14 +1,15 @@
-import { ISensorPopulated } from './../../sensor.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import formUtils from 'src/app/shared/utils/form-utils';
 import { SensorTypeService } from '../../sensor-type.service';
-import { ISensorType, ISensor } from '../../sensor.model';
+import { ISensorPopulated, ISensorType, ISensor } from '../../sensor.model';
 import arrayUtils from 'src/app/shared/utils/array-utils';
 import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SensorService } from '../../sensor.service';
+import { codeValidator } from 'src/app/shared/validators/code.validator';
+import sensorUtils from 'src/app/shared/utils/sensor-utils';
 
 @Component({
   selector: 'm-sensor-create',
@@ -59,6 +60,20 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
       function: [sensor ? sensor.function ? sensor.function : null : null],
       config: this.fb.array([])
     });
+
+    if (sensor) {
+      sensor.config.forEach(param => {
+        (this.form.get('config') as FormArray).push(
+          this.fb.group({
+            parameter: [param.parameter, Validators.required],
+            value: [param.value, Validators.required]
+          })
+        );
+      });
+
+      this.form.get('type').disable();
+    }
+
   }
 
   private async subscribeForm() {
@@ -66,6 +81,36 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
     .subscribe((value: string) => {
       this.filterTypes(value);
     });
+
+    this.form.get('type').valueChanges.pipe(takeUntil(this.onDestroy))
+    .subscribe((value: string) => {
+      this.initConfigForm(this.getType(value));
+    });
+  }
+
+  private initConfigForm(sensorType: ISensorType) {
+    this.resetConfigForm();
+
+    sensorType.config.forEach(config => {
+      (this.form.get('config') as FormArray).push(
+        this.fb.group({
+          parameter: [config.parameter, Validators.required],
+          value: [config.default, Validators.required]
+        })
+      );
+    });
+
+    if (sensorType.config.length === 0) {
+      this.form.get('function').setValue(sensorUtils.getDefaultCode());
+      this.form.get('function').setValidators([Validators.required, codeValidator]);
+    }
+  }
+
+  private resetConfigForm() {
+    (this.form.get('config') as FormArray).clear();
+
+    this.form.get('function').setValue(null);
+    this.form.get('function').setValidators([]);
   }
 
   private getProjectId(): string {
@@ -107,7 +152,7 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
 
     let save: Promise<void>;
     if (this.sensorId) {
-      save = save = this.sensorService.editSensor(this.getProjectId(), this.sensorId, this.form.value as ISensor);
+      save = this.sensorService.editSensor(this.getProjectId(), this.sensorId, this.form.value as ISensor);
     } else {
       save = this.sensorService.createSensor(this.getProjectId(), this.form.value as ISensor);
     }
