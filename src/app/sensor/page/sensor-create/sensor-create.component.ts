@@ -1,3 +1,4 @@
+import { ISensorPopulated } from './../../sensor.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -24,6 +25,8 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
   public filteredTypes$: ReplaySubject<ISensorType[]> = new ReplaySubject<ISensorType[]>(1);
   public typeFilter = new FormControl();
 
+  public sensorId: ISensor['_id'];
+
   private onDestroy: Subject<void> = new Subject<void>();
 
   constructor(
@@ -35,19 +38,25 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.filteredTypes$.next(this.types = arrayUtils.orderBy(await this.getTypes(), 'ASC', 'type'));
-    this.initForm();
+    this.initForm(
+      await this.getSensor(
+        this.getProjectId(),
+        this.getThingId(),
+        this.sensorId = this.getSensorId()
+      )
+    );
     this.subscribeForm();
   }
 
-  private initForm() {
+  private initForm(sensor: ISensorPopulated) {
     this.form = this.fb.group({
-      name: [null, [Validators.required, Validators.maxLength(64)]],
-      type: [null, [Validators.required]],
-      pin: [null, [Validators.required, Validators.min(1)]],
-      pollTime: [null, [Validators.required, Validators.min(1000)]],
-      store: [true, [Validators.required]],
+      name: [sensor ? sensor.name ? sensor.name : null : null, [Validators.required, Validators.maxLength(64)]],
+      type: [sensor ? sensor.type ? sensor.type._id : null : null, [Validators.required]],
+      pin: [sensor ? sensor.pin ? sensor.pin : null : null, [Validators.required, Validators.min(1)]],
+      pollTime: [sensor ? sensor.pollTime ? sensor.pollTime : null : null, [Validators.required, Validators.min(1000)]],
+      store: [sensor ? sensor.store ? sensor.store : true : true, [Validators.required]],
       thing: [this.getThingId(), [Validators.required]],
-      function: [null],
+      function: [sensor ? sensor.function ? sensor.function : null : null],
       config: this.fb.array([])
     });
   }
@@ -65,6 +74,14 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
 
   private getThingId(): string {
     return this.activatedRoute.snapshot.paramMap.get('thingId');
+  }
+
+  private getSensorId(): string {
+    return this.activatedRoute.snapshot.paramMap.get('sensorId');
+  }
+
+  private async getSensor(projectId: string, thingId: string, sensorId: string): Promise<ISensorPopulated> {
+    return await this.sensorService.getSensor(projectId, thingId, sensorId);
   }
 
   private async getTypes(): Promise<ISensorType[]> {
@@ -88,7 +105,14 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
 
     this.loading = true;
 
-    this.sensorService.createSensor(this.getProjectId(), this.form.value as ISensor).finally(() => {
+    let save: Promise<void>;
+    if (this.sensorId) {
+      save = save = this.sensorService.editSensor(this.getProjectId(), this.sensorId, this.form.value as ISensor);
+    } else {
+      save = this.sensorService.createSensor(this.getProjectId(), this.form.value as ISensor);
+    }
+
+    save.finally(() => {
       this.loading = false;
     });
   }

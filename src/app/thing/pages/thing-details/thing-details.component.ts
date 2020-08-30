@@ -94,9 +94,8 @@ export class ThingDetailsComponent implements OnInit {
     this.router.navigate([`project/${this.project._id}/thing/${this.thing._id}/sensor/create`]);
   }
 
-  public editSensor(event) {
-    // this.router.navigate([`project/${this.project._id}/thing/${this.thing._id}/sensor/create`]);
-    console.log(event);
+  public editSensor(id) {
+    this.router.navigate([`project/${this.project._id}/thing/${this.thing._id}/sensor/edit/${id}`]);
   }
 
 }

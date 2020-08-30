@@ -21,6 +21,7 @@ export class SensorService extends BaseService {
   public async createSensor(projectId: string, sensor: ISensor): Promise<void> {
     try {
       await this.http.post<IResponse>(`${this.getUrl(projectId, sensor.thing)}`, sensor).toPromise();
+      this.router.navigate([`project/${projectId}/thing/${sensor.thing}`]);
     }
     catch (e) {
       throw e;
@@ -41,6 +42,28 @@ export class SensorService extends BaseService {
     try {
       const sensors = await this.http.get<IResponse>(`${this.getUrl(projectId, thingId)}`).toPromise();
       return sensors.data;
+    }
+    catch (e) {
+      throw e;
+    }
+  }
+
+  public async getSensor(projectId: string, thingId: string, sensorId: string): Promise<ISensorPopulated> {
+    try {
+      if (!sensorId) { return; }
+
+      const sensor = await this.http.get<IResponse>(`${this.getUrl(projectId, thingId)}/${sensorId}`).toPromise();
+      return sensor.data;
+    }
+    catch (e) {
+      throw e;
+    }
+  }
+
+  public async editSensor(projectId: string, sensorId: string, sensor: ISensor): Promise<void> {
+    try {
+      const editedSensor = await this.http.put<IResponse>(`${this.getUrl(projectId, sensor.thing)}/${sensorId}`, sensor).toPromise();
+      this.router.navigate([`project/${projectId}/thing/${sensor.thing}`]);
     }
     catch (e) {
       throw e;

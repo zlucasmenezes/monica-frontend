@@ -1,6 +1,6 @@
 <m-page-container>
 
-  <m-card [title]="'new sensor'" [icon]="'track_changes'">
+  <m-card [title]="sensorId ? 'edit sensor' : 'new sensor'" [icon]="'track_changes'">
 
     <form *ngIf="form" [formGroup]="form" (submit)="save()">
 
@@ -121,7 +121,7 @@
       [configuration]="getType(form.get('type').value)"></m-sensor-config>
 
       <div class="m-btn-area">
-        <button *ngIf="!loading" mat-button type="submit">ADD</button>
+        <button *ngIf="!loading" mat-button type="submit">{{ sensorId ? 'EDIT' : 'ADD' }}</button>
         <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
       </div>  
 

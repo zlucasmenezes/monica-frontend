@@ -13,6 +13,14 @@ const routes: MRoute[] = [
     data: {
       backRoute: 'project/:projectId/thing/:thingId'
     }
+  },
+  {
+    path: 'edit/:sensorId',
+    component: SensorCreateComponent,
+    canActivate: [ IsAdminGuard ],
+    data: {
+      backRoute: 'project/:projectId/thing/:thingId'
+    }
   }
 ];
 
