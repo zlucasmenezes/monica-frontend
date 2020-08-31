@@ -7,7 +7,7 @@ export const environment = {
   name: 'Monica',
   version: '0.0.8',
   backend: {
-    host: 'localhost',
+    host: '192.168.5.116',
     port: 3000,
     path: 'api'
   }

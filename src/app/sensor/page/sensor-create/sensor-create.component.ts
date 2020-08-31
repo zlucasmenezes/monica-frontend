@@ -10,6 +10,7 @@ import { takeUntil } from 'rxjs/operators';
 import { SensorService } from '../../sensor.service';
 import { codeValidator } from 'src/app/shared/validators/code.validator';
 import sensorUtils from 'src/app/shared/utils/sensor-utils';
+import * as moment from 'moment';
 
 @Component({
   selector: 'm-sensor-create',
@@ -143,6 +144,26 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
     const type = this.types.filter(t => t._id === id);
 
     return type[0] ? type[0] : null;
+  }
+
+  public getTime(time: number): string {
+    if (!time) { return ''; }
+
+    if (time < 60000) {
+      const seconds = Math.round(moment.duration(time, 'milliseconds').asSeconds() * 10) / 10;
+      return `${seconds} ${seconds === 1 ? 'second' : 'seconds'}`;
+    }
+    if (time < 60 * 60000) {
+      const minutes = Math.round(moment.duration(time, 'milliseconds').asMinutes() * 10) / 10;
+      return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`;
+    }
+    if (time < 24 * 60 * 60000) {
+      const hours = Math.round(moment.duration(time, 'milliseconds').asHours() * 10) / 10;
+      return `${hours} ${hours === 1 ? 'hour' : 'hours'}`;
+    }
+
+    const days = Math.round(moment.duration(time, 'milliseconds').asDays() * 10) / 10;
+    return `${days} ${days === 1 ? 'day' : 'days'}`;
   }
 
   public save() {

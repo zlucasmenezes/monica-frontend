@@ -52,7 +52,9 @@
               type="number"
               min="1000"
               placeholder="poll time (ms)">
-              
+
+              <mat-hint>{{ getTime(form.get('pollTime').value) }}</mat-hint>              
+
               <mat-error *ngIf="form.get('pollTime').invalid">
                 <mat-icon>info_outline</mat-icon>
                 <span>{{ getError('pollTime') }}</span>
