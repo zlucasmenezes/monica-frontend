@@ -20,9 +20,13 @@
   [hideGoTo]="true" [hideEdit]="true" [hideRemove]="true"
   [showEditMenu]="true" [editMenuItems]="sensorsMenuItems"
   [showRemoveMenu]="true" [removeMenuItems]="sensorsMenuItems"
-  [disableAdd]="!isAdmin()" [disableEdit]="!isAdmin()" [disableRemove]="true"
+  [disableAdd]="!isAdmin()" [disableEdit]="!isAdmin() || !sensors || sensors.length === 0" [disableRemove]="true"
   (add)="addSensor()" (editMenu)="editSensor($event)">
     <div class="card-body">
+
+      <div class="no-devices" *ngIf="!sensors || sensors.length === 0">
+        <span>NO SENSORS FOUND</span>
+      </div>
 
       <!-- {{ sensors | json }} -->
 
