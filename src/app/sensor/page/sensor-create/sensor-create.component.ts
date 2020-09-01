@@ -11,6 +11,10 @@ import { SensorService } from '../../sensor.service';
 import { codeValidator } from 'src/app/shared/validators/code.validator';
 import sensorUtils from 'src/app/shared/utils/sensor-utils';
 import * as moment from 'moment';
+import { IProjectPopulated } from 'src/app/project/project.model';
+import { IThingPopulated } from 'src/app/thing/thing.model';
+import { ThingService } from 'src/app/thing/thing.service';
+import { ProjectService } from 'src/app/project/project.service';
 
 @Component({
   selector: 'm-sensor-create',
@@ -27,6 +31,9 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
   public filteredTypes$: ReplaySubject<ISensorType[]> = new ReplaySubject<ISensorType[]>(1);
   public typeFilter = new FormControl();
 
+  public project: IProjectPopulated;
+  public thing: IThingPopulated;
+
   public sensorId: ISensor['_id'];
 
   private onDestroy: Subject<void> = new Subject<void>();
@@ -35,10 +42,14 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private sensorTypeService: SensorTypeService,
-    private sensorService: SensorService
+    private sensorService: SensorService,
+    private thingService: ThingService,
+    private projectService: ProjectService,
   ) { }
 
   async ngOnInit() {
+    this.project = await this.getProject();
+    this.thing = await this.getThing();
     this.filteredTypes$.next(this.types = arrayUtils.orderBy(await this.getTypes(), 'ASC', 'type'));
     this.initForm(
       await this.getSensor(
@@ -118,8 +129,16 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
     return this.activatedRoute.snapshot.paramMap.get('projectId');
   }
 
+  private async getProject(): Promise<IProjectPopulated> {
+    return await this.projectService.getProject(this.getProjectId());
+  }
+
   private getThingId(): string {
     return this.activatedRoute.snapshot.paramMap.get('thingId');
+  }
+
+  private async getThing(): Promise<IThingPopulated> {
+    return await this.thingService.getThing(this.getProjectId(), this.getThingId());
   }
 
   private getSensorId(): string {
