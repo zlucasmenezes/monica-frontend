@@ -18,6 +18,8 @@ import arrayUtils from 'src/app/shared/utils/array-utils';
 })
 export class ThingDetailsComponent implements OnInit {
 
+  date = new Date();
+
   public project: IProjectPopulated;
   public thing: IThingPopulated;
 

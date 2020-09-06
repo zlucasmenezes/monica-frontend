@@ -1,6 +1,10 @@
 import { IDocument } from '../shared/models/backend.model';
 import { IThing } from '../thing/thing.model';
 
+export interface ITSValue {
+  value: any;
+  ts: Date;
+}
 export interface ISensor extends IDocument {
   name: string;
   type: ISensorType['_id'];

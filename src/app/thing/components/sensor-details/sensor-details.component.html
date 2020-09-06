@@ -1,0 +1,39 @@
+<div class="sensor">
+
+  <div class="info-container">
+    <div class="header">
+      <span>{{ sensor?.name | uppercase }}</span>
+    </div>
+
+    <div class="info">
+      <div>
+        <mat-icon>fiber_pin</mat-icon>
+        <span>{{ sensor?.pin }}</span>
+      </div>
+
+      <div>
+        <mat-icon>schedule</mat-icon>
+        <span>{{ getPollTime() }}</span>
+      </div>
+
+      <div *ngIf="sensor?.store">
+        <mat-icon>save</mat-icon>
+        <span>store data</span>
+      </div>      
+    </div>
+  
+    <div class="value">
+      <span>{{ value?.value }}</span>
+    </div>
+  
+    <div class="footer" *ngIf="value">
+      <mat-icon>history</mat-icon>
+      <span>{{ getTS() }}</span>
+    </div>
+  </div>
+
+  <div class="chart-container">
+
+  </div>
+
+</div>

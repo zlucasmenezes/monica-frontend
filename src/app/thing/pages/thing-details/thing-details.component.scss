@@ -2,38 +2,22 @@
 
 m-card {
   .card-body {
-    padding: 0 125px;
+    @extend .m-flex-column;
+    align-items: center;
+    padding: 0 100px;
 
-    .item {
-      margin-bottom: 10px;
-
-      div {
-        @extend .m-flex-row;
-        justify-content: flex-start;
-        align-items: center;
-
-        mat-icon {
-          margin: 0 10px 0 -2px;
-          color: $m-gray;
-        }
-
-        h4 {
-          font-weight: 300;
-          margin: 0 10px 0 0;
-          min-width: 70px;
-        }
-      }
-
+    .no-devices {
+      font-weight: 300;
     }
+
+    m-sensor-details {
+      width: 100%;
+    }   
   }
 
   @media screen and (max-width: $breakpoint-phone) {
     .card-body {
-      padding: 0 40px;
+      padding: 0 20px;
     }
   }
-}
-
-.no-devices {
-  font-weight: 300;
 }

@@ -15,6 +15,7 @@ import { IProjectPopulated } from 'src/app/project/project.model';
 import { IThingPopulated } from 'src/app/thing/thing.model';
 import { ThingService } from 'src/app/thing/thing.service';
 import { ProjectService } from 'src/app/project/project.service';
+import dateUtils from 'src/app/shared/utils/date-utils';
 
 @Component({
   selector: 'm-sensor-create',
@@ -165,24 +166,8 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
     return type[0] ? type[0] : null;
   }
 
-  public getTime(time: number): string {
-    if (!time) { return ''; }
-
-    if (time < 60000) {
-      const seconds = Math.round(moment.duration(time, 'milliseconds').asSeconds() * 10) / 10;
-      return `${seconds} ${seconds === 1 ? 'second' : 'seconds'}`;
-    }
-    if (time < 60 * 60000) {
-      const minutes = Math.round(moment.duration(time, 'milliseconds').asMinutes() * 10) / 10;
-      return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`;
-    }
-    if (time < 24 * 60 * 60000) {
-      const hours = Math.round(moment.duration(time, 'milliseconds').asHours() * 10) / 10;
-      return `${hours} ${hours === 1 ? 'hour' : 'hours'}`;
-    }
-
-    const days = Math.round(moment.duration(time, 'milliseconds').asDays() * 10) / 10;
-    return `${days} ${days === 1 ? 'day' : 'days'}`;
+  public getTime(milliseconds: number): string {
+    return dateUtils.formatMillis(milliseconds);
   }
 
   public save() {

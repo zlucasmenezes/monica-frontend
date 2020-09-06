@@ -1,0 +1,67 @@
+@import 'src/styles/styles.scss';
+
+.sensor {
+  @extend .m-flex-row;
+  width: auto;
+  justify-content: space-between;
+  box-shadow: $m-shadow-2;
+  border-radius: $m-border-radius;
+  margin: 5px;
+  margin-right: 35%;
+  color: rgba($m-gray, .7);
+  font-weight: 300;
+  background-color: $m-marley;
+
+  .info-container {
+    width: 60%;
+    padding: 10px 20px 5px;
+
+    mat-icon {
+      margin-right: 5px;
+      font-size: 18px;
+      height: 18px;
+      width: 18px;
+    }
+
+    .header {
+      font-size: 16px;
+      font-weight: 300;
+      margin-bottom: 10px;
+    }
+
+    .info {
+      div {
+        @extend .m-flex-row;
+        justify-content: flex-start;
+        align-items: center;
+        font-size: 12px;
+      }
+    }
+
+    .value {
+      color: $m-gray;
+      font-size: 40px;
+      line-height: 40px;
+      margin: 10px 0;
+      text-align: right;
+    }
+
+    .footer {
+      @extend .m-flex-row;
+      justify-content: flex-end;
+      align-items: center;
+      border-top: 1px solid rgba($m-gray, .1);
+      padding-top: 5px;
+      font-size: 12px;
+    }
+  }
+
+  .chart-container {
+    width: 100%;
+    margin: 10px;
+    margin-right: -54%;
+    box-shadow: $m-shadow-2;
+    border-radius: $m-border-radius;
+    background: $m-orange-gradient-60;
+  }
+}

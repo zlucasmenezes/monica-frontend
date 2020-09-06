@@ -28,8 +28,8 @@
         <span>NO SENSORS FOUND</span>
       </div>
 
-      <!-- {{ sensors | json }} -->
-
+      <m-sensor-details *ngFor="let item of sensors"
+      [sensor]="item"></m-sensor-details>
     </div>
   </m-card>
 
