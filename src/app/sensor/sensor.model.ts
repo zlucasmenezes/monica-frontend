@@ -3,7 +3,7 @@ import { IThing } from '../thing/thing.model';
 
 export interface ITSValue {
   value: any;
-  ts: Date;
+  ts: number;
 }
 export interface ISensor extends IDocument {
   name: string;

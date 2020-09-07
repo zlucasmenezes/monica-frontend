@@ -1,6 +1,7 @@
+import { SocketIOService } from 'src/app/shared/socket-io/socket-io.service';
 import { SensorService } from './../../../sensor/sensor.service';
 import { ISensorPopulated } from './../../../sensor/sensor.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IProjectPopulated } from 'src/app/project/project.model';
 import { IThingPopulated } from '../../thing.model';
 import { Subject } from 'rxjs';
@@ -16,9 +17,7 @@ import arrayUtils from 'src/app/shared/utils/array-utils';
   templateUrl: './thing-details.component.html',
   styleUrls: ['./thing-details.component.scss']
 })
-export class ThingDetailsComponent implements OnInit {
-
-  date = new Date();
+export class ThingDetailsComponent implements OnInit, OnDestroy {
 
   public project: IProjectPopulated;
   public thing: IThingPopulated;
@@ -34,7 +33,8 @@ export class ThingDetailsComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private projectService: ProjectService,
-    private sensorService: SensorService
+    private sensorService: SensorService,
+    private socketIOService: SocketIOService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -42,6 +42,7 @@ export class ThingDetailsComponent implements OnInit {
     this.thing = await this.getThing();
     this.sensors = arrayUtils.orderBy(await this.getSensors(), 'ASC', 'name');
     this.sensorsMenuItems = this.getSensorsMenuItems();
+    this.socketIOService.join(`thing:${this.getThingId()}`);
   }
 
   private getProjectId(): string {
@@ -100,4 +101,7 @@ export class ThingDetailsComponent implements OnInit {
     this.router.navigate([`project/${this.project._id}/thing/${this.thing._id}/sensor/edit/${id}`]);
   }
 
+  ngOnDestroy() {
+    this.socketIOService.leave(`thing:${this.getThingId()}`);
+  }
 }
