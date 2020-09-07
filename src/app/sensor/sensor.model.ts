@@ -1,3 +1,4 @@
+import { IThingPopulated } from './../thing/thing.model';
 import { IDocument } from '../shared/models/backend.model';
 import { IThing } from '../thing/thing.model';
 
@@ -18,7 +19,7 @@ export interface ISensor extends IDocument {
 
 export type ISensorPopulated = Pick<ISensor, Exclude<keyof ISensor, 'type' | 'thing'>> & {
   type: ISensorType;
-  thing: IThing;
+  thing: IThingPopulated;
 };
 
 export interface ISensorType extends IDocument {

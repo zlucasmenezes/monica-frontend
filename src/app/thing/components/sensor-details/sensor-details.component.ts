@@ -1,3 +1,5 @@
+import { ISensorPopulated } from './../../../sensor/sensor.model';
+import { SensorService } from './../../../sensor/sensor.service';
 import { takeUntil } from 'rxjs/operators';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ISensor, ITSValue } from 'src/app/sensor/sensor.model';
@@ -13,12 +15,13 @@ import { Subject } from 'rxjs';
 })
 export class SensorDetailsComponent implements OnInit, OnDestroy {
 
-  @Input() sensor: ISensor;
+  @Input() sensor: ISensorPopulated;
   @Input() value: ITSValue;
 
   private onDestroy: Subject<void> = new Subject<void>();
 
   constructor(
+    private sensorService: SensorService,
     private socketIOService: SocketIOService
   ) { }
 
@@ -26,11 +29,13 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
     this.getValue();
   }
 
-  public getValue() {
+  public async getValue() {
     this.socketIOService.on(this.sensor._id).pipe(takeUntil(this.onDestroy))
     .subscribe((data: ITSValue) => {
       this.value = data;
     });
+
+    this.value = await this.sensorService.getCurrentValue(this.sensor.thing.project._id, this.sensor.thing._id, this.sensor._id);
   }
 
   public getTS(): string {
