@@ -6,7 +6,7 @@ import { ISensor, ITSValue } from 'src/app/sensor/sensor.model';
 import * as moment from 'moment';
 import dateUtils from 'src/app/shared/utils/date-utils';
 import { SocketIOService } from 'src/app/shared/socket-io/socket-io.service';
-import { Subject } from 'rxjs';
+import { Subject, interval } from 'rxjs';
 
 @Component({
   selector: 'm-sensor-details',
@@ -18,6 +18,8 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
   @Input() sensor: ISensorPopulated;
   @Input() value: ITSValue;
 
+  public tsFromNow = '—';
+
   private onDestroy: Subject<void> = new Subject<void>();
 
   constructor(
@@ -27,9 +29,10 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getValue();
+    this.getTS();
   }
 
-  public async getValue() {
+  public async getValue(): Promise<void> {
     this.socketIOService.on(this.sensor._id).pipe(takeUntil(this.onDestroy))
     .subscribe((data: ITSValue) => {
       this.value = data;
@@ -38,10 +41,13 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
     this.value = await this.sensorService.getCurrentValue(this.sensor.thing.project._id, this.sensor.thing._id, this.sensor._id);
   }
 
-  public getTS(): string {
-    if (!this.value) { return '—'; }
+  public getTS(): void {
+    interval(1000).pipe(takeUntil(this.onDestroy))
+    .subscribe(() => {
+      if (!this.value) { this.tsFromNow = '—'; }
 
-    return moment(this.value.ts).fromNow();
+      this.tsFromNow = dateUtils.fromNow(this.value.ts);
+    });
   }
 
   public getPollTime(): string {
