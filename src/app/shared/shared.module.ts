@@ -4,6 +4,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 
+import { ChartsModule } from 'ng2-charts';
+
 import { AngularMaterialModule } from './modules/material.module';
 import { ErrorDialogComponent } from './components/error-dialog/error-dialog/error-dialog.component';
 import { HttpErrorInterceptor } from './components/error-dialog/http-error.interceptor';
@@ -37,7 +39,8 @@ import { CodeComponent } from './components/code/code.component';
     HeaderComponent,
     FooterComponent,
     FormsModule,
-    CodeComponent
+    CodeComponent,
+    ChartsModule
   ],
   entryComponents: [
     ErrorDialogComponent

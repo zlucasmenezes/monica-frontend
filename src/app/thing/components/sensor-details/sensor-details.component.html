@@ -33,7 +33,14 @@
   </div>
 
   <div class="chart-container">
-
+    <canvas
+      baseChart
+      [colors]="chartColors"
+      [chartType]="'line'"
+      [datasets]="chartData"
+      [labels]="chartLabels"
+      [options]="chartOptions">
+    </canvas>
   </div>
 
 </div>

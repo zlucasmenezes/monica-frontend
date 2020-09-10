@@ -14,7 +14,7 @@
 
   .info-container {
     width: 70%;
-    padding: 10px 20px 5px;
+    padding: 10px 5px 5px 20px;
 
     mat-icon {
       margin-right: 5px;
@@ -58,10 +58,11 @@
 
   .chart-container {
     width: 100%;
-    margin: 10px;
+    margin: 10px 5px;
     margin-right: -54%;
     box-shadow: $m-shadow-2;
     border-radius: $m-border-radius;
     background: $m-orange-gradient-60;
+    padding: 20px;
   }
 }
