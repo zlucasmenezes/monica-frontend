@@ -13,8 +13,11 @@
   background-color: $m-marley;
 
   .info-container {
+    @extend .m-flex-column;
+    justify-content: unset;
     width: 70%;
-    padding: 10px 5px 5px 20px;
+    min-width: 110px;
+    padding: 10px 5px 10px 20px;
 
     mat-icon {
       margin-right: 5px;
@@ -36,6 +39,10 @@
         align-items: center;
         font-size: 12px;
       }
+    }
+
+    .spacer {
+      flex: 1 1 auto;
     }
 
     .value {
