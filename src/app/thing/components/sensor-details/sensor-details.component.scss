@@ -73,3 +73,21 @@
     padding: 20px;
   }
 }
+
+@media screen and (max-width: $breakpoint-phone) {
+  .sensor {
+    flex-direction: column;
+    margin: 10px 5px;
+
+    .info-container {
+      width: auto;
+      min-width: unset;
+      padding: 20px 10px 10px;
+    }
+
+    .chart-container {
+      width: auto;
+      margin: 0 -10px 10px -10px;
+    }
+  }
+}
