@@ -46,7 +46,9 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
 
     value$.pipe(takeUntil(this.onDestroy)).subscribe(value => {
       this.value = value;
-      this.addDataPoint(value.value, moment(value.ts));
+      if (value) {
+        this.addDataPoint(value.value, moment(value.ts));
+      }
     });
   }
 

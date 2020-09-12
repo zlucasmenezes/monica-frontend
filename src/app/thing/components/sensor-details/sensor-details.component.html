@@ -16,9 +16,9 @@
         <span>{{ getPollTime() }}</span>
       </div>
 
-      <div *ngIf="sensor?.store">
-        <mat-icon>save</mat-icon>
-        <span>store data</span>
+      <div>
+        <mat-icon [ngClass]="{disabled: !sensor?.store}">save</mat-icon>
+        <span>{{sensor?.store ? 'store' : 'don\'t store'}}</span>
       </div>      
     </div>
 
