@@ -50,7 +50,8 @@
         <span>NO SENSORS FOUND</span>
       </div>
 
-      <m-sensor-details *ngFor="let item of (sensorsFiltered$ | async )"
+      <m-sensor-details *ngFor="let item of sensors"
+      [hidden]="!(sensorsFiltered$ | async ).includes(item)"
       [sensor]="item"></m-sensor-details>
     </div>
   </m-card>
