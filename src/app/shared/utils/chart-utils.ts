@@ -29,18 +29,16 @@ class ChartUtils {
             zeroLineWidth: 0
           },
           ticks: {
-            fontColor: this.marleyColor,
+            fontColor: this.marleyColor
           },
           time: {
-            unit: 'second',
-            unitStepSize: stepX / 1000,
-            round: 'second',
+            ... this.getUnitStep(stepX),
             tooltipFormat: 'YYYY-MM-DD HH:mm:ss',
             displayFormats: {
-              millisecond: 'HH:mm:ss',
-              second: 'HH:mm:ss',
-              minute: 'HH:mm',
-              hour: 'MM/DD HH:mm'
+              second: 'MM/DD HH:mm:ss',
+              minute: 'MM/DD HH:mm',
+              hour: 'MM/DD HH',
+              day: 'MM/DD/YY',
             }
           }
         }],
@@ -58,6 +56,24 @@ class ChartUtils {
         }]
       }
     };
+  }
+
+  private getUnitStep(stepX: number): { unit: Chart.TimeUnit, unitStepSize: number } {
+    stepX /= 1000;
+
+    console.log(stepX);
+
+    if (stepX < 60) {
+      return  { unit: 'second', unitStepSize: stepX } ;
+    }
+    if (stepX < 60 * 60) {
+      return  { unit: 'minute', unitStepSize: stepX / 60 } ;
+    }
+    if (stepX < 24 * 60 * 60) {
+      return  { unit: 'hour', unitStepSize: stepX / (60 * 60) } ;
+    }
+
+    return  { unit: 'day', unitStepSize: stepX / (60 * 60 * 24) } ;
   }
 
   public getSingleDeviceColors(): Color[] {
