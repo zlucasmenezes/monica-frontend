@@ -61,8 +61,6 @@ class ChartUtils {
   private getUnitStep(stepX: number): { unit: Chart.TimeUnit, unitStepSize: number } {
     stepX /= 1000;
 
-    console.log(stepX);
-
     if (stepX < 60) {
       return  { unit: 'second', unitStepSize: stepX } ;
     }
