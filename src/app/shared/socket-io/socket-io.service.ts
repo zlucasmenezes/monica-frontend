@@ -20,8 +20,8 @@ export class SocketIOService {
       query: { token: tokenData.token }
     });
 
-    this.socket.on('user_connected', data => {
-      console.log('connected --> ', data._id);
+    this.socket.on('user_connected', (data) => {
+      console.log(`${data.userId} connected`);
 
       this.rooms.forEach(room => {
         this.socket.emit('join_room', room);

@@ -31,6 +31,9 @@ class DateUtils {
 
     const millisecondsFromNow = moment().diff(moment(milliseconds), 'ms');
 
+    if (millisecondsFromNow < 1000) {
+      return `updated now`;
+    }
     if (millisecondsFromNow < 60000) {
       const seconds = Math.floor(moment.duration(millisecondsFromNow, 'milliseconds').asSeconds());
       return `${seconds} ${seconds === 1 ? 'second ago' : 'seconds ago'}`;

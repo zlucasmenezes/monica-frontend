@@ -6,15 +6,18 @@
   justify-content: space-between;
   box-shadow: $m-shadow-2;
   border-radius: $m-border-radius;
-  margin: 5px;
+  margin: 10px 5px;
   margin-right: 35%;
   color: rgba($m-gray, .7);
   font-weight: 300;
   background-color: $m-marley;
 
   .info-container {
-    width: 60%;
-    padding: 10px 20px 5px;
+    @extend .m-flex-column;
+    justify-content: unset;
+    width: 70%;
+    min-width: 110px;
+    padding: 10px 5px 10px 20px;
 
     mat-icon {
       margin-right: 5px;
@@ -38,10 +41,14 @@
       }
     }
 
+    .spacer {
+      flex: 1 1 auto;
+    }
+
     .value {
       color: $m-gray;
       font-size: 45px;
-      line-height: 45px;
+      line-height: 50px;
       margin: 20px 0 10px;
       text-align: right;
     }
@@ -58,10 +65,29 @@
 
   .chart-container {
     width: 100%;
-    margin: 10px;
+    margin: 10px 5px;
     margin-right: -54%;
     box-shadow: $m-shadow-2;
     border-radius: $m-border-radius;
     background: $m-orange-gradient-60;
+    padding: 20px;
+  }
+}
+
+@media screen and (max-width: $breakpoint-phone) {
+  .sensor {
+    flex-direction: column;
+    margin: 10px 5px;
+
+    .info-container {
+      width: auto;
+      min-width: unset;
+      padding: 20px 10px 10px;
+    }
+
+    .chart-container {
+      width: auto;
+      margin: 0 -10px 10px -10px;
+    }
   }
 }

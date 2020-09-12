@@ -5,6 +5,10 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ITSValue } from 'src/app/sensor/sensor.model';
 import dateUtils from 'src/app/shared/utils/date-utils';
 import { Subject, interval } from 'rxjs';
+import { ChartOptions, ChartDataSets } from 'chart.js';
+import { Color, Label } from 'ng2-charts';
+import * as moment from 'moment';
+import chartUtils from 'src/app/shared/utils/chart-utils';
 
 @Component({
   selector: 'm-sensor-details',
@@ -20,13 +24,21 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
 
   private onDestroy: Subject<void> = new Subject<void>();
 
+  chartData: ChartDataSets[];
+  chartLabels: Label[];
+  chartOptions: ChartOptions;
+  chartColors: Color[];
+
   constructor(
     private sensorService: SensorService
   ) { }
 
-  ngOnInit(): void {
-    this.getValue();
+  async ngOnInit(): Promise<void> {
+    this.initChart();
+
     this.getTSFromNow();
+    this.getValue();
+
   }
 
   public async getValue() {
@@ -34,6 +46,7 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
 
     value$.pipe(takeUntil(this.onDestroy)).subscribe(value => {
       this.value = value;
+      this.addDataPoint(value.value, moment(value.ts));
     });
   }
 
@@ -43,6 +56,26 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
       if (this.value) { this.tsFromNow = dateUtils.fromNow(this.value.ts); }
       else { this.tsFromNow = '—'; }
     });
+  }
+
+  private initChart() {
+    this.chartData = [
+      { data: [], label: this.sensor.name, steppedLine: 'before', fill: false }
+    ];
+    this.chartLabels = [];
+
+    this.chartOptions = chartUtils.getSingleDeviceOptions(this.sensor.pollTime);
+    this.chartColors = chartUtils.getSingleDeviceColors();
+  }
+
+  private addDataPoint(y: any, x: moment.Moment) {
+    this.chartData[0].data.push(y);
+    this.chartLabels.push(x.toString());
+
+    if (this.chartLabels.length > 10) {
+      this.chartData[0].data.shift();
+      this.chartLabels.shift();
+    }
   }
 
   public getPollTime(): string {
