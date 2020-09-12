@@ -1,3 +1,4 @@
+import { ThingDetailsComponent } from './pages/thing-details/thing-details.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
@@ -21,6 +22,14 @@ const routes: MRoute[] = [
     path: 'create',
     component: ThingCreateComponent,
     canActivate: [ IsAdminGuard ],
+    data: {
+      backRoute: 'project/:projectId/thing'
+    }
+  },
+  {
+    path: ':thingId',
+    component: ThingDetailsComponent,
+    canActivate: [ IsUserGuard ],
     data: {
       backRoute: 'project/:projectId/thing'
     }

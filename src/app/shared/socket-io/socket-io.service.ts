@@ -11,6 +11,7 @@ import { SocketIOEvent } from './socket-io.model';
 export class SocketIOService {
 
   private socket: SocketIOClient.Socket;
+  private rooms: string[] = [];
 
   constructor() { }
 
@@ -21,6 +22,10 @@ export class SocketIOService {
 
     this.socket.on('user_connected', data => {
       console.log('connected --> ', data._id);
+
+      this.rooms.forEach(room => {
+        this.socket.emit('join_room', room);
+      });
     });
   }
 
@@ -37,6 +42,20 @@ export class SocketIOService {
           observable.next(data);
         });
       });
+    }
+  }
+
+  public join(room: string) {
+    if (!this.rooms.includes(room)) {
+      this.socket.emit('join_room', room);
+      this.rooms.push(room);
+    }
+  }
+
+  public leave(room: string) {
+    if (this.rooms.includes(room)) {
+      this.socket.emit('leave_room', room);
+      this.rooms = this.rooms.filter(r => r !== room);
     }
   }
 

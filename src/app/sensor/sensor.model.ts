@@ -1,7 +1,12 @@
+import { IThingPopulated } from './../thing/thing.model';
 import { IDocument } from '../shared/models/backend.model';
 import { IThing } from '../thing/thing.model';
 
-export interface ISensor {
+export interface ITSValue {
+  value: any;
+  ts: number;
+}
+export interface ISensor extends IDocument {
   name: string;
   type: ISensorType['_id'];
   thing: IThing['_id'];
@@ -11,6 +16,11 @@ export interface ISensor {
   function: string;
   config: ISensorParameters[];
 }
+
+export type ISensorPopulated = Pick<ISensor, Exclude<keyof ISensor, 'type' | 'thing'>> & {
+  type: ISensorType;
+  thing: IThingPopulated;
+};
 
 export interface ISensorType extends IDocument {
   type: string;

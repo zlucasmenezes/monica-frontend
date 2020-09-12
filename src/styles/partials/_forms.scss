@@ -38,7 +38,12 @@
       color: $m-dark-orange;
     }
 
-  } 
+  }
+
+  &.mat-form-field-disabled .mat-form-field-underline {
+    background-color: rgba($m-gray, 0.2) !important;
+    background: unset;
+  }
 
   .mat-error {
     display: flex;
@@ -77,6 +82,12 @@
 
   mat-checkbox {
     margin: 20px 0;
+  }
+
+  &.disabled {
+    .m-field-icon {
+      color: rgba($m-gray, 0.2);
+    }
   }
 }
 

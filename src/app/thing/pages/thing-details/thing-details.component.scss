@@ -1,0 +1,29 @@
+@import 'src/styles/styles.scss';
+
+m-card {
+  .card-body {
+    @extend .m-flex-column;
+    align-items: center;
+    padding: 0 100px;
+
+    .search {
+      margin: -10px 0 10px;
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    .no-devices {
+      font-weight: 300;
+    }
+
+    m-sensor-details {
+      width: 100%;
+    }   
+  }
+
+  @media screen and (max-width: $breakpoint-phone) {
+    .card-body {
+      padding: 0 20px;
+    }
+  }
+}

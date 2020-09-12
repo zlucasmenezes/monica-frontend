@@ -1,1 +1,4 @@
-export type SocketIOEvent = 'user_connected' | 'user_disconnected';
+export type SocketIOEvent =
+'user_connected' |
+'user_disconnected' |
+string;

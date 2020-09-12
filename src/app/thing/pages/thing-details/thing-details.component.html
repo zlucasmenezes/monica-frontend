@@ -1,0 +1,58 @@
+<m-page-container>
+
+  <div class="m-parent-page-title">
+    <div class="title">
+      <mat-icon>domain</mat-icon>
+      <h1>{{ project?.name | uppercase }}</h1>
+    </div>
+  </div>
+
+  <div class="m-page-title">
+    <div class="title">
+      <mat-icon class="icon-tree">subdirectory_arrow_right</mat-icon>
+      <mat-icon>emoji_symbols</mat-icon>
+      <h1>{{ thing?.name | uppercase }}</h1>
+    </div>
+  </div>
+
+  <m-card [title]="'sensors'" [icon]="'track_changes'"
+  [actions]="true"
+  [hideGoTo]="true" [hideEdit]="true" [hideRemove]="true"
+  [showEditMenu]="true" [editMenuItems]="(sensorsMenuItems | async)"
+  [showRemoveMenu]="true" [removeMenuItems]="(sensorsMenuItems | async)"
+  [disableAdd]="!isAdmin()" [disableEdit]="!isAdmin() || !sensors || sensors.length === 0" [disableRemove]="true"
+  (add)="addSensor()" (editMenu)="editSensor($event)">
+    <div class="card-body">
+
+      <div class="search">
+        <div class="m-form-field">
+          <mat-icon class="m-field-icon">search</mat-icon>
+      
+          <mat-form-field floatLabel='never'>
+            <input
+            matInput
+            type="text"
+            placeholder="search"
+            [formControl]="sensorsFilter">
+      
+            <button
+            type="button"
+            mat-icon-button
+            matSuffix
+            (click)="sensorsFilter.setValue(null); filterSensors('')">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="no-devices" *ngIf="(sensorsFiltered$ | async ) && (sensorsFiltered$ | async ).length === 0">
+        <span>NO SENSORS FOUND</span>
+      </div>
+
+      <m-sensor-details *ngFor="let item of (sensorsFiltered$ | async )"
+      [sensor]="item"></m-sensor-details>
+    </div>
+  </m-card>
+
+</m-page-container>
