@@ -82,7 +82,7 @@
                 <span>select all</span>
               </div>
 
-              <!-- <div class="mat-option m-select-search">
+              <div class="mat-option m-select-search">
                 <div class="m-form-field">
                   <mat-icon class="m-field-icon">search</mat-icon>
               
@@ -91,7 +91,8 @@
                     matInput
                     type="text"
                     placeholder="search"
-                    [formControl]="userFilter">
+                    [formControl]="userFilter"
+                    (keydown)="$event.stopPropagation()">
 
                     <button
                     type="button"
@@ -102,14 +103,16 @@
                     </button>
                   </mat-form-field>
                 </div>
-              </div> -->
+              </div>
 
               <div class="mat-option" *ngIf="(userFilteredList$ | async).length === 0">
                 <mat-icon class="m-select-icon">info_outline</mat-icon>
                 <span>No users found</span>
               </div>
 
-              <mat-option *ngFor="let user of userFilteredList$ | async" [value]="user._id">{{ user.username }}</mat-option>
+              <mat-option *ngFor="let user of userList"
+              [style.display]="(userFilteredList$ | async).includes(user) ? 'flex' : 'none'"
+              [value]="user._id">{{ user.username }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
