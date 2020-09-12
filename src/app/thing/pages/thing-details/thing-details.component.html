@@ -18,17 +18,39 @@
   <m-card [title]="'sensors'" [icon]="'track_changes'"
   [actions]="true"
   [hideGoTo]="true" [hideEdit]="true" [hideRemove]="true"
-  [showEditMenu]="true" [editMenuItems]="sensorsMenuItems"
-  [showRemoveMenu]="true" [removeMenuItems]="sensorsMenuItems"
+  [showEditMenu]="true" [editMenuItems]="(sensorsMenuItems | async)"
+  [showRemoveMenu]="true" [removeMenuItems]="(sensorsMenuItems | async)"
   [disableAdd]="!isAdmin()" [disableEdit]="!isAdmin() || !sensors || sensors.length === 0" [disableRemove]="true"
   (add)="addSensor()" (editMenu)="editSensor($event)">
     <div class="card-body">
 
-      <div class="no-devices" *ngIf="!sensors || sensors.length === 0">
+      <div class="search">
+        <div class="m-form-field">
+          <mat-icon class="m-field-icon">search</mat-icon>
+      
+          <mat-form-field floatLabel='never'>
+            <input
+            matInput
+            type="text"
+            placeholder="search"
+            [formControl]="sensorsFilter">
+      
+            <button
+            type="button"
+            mat-icon-button
+            matSuffix
+            (click)="sensorsFilter.setValue(null); filterSensors('')">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="no-devices" *ngIf="(sensorsFiltered$ | async ) && (sensorsFiltered$ | async ).length === 0">
         <span>NO SENSORS FOUND</span>
       </div>
 
-      <m-sensor-details *ngFor="let item of sensors"
+      <m-sensor-details *ngFor="let item of (sensorsFiltered$ | async )"
       [sensor]="item"></m-sensor-details>
     </div>
   </m-card>
