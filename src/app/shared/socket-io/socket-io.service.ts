@@ -17,11 +17,11 @@ export class SocketIOService {
 
   public connect(tokenData: IToken) {
     this.socket = io.connect(`http://${environment.backend.host}:${environment.backend.port}`, {
-      query: { token: tokenData.token }
+      query: { user: tokenData.token }
     });
 
     this.socket.on('user_connected', (data) => {
-      console.log(`${data.userId} connected`);
+      console.log(`${data.id} connected`);
 
       this.rooms.forEach(room => {
         this.socket.emit('join_room', room);
