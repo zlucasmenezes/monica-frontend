@@ -68,7 +68,7 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
       type: [sensor ? sensor.type ? sensor.type._id : null : null, [Validators.required]],
       pin: [sensor ? sensor.pin ? sensor.pin : null : null, [Validators.required, Validators.min(1)]],
       pollTime: [sensor ? sensor.pollTime ? sensor.pollTime : null : null, [Validators.required, Validators.min(1000)]],
-      store: [sensor ? sensor.store ? sensor.store : true : true, [Validators.required]],
+      store: [sensor ? sensor.store !== null ? sensor.store : true : true, [Validators.required]],
       thing: [this.getThingId(), [Validators.required]],
       function: [sensor ? sensor.function ? sensor.function : null : null],
       config: this.fb.array([])
