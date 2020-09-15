@@ -2,10 +2,6 @@ import { IThingPopulated } from './../thing/thing.model';
 import { IDocument } from '../shared/models/backend.model';
 import { IThing } from '../thing/thing.model';
 
-export interface ITSValue {
-  value: any;
-  ts: number;
-}
 export interface ISensor extends IDocument {
   name: string;
   type: ISensorType['_id'];

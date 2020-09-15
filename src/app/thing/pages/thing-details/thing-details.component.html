@@ -56,4 +56,45 @@
     </div>
   </m-card>
 
+  <m-card [title]="'relays'" [icon]="'emoji_objects'"
+  [actions]="true"
+  [hideGoTo]="true" [hideEdit]="true" [hideRemove]="true"
+  [showEditMenu]="true" [editMenuItems]="(relaysMenuItems | async)"
+  [showRemoveMenu]="true" [removeMenuItems]="(relaysMenuItems | async)"
+  [disableAdd]="!isAdmin()" [disableEdit]="!isAdmin() || !relays || relays.length === 0" [disableRemove]="true"
+  (add)="addRelay()" (editMenu)="editRelay($event)">
+    <div class="card-body">
+
+      <div class="search">
+        <div class="m-form-field">
+          <mat-icon class="m-field-icon">search</mat-icon>
+      
+          <mat-form-field floatLabel='never'>
+            <input
+            matInput
+            type="text"
+            placeholder="search"
+            [formControl]="relaysFilter">
+      
+            <button
+            type="button"
+            mat-icon-button
+            matSuffix
+            (click)="relaysFilter.setValue(null); filterRelays('')">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="no-devices" *ngIf="(relaysFiltered$ | async ) && (relaysFiltered$ | async ).length === 0">
+        <span>NO RELAYS FOUND</span>
+      </div>
+
+      <!-- <m-relay-details *ngFor="let item of relays"
+      [hidden]="!(relaysFiltered$ | async ).includes(item)"
+      [relay]="item"></m-relay-details> -->
+    </div>
+  </m-card>
+
 </m-page-container>

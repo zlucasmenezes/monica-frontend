@@ -1,13 +1,13 @@
-import { takeUntil, takeWhile, finalize } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { BaseService } from 'src/app/shared/services/base.service';
-import { SocketIOService } from './../shared/socket-io/socket-io.service';
-import { IResponse } from '../shared/models/backend.model';
-import { ISensor, ISensorPopulated, ITSValue } from './sensor.model';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { finalize, takeUntil } from 'rxjs/operators';
+import { BaseService } from 'src/app/shared/services/base.service';
+import { IResponse } from '../shared/models/backend.model';
+import { ITSValue } from '../shared/models/ts.model';
+import { SocketIOService } from './../shared/socket-io/socket-io.service';
+import { ISensor, ISensorPopulated } from './sensor.model';
 
 @Injectable({
   providedIn: 'root'

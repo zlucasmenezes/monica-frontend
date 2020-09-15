@@ -47,23 +47,36 @@
           </button>
         </div>
 
-        <mat-menu #editMatMenu="matMenu">          
+        <mat-menu #editMatMenu="matMenu">
           <ng-container *ngFor="let item of editMenuItems">
-            <button mat-menu-item [matMenuTriggerFor]="editSubMatMenu">{{ item.label }}</button>
-            <mat-menu #editSubMatMenu="matMenu">
-              <button mat-menu-item *ngFor="let subItem of item.items" (click)="editMenu(subItem._id)">{{ subItem.label }}</button>
-            </mat-menu>  
+            <ng-container *ngIf="item.items">
+              <button mat-menu-item [matMenuTriggerFor]="editSubMatMenu">{{ item.label }}</button>
+              <mat-menu #editSubMatMenu="matMenu">
+                <button mat-menu-item *ngFor="let subItem of item.items" (click)="editMenu(subItem._id)">{{ subItem.label }}</button>
+              </mat-menu>  
+            </ng-container>
+
+            <ng-container *ngIf="!item.items">
+              <button mat-menu-item (click)="editMenu(item._id)">{{ item.label }}</button> 
+            </ng-container> 
           </ng-container>
         </mat-menu>
 
-        <mat-menu #removeMatMenu="matMenu">          
+        <mat-menu #removeMatMenu="matMenu">
           <ng-container *ngFor="let item of removeMenuItems">
-            <button mat-menu-item [matMenuTriggerFor]="removeSubMatMenu">{{ item.label }}</button>
-            <mat-menu #removeSubMatMenu="matMenu">
-              <button mat-menu-item *ngFor="let subItem of item.items" (click)="removeMenu(subItem._id)">{{ subItem.label }}</button>
-            </mat-menu>  
+            <ng-container *ngIf="item.items">
+              <button mat-menu-item [matMenuTriggerFor]="removeSubMatMenu">{{ item.label }}</button>
+              <mat-menu #removeSubMatMenu="matMenu">
+                <button mat-menu-item *ngFor="let subItem of item.items" (click)="removeMenu(subItem._id)">{{ subItem.label }}</button>
+              </mat-menu>  
+            </ng-container>
+
+            <ng-container *ngIf="!item.items">
+              <button mat-menu-item (click)="removeMenu(item._id)">{{ item.label }}</button> 
+            </ng-container> 
           </ng-container>
         </mat-menu>
+
     </div>
   </div>
 

@@ -1,21 +1,20 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import formUtils from 'src/app/shared/utils/form-utils';
-import { SensorTypeService } from '../../sensor-type.service';
-import { ISensorPopulated, ISensorType, ISensor } from '../../sensor.model';
-import arrayUtils from 'src/app/shared/utils/array-utils';
 import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { SensorService } from '../../sensor.service';
-import { codeValidator } from 'src/app/shared/validators/code.validator';
-import sensorUtils from 'src/app/shared/utils/sensor-utils';
-import * as moment from 'moment';
 import { IProjectPopulated } from 'src/app/project/project.model';
+import { ProjectService } from 'src/app/project/project.service';
+import arrayUtils from 'src/app/shared/utils/array-utils';
+import dateUtils from 'src/app/shared/utils/date-utils';
+import formUtils from 'src/app/shared/utils/form-utils';
+import sensorUtils from 'src/app/shared/utils/sensor-utils';
+import { codeValidator } from 'src/app/shared/validators/code.validator';
 import { IThingPopulated } from 'src/app/thing/thing.model';
 import { ThingService } from 'src/app/thing/thing.service';
-import { ProjectService } from 'src/app/project/project.service';
-import dateUtils from 'src/app/shared/utils/date-utils';
+import { SensorTypeService } from '../../sensor-type.service';
+import { ISensor, ISensorPopulated, ISensorType } from '../../sensor.model';
+import { SensorService } from '../../sensor.service';
 
 @Component({
   selector: 'm-sensor-create',

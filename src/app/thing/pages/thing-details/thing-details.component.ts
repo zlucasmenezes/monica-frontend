@@ -1,18 +1,20 @@
-import { SocketIOService } from 'src/app/shared/socket-io/socket-io.service';
-import { SensorService } from './../../../sensor/sensor.service';
-import { ISensorPopulated } from './../../../sensor/sensor.model';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IProjectPopulated } from 'src/app/project/project.model';
-import { IThingPopulated } from '../../thing.model';
-import { ReplaySubject, Subject } from 'rxjs';
-import { AuthService } from 'src/app/auth/auth.service';
-import { ThingService } from '../../thing.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { ProjectService } from 'src/app/project/project.service';
-import { ICardMenuItem } from 'src/app/shared/components/card/card.model';
-import arrayUtils from 'src/app/shared/utils/array-utils';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { takeUntil, takeWhile } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ReplaySubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { AuthService } from 'src/app/auth/auth.service';
+import { IProjectPopulated } from 'src/app/project/project.model';
+import { ProjectService } from 'src/app/project/project.service';
+import { IRelayPopulated } from 'src/app/relay/relay.model';
+import { RelayService } from 'src/app/relay/relay.service';
+import { ICardMenuItem } from 'src/app/shared/components/card/card.model';
+import { SocketIOService } from 'src/app/shared/socket-io/socket-io.service';
+import arrayUtils from 'src/app/shared/utils/array-utils';
+import { IThingPopulated } from '../../thing.model';
+import { ThingService } from '../../thing.service';
+import { ISensorPopulated } from './../../../sensor/sensor.model';
+import { SensorService } from './../../../sensor/sensor.service';
 
 @Component({
   selector: 'm-thing-details',
@@ -29,6 +31,11 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
   public sensorsMenuItems: ReplaySubject<ICardMenuItem[]> = new ReplaySubject<ICardMenuItem[]>(1);
   public sensorsFilter = new FormControl();
 
+  public relays: IRelayPopulated[];
+  public relaysFiltered$: ReplaySubject<IRelayPopulated[]> = new ReplaySubject<IRelayPopulated[]>(1);
+  public relaysMenuItems: ReplaySubject<ICardMenuItem[]> = new ReplaySubject<ICardMenuItem[]>(1);
+  public relaysFilter = new FormControl();
+
   private onDestroy: Subject<void> = new Subject<void>();
 
   constructor(
@@ -38,6 +45,7 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private projectService: ProjectService,
     private sensorService: SensorService,
+    private relayService: RelayService,
     private socketIOService: SocketIOService
   ) {
     this.socketIOService.join(`thing:${this.getThingId()}`);
@@ -48,15 +56,21 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
     this.thing = await this.getThing();
 
     this.sensorsFiltered$.next(this.sensors = arrayUtils.orderBy(await this.getSensors(), 'ASC', 'name'));
+    this.relaysFiltered$.next(this.relays = arrayUtils.orderBy(await this.getRelays(), 'ASC', 'name'));
     this.subscribeForm();
 
     this.subscribeSensorsMenuItems();
+    this.subscribeRelaysMenuItems();
   }
 
   private subscribeForm(): void {
     this.sensorsFilter.valueChanges.pipe(takeUntil(this.onDestroy))
     .subscribe((value: string) => {
       this.filterSensors(value);
+    });
+    this.relaysFilter.valueChanges.pipe(takeUntil(this.onDestroy))
+    .subscribe((value: string) => {
+      this.filterRelays(value);
     });
   }
 
@@ -78,6 +92,10 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
 
   private async getSensors(): Promise<ISensorPopulated[]> {
     return await this.sensorService.getSensors(this.getProjectId(), this.getThingId());
+  }
+
+  private async getRelays(): Promise<IRelayPopulated[]> {
+    return await this.relayService.getRelays(this.getProjectId(), this.getThingId());
   }
 
   public subscribeSensorsMenuItems(): void {
@@ -105,6 +123,18 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
+  public subscribeRelaysMenuItems(): void {
+    this.relaysFiltered$.pipe(takeUntil(this.onDestroy))
+    .subscribe((relaysFiltered) => {
+
+      const items: ICardMenuItem[] = relaysFiltered.map(relay => {
+        return { _id: relay._id, label: relay.name };
+      });
+
+      this.relaysMenuItems.next(arrayUtils.orderBy(items, 'ASC', 'label'));
+    });
+  }
+
   public isAdmin(): boolean {
     if (!this.project) { return false; }
     return this.project.admin._id === this.authService.getTokenData().userId;
@@ -121,6 +151,19 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
   public filterSensors(filter: string): void {
     const fields = ['name', 'type.type'];
     this.sensorsFiltered$.next(arrayUtils.filter(this.sensors, filter, fields));
+  }
+
+  public addRelay(): void {
+    this.router.navigate([`project/${this.project._id}/thing/${this.thing._id}/relay/create`]);
+  }
+
+  public editRelay(id): void {
+    this.router.navigate([`project/${this.project._id}/thing/${this.thing._id}/relay/edit/${id}`]);
+  }
+
+  public filterRelays(filter: string): void {
+    const fields = ['name'];
+    this.relaysFiltered$.next(arrayUtils.filter(this.relays, filter, fields));
   }
 
   ngOnDestroy(): void {

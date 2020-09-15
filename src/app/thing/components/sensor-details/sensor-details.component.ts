@@ -2,13 +2,13 @@ import { ISensorPopulated } from './../../../sensor/sensor.model';
 import { SensorService } from './../../../sensor/sensor.service';
 import { takeUntil } from 'rxjs/operators';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { ITSValue } from 'src/app/sensor/sensor.model';
 import dateUtils from 'src/app/shared/utils/date-utils';
 import { Subject, interval } from 'rxjs';
 import { ChartOptions, ChartDataSets } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 import * as moment from 'moment';
 import chartUtils from 'src/app/shared/utils/chart-utils';
+import { ITSValue } from 'src/app/shared/models/ts.model';
 
 @Component({
   selector: 'm-sensor-details',

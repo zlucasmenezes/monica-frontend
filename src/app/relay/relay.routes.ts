@@ -1,22 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { SensorCreateComponent } from './pages/sensor-create/sensor-create.component';
+import { RelayCreateComponent } from './pages/relay-create/relay-create.component';
 import { MRoute } from '../shared/models/angular.model';
 import { IsAdminGuard } from '../project/is-admin.guard';
+
 
 const routes: MRoute[] = [
   {
     path: 'create',
-    component: SensorCreateComponent,
+    component: RelayCreateComponent,
     canActivate: [ IsAdminGuard ],
     data: {
       backRoute: 'project/:projectId/thing/:thingId'
     }
   },
   {
-    path: 'edit/:sensorId',
-    component: SensorCreateComponent,
+    path: 'edit/:relayId',
+    component: RelayCreateComponent,
     canActivate: [ IsAdminGuard ],
     data: {
       backRoute: 'project/:projectId/thing/:thingId'
@@ -29,4 +30,4 @@ const routes: MRoute[] = [
     RouterModule.forChild(routes)
   ]
 })
-export class SensorRoutes { }
+export class RelayRoutes { }

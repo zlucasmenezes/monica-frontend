@@ -26,6 +26,11 @@ const routes: MRoute[] = [
     canActivate: [ AuthGuard ]
   },
   {
+    path: 'project/:projectId/thing/:thingId/relay',
+    loadChildren: './relay/relay.routes#RelayRoutes',
+    canActivate: [ AuthGuard ]
+  },
+  {
     path: '',
     redirectTo: 'project',
     pathMatch: 'full'
