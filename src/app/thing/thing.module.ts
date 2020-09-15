@@ -7,6 +7,7 @@ import { BoardCredentialsDialogComponent } from './components/board-credentials-
 import { ThingListComponent } from './pages/thing-list/thing-list.component';
 import { ThingDetailsComponent } from './pages/thing-details/thing-details.component';
 import { SensorDetailsComponent } from './components/sensor-details/sensor-details.component';
+import { RelayDetailsComponent } from './components/relay-details/relay-details.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { SensorDetailsComponent } from './components/sensor-details/sensor-detai
     BoardCredentialsDialogComponent,
     ThingListComponent,
     ThingDetailsComponent,
-    SensorDetailsComponent
+    SensorDetailsComponent,
+    RelayDetailsComponent
   ],
   imports: [
     SharedModule,

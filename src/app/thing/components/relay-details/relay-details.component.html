@@ -1,0 +1,43 @@
+<div class="relay">
+
+  <div class="info-container">
+    <div class="header">
+      <span>{{ relay?.name | uppercase }}</span>
+    </div>
+
+    <div class="info">
+      <div>
+        <mat-icon>fiber_pin</mat-icon>
+        <span>{{ relay?.pin }}</span>
+      </div>
+
+      <div>
+        <mat-icon [ngClass]="{disabled: !relay?.store}">save</mat-icon>
+        <span>{{relay?.store ? 'store' : 'don\'t store'}}</span>
+      </div>      
+    </div>
+
+    <div class="spacer"></div>
+  
+    <div class="value">
+      <span>{{ value?.value }}</span>
+    </div>
+  
+    <div class="footer" *ngIf="value">
+      <mat-icon>history</mat-icon>
+      <span>{{ tsFromNow }}</span>
+    </div>
+  </div>
+
+  <div class="chart-container">
+    <canvas
+      baseChart
+      [colors]="chartColors"
+      [chartType]="'line'"
+      [datasets]="chartData"
+      [labels]="chartLabels"
+      [options]="chartOptions">
+    </canvas>
+  </div>
+
+</div>

@@ -1,0 +1,93 @@
+@import 'src/styles/styles.scss';
+
+.relay {
+  @extend .m-flex-row;
+  width: auto;
+  justify-content: space-between;
+  box-shadow: $m-shadow-2;
+  border-radius: $m-border-radius;
+  margin: 10px 5px;
+  margin-right: 35%;
+  color: rgba($m-gray, .7);
+  font-weight: 300;
+  background-color: $m-marley;
+
+  .info-container {
+    @extend .m-flex-column;
+    justify-content: unset;
+    width: 70%;
+    min-width: 110px;
+    padding: 10px 5px 10px 20px;
+
+    mat-icon {
+      margin-right: 5px;
+      font-size: 18px;
+      height: 18px;
+      width: 18px;
+    }
+
+    .header {
+      font-size: 16px;
+      font-weight: 300;
+      margin-bottom: 10px;
+    }
+
+    .info {
+      div {
+        @extend .m-flex-row;
+        justify-content: flex-start;
+        align-items: center;
+        font-size: 12px;
+      }
+    }
+
+    .spacer {
+      flex: 1 1 auto;
+    }
+
+    .value {
+      color: $m-gray;
+      font-size: 45px;
+      line-height: 50px;
+      margin: 20px 0 10px;
+      text-align: right;
+    }
+
+    .footer {
+      @extend .m-flex-row;
+      justify-content: flex-end;
+      align-items: center;
+      border-top: 1px solid rgba($m-gray, .1);
+      padding-top: 5px;
+      font-size: 12px;
+    }
+  }
+
+  .chart-container {
+    width: 100%;
+    margin: 10px 5px;
+    margin-right: -54%;
+    box-shadow: $m-shadow-2;
+    border-radius: $m-border-radius;
+    background: $m-orange-gradient-60;
+    padding: 20px;
+  }
+}
+
+@media screen and (max-width: $breakpoint-phone) {
+  .relay {
+    flex-direction: column;
+    margin: 10px 5px;
+
+    .info-container {
+      width: auto;
+      min-width: unset;
+      padding: 20px 10px 10px;
+    }
+
+    .chart-container {
+      width: auto;
+      margin: 0 -10px 10px -10px;
+    }
+  }
+}

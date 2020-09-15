@@ -32,9 +32,10 @@ class ChartUtils {
             fontColor: this.marleyColor
           },
           time: {
-            ... this.getUnitStep(stepX),
+            ... this.getUnitStep(stepX ? stepX : null),
             tooltipFormat: 'YYYY-MM-DD HH:mm:ss',
             displayFormats: {
+              millisecond: 'MM/DD HH:mm:ss',
               second: 'MM/DD HH:mm:ss',
               minute: 'MM/DD HH:mm',
               hour: 'MM/DD HH',
@@ -58,7 +59,9 @@ class ChartUtils {
     };
   }
 
-  private getUnitStep(stepX: number): { unit: Chart.TimeUnit, unitStepSize: number } {
+  private getUnitStep(stepX?: number): { unit?: Chart.TimeUnit, unitStepSize?: number } {
+    if (stepX === null) { return {}; }
+
     stepX /= 1000;
 
     if (stepX < 60) {
@@ -76,7 +79,7 @@ class ChartUtils {
 
   public getSingleDeviceColors(): Color[] {
     return [{
-      backgroundColor: 'transparent',
+      backgroundColor: this.marleyColor + '22',
       borderColor: this.marleyColor,
       pointBackgroundColor: this.marleyColor,
       pointBorderColor: this.marleyColor,

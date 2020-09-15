@@ -4,20 +4,20 @@ import * as moment from 'moment';
 import { Color, Label } from 'ng2-charts';
 import { interval, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { IRelayPopulated } from 'src/app/relay/relay.model';
+import { RelayService } from 'src/app/relay/relay.service';
 import { ITSValue } from 'src/app/shared/models/ts.model';
 import chartUtils from 'src/app/shared/utils/chart-utils';
 import dateUtils from 'src/app/shared/utils/date-utils';
-import { ISensorPopulated } from './../../../sensor/sensor.model';
-import { SensorService } from './../../../sensor/sensor.service';
 
 @Component({
-  selector: 'm-sensor-details',
-  templateUrl: './sensor-details.component.html',
-  styleUrls: ['./sensor-details.component.scss']
+  selector: 'm-relay-details',
+  templateUrl: './relay-details.component.html',
+  styleUrls: ['./relay-details.component.scss']
 })
-export class SensorDetailsComponent implements OnInit, OnDestroy {
+export class RelayDetailsComponent implements OnInit, OnDestroy {
 
-  @Input() sensor: ISensorPopulated;
+  @Input() relay: IRelayPopulated;
 
   public value: ITSValue;
   public tsFromNow = '—';
@@ -30,7 +30,7 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
   chartColors: Color[];
 
   constructor(
-    private sensorService: SensorService
+    private relayService: RelayService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -38,11 +38,10 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
 
     this.getTSFromNow();
     this.getValue();
-
   }
 
   public async getValue() {
-    const value$ = await this.sensorService.getValue(this.sensor.thing.project._id, this.sensor.thing._id, this.sensor._id);
+    const value$ = await this.relayService.getValue(this.relay.thing.project._id, this.relay.thing._id, this.relay._id);
 
     value$.pipe(takeUntil(this.onDestroy)).subscribe(value => {
       this.value = value;
@@ -62,16 +61,15 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
 
   private initChart() {
     this.chartData = [
-      { data: [], label: this.sensor.name, steppedLine: 'before', fill: false }
+      { data: [], label: this.relay.name, steppedLine: 'before' }
     ];
     this.chartLabels = [];
 
-    this.chartOptions = chartUtils.getSingleDeviceOptions(this.sensor.pollTime);
+    this.chartOptions = chartUtils.getSingleDeviceOptions();
     this.chartColors = chartUtils.getSingleDeviceColors();
   }
 
   private addDataPoint(y: any, x: moment.Moment) {
-    console.log(y, x);
     this.chartData[0].data.push(y);
     this.chartLabels.push(x.toString());
 
@@ -79,12 +77,6 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
       this.chartData[0].data.shift();
       this.chartLabels.shift();
     }
-  }
-
-  public getPollTime(): string {
-    if (!this.sensor) { return '—'; }
-
-    return dateUtils.formatMillis(this.sensor.pollTime);
   }
 
   ngOnDestroy() {
