@@ -19,7 +19,7 @@
 
     <div class="spacer"></div>
 
-    <div class="slide">
+    <div class="slide" *ngIf="value">
       <mat-slide-toggle [(ngModel)]="value.value">{{ value?.value ? 'ON' : 'OFF' }}</mat-slide-toggle>
     </div>
   
