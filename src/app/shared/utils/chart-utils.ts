@@ -79,7 +79,7 @@ class ChartUtils {
 
   public getSingleDeviceColors(): Color[] {
     return [{
-      backgroundColor: this.marleyColor + '22',
+      backgroundColor: this.marleyColor + '33',
       borderColor: this.marleyColor,
       pointBackgroundColor: this.marleyColor,
       pointBorderColor: this.marleyColor,

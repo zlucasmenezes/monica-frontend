@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import * as moment from 'moment';
 import { Color, Label } from 'ng2-charts';
@@ -57,6 +58,12 @@ export class RelayDetailsComponent implements OnInit, OnDestroy {
       if (this.value) { this.tsFromNow = dateUtils.fromNow(this.value.ts); }
       else { this.tsFromNow = '—'; }
     });
+  }
+
+  public toggleRelay(event: MatSlideToggleChange): void {
+    event.source.writeValue(this.value.value);
+
+    this.relayService.insertTSData(this.relay.thing.project._id, this.relay.thing._id, this.relay._id, !this.value.value);
   }
 
   private initChart() {

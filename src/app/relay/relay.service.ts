@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
+import { ITSValue } from 'src/app/shared/models/ts.model';
 import { BaseService } from 'src/app/shared/services/base.service';
 import { IResponse } from '../shared/models/backend.model';
-import { ITSValue } from '../shared/models/ts.model';
 import { SocketIOService } from '../shared/socket-io/socket-io.service';
 import { IRelay, IRelayPopulated } from './relay.model';
 
@@ -76,6 +76,15 @@ export class RelayService extends BaseService {
     });
 
     return value$.asObservable();
+  }
+
+  public async insertTSData(projectId: string, thingId: string, relayId: string, value: boolean): Promise<void> {
+    try {
+      this.http.post<IResponse>(`${this.getUrl(projectId, thingId)}/${relayId}/ts`, {value}).toPromise();
+    }
+    catch (e) {
+      throw e;
+    }
   }
 
 }

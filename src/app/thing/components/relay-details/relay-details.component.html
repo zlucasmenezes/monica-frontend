@@ -20,7 +20,17 @@
     <div class="spacer"></div>
 
     <div class="slide" *ngIf="value">
-      <mat-slide-toggle [(ngModel)]="value.value">{{ value?.value ? 'ON' : 'OFF' }}</mat-slide-toggle>
+      <mat-slide-toggle
+      [checked]="value.value"
+      (change)="toggleRelay($event)">
+      <mat-icon class="slide-toggle-icon">
+        {{ value?.value ? 'power' : 'power_off' }}
+      </mat-icon>
+      </mat-slide-toggle>
+    </div>
+
+    <div class="value">
+      <span>{{ value?.value ? 'ON' : 'OFF' }}</span>
     </div>
   
     <div class="footer" *ngIf="value">

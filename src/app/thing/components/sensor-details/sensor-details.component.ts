@@ -71,7 +71,6 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
   }
 
   private addDataPoint(y: any, x: moment.Moment) {
-    console.log(y, x);
     this.chartData[0].data.push(y);
     this.chartLabels.push(x.toString());
 
