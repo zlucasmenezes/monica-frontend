@@ -53,6 +53,98 @@
       text-align: right;
     }
 
+    .slide {
+      @extend .m-flex-column;
+      align-items: center;
+      margin: 20px 0;
+      color: $m-gray;
+      min-height: 100px;
+      transform: scale(1.2);      
+
+      ::ng-deep {
+        .mat-slide-toggle-bar {
+          width: 106px;
+          height: 36px;
+          border-radius: 30px;
+          margin-right: 0;
+          background-color: rgba($m-gray, .5);
+          transition: all 0ms linear;
+          transition-delay: 0ms;          
+        }
+
+        .mat-slide-toggle-thumb-container {
+          width: 30px;
+          height: 30px;
+          top: 3px;
+          left: 3px;
+          z-index: 2;
+          transition: all 400ms linear;
+        }
+
+        .mat-slide-toggle-thumb {
+          width: 30px;
+          height: 30px;
+          transition: all 50ms linear;
+          transition-delay: 0ms;
+          transition-property: background-color;
+          z-index: 2;
+        }
+
+        .mat-ripple-element {
+          visibility: hidden;
+          background-color: $m-gray;
+        }
+
+        .mat-slide-toggle.mat-checked { 
+          .mat-slide-toggle-bar {
+            background: $m-orange-gradient-270;
+          }
+
+          .mat-slide-toggle-thumb-container {
+            transform: translate3d(70px, 0, 0);
+            transition: all 400ms linear;
+            transition-delay: 0ms;
+          }
+
+          .mat-slide-toggle-thumb {
+            background-color: $m-marley;
+          }
+
+          .mat-ripple-element {
+            visibility: hidden;
+            background-color: $m-gray;
+          }
+
+          .mat-slide-toggle-content {
+            margin-left: 12px;
+          }
+        }
+
+        .mat-slide-toggle-content {
+          position: absolute;
+          margin-left: 62px;
+          color: $m-marley;
+          z-index: 1;
+          font-size: 18px;
+          transition: all 400ms linear;
+          transition-delay: 0ms;
+          -webkit-touch-callout: none; /* iOS Safari */
+            -webkit-user-select: none; /* Safari */
+             -khtml-user-select: none; /* Konqueror HTML */
+               -moz-user-select: none; /* Old versions of Firefox */
+                -ms-user-select: none; /* Internet Explorer/Edge */
+                    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+        }
+
+        .mat-slide-toggle-ripple {
+          top: calc(50% - 20px);
+          left: calc(50% - 20px);
+          height: 40px;
+          width: 40px;
+        }
+      }
+    }
+
     .footer {
       @extend .m-flex-row;
       justify-content: flex-end;
