@@ -1,6 +1,7 @@
-import { ISensor } from './../sensor/sensor.model';
-import { IDocument } from '../shared/models/backend.model';
+import { IRelayPopulated } from 'src/app/relay/relay.model';
 import { IProject, IProjectPopulated } from '../project/project.model';
+import { IDocument } from '../shared/models/backend.model';
+import { ISensorPopulated } from './../sensor/sensor.model';
 
 export interface IThing extends IDocument {
   name: string;
@@ -10,7 +11,8 @@ export interface IThing extends IDocument {
 
 export type IThingPopulated = Pick<IThing, Exclude<keyof IThing, 'project'>> & {
   project: IProjectPopulated;
-  sensors: ISensor[];
+  sensors: ISensorPopulated[];
+  relays: IRelayPopulated[];
 };
 
 export interface IBoard extends IDocument {
