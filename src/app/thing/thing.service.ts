@@ -1,12 +1,14 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-
-import { BaseService } from 'src/app/shared/services/base.service';
-import { IResponse } from '../shared/models/backend.model';
-import { IThing, IBoard, IThingPopulated } from './thing.model';
+import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { finalize, takeUntil } from 'rxjs/operators';
+import { BaseService } from 'src/app/shared/services/base.service';
+import { SocketIOService } from 'src/app/shared/socket-io/socket-io.service';
+import { IResponse } from '../shared/models/backend.model';
 import { BoardCredentialsDialogComponent } from './components/board-credentials-dialog/board-credentials-dialog.component';
+import { IBoard, IBoardStatus, IThing, IThingPopulated } from './thing.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,8 @@ export class ThingService extends BaseService {
   constructor(
     http: HttpClient,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private socketIOService: SocketIOService
     ) {
     super('project/:0/thing', http);
   }
@@ -80,6 +83,20 @@ export class ThingService extends BaseService {
     catch (e) {
       throw e;
     }
+  }
+
+  public async getBoardStatus(projectId: string, thingId: string): Promise<Observable<IBoardStatus>> {
+    const status = await this.http.get<IResponse>(`${this.getUrl(projectId)}/${thingId}/board`).toPromise();
+
+    const status$ = new BehaviorSubject<IBoardStatus>(status ? status.data : null);
+    const unsubscribeStatus$ = new Subject<void>();
+    status$.pipe(finalize(() => { unsubscribeStatus$.next(); unsubscribeStatus$.complete(); }));
+
+    this.socketIOService.on('board_status').pipe(takeUntil(unsubscribeStatus$)).subscribe((data) => {
+      status$.next(data);
+    });
+
+    return status$.asObservable();
   }
 
 }

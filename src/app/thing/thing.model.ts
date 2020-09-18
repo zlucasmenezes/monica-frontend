@@ -18,3 +18,8 @@ export type IThingPopulated = Pick<IThing, Exclude<keyof IThing, 'project'>> & {
 export interface IBoard extends IDocument {
   password: string;
 }
+
+export interface IBoardStatus {
+  board: string;
+  status: boolean;
+}

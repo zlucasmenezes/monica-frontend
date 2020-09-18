@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReplaySubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { IProjectPopulated } from 'src/app/project/project.model';
 import { ProjectService } from 'src/app/project/project.service';
@@ -15,6 +15,7 @@ import { IThingPopulated } from '../../thing.model';
 import { ThingService } from '../../thing.service';
 import { ISensorPopulated } from './../../../sensor/sensor.model';
 import { SensorService } from './../../../sensor/sensor.service';
+import { IBoardStatus } from './../../thing.model';
 
 @Component({
   selector: 'm-thing-details',
@@ -36,6 +37,8 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
   public relaysMenuItems: ReplaySubject<ICardMenuItem[]> = new ReplaySubject<ICardMenuItem[]>(1);
   public relaysFilter = new FormControl();
 
+  public boardStatus;
+
   private onDestroy: Subject<void> = new Subject<void>();
 
   constructor(
@@ -52,6 +55,8 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
+    this.subscribeBoardStatus();
+
     this.project = await this.getProject();
     this.thing = await this.getThing();
 
@@ -96,6 +101,16 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
 
   private async getRelays(): Promise<IRelayPopulated[]> {
     return await this.relayService.getRelays(this.getProjectId(), this.getThingId());
+  }
+
+  public async subscribeBoardStatus(): Promise<void> {
+    const status$ = await this.thingService.getBoardStatus(this.getProjectId(), this.getThingId());
+
+    status$.pipe(map((status: IBoardStatus) => {
+      return status.status;
+    })).subscribe(status => {
+      this.boardStatus = status;
+    });
   }
 
   public subscribeSensorsMenuItems(): void {

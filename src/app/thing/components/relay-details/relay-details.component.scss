@@ -166,6 +166,8 @@
   }
 
   .chart-container {
+    @extend .m-flex-row;
+    align-items: center;
     width: 100%;
     margin: 10px 5px;
     margin-right: -54%;
