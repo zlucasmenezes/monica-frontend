@@ -60,7 +60,7 @@ export class RelayDetailsComponent implements OnInit, OnDestroy {
   public getTSFromNow(): void {
     interval(1000).pipe(takeUntil(this.onDestroy))
     .subscribe(() => {
-      if (this.value) { this.tsFromNow = dateUtils.fromNow(this.value.ts); }
+      if (this.value && this.value.ts) { this.tsFromNow = dateUtils.fromNow(this.value.ts); }
       else { this.tsFromNow = '—'; }
     });
   }
