@@ -37,7 +37,7 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
   public relaysMenuItems: ReplaySubject<ICardMenuItem[]> = new ReplaySubject<ICardMenuItem[]>(1);
   public relaysFilter = new FormControl();
 
-  public boardStatus;
+  public boardStatus: boolean;
 
   private onDestroy: Subject<void> = new Subject<void>();
 
@@ -106,9 +106,8 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
   public async subscribeBoardStatus(): Promise<void> {
     const status$ = await this.thingService.getBoardStatus(this.getProjectId(), this.getThingId());
 
-    status$.pipe(map((status: IBoardStatus) => {
-      return status.status;
-    })).subscribe(status => {
+    status$.pipe(takeUntil(this.onDestroy), map((status: IBoardStatus) => status.status))
+    .subscribe(status => {
       this.boardStatus = status;
     });
   }

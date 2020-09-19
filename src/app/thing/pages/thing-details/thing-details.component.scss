@@ -1,5 +1,26 @@
 @import 'src/styles/styles.scss';
 
+.board-status {
+  position: sticky;
+  z-index: 2;
+  margin: -10px 10px -22px auto;
+  top: 10px;
+  padding: 6px 8px;
+  background: $m-red-gradient-60;
+  border-radius: $m-mini-border-radius;
+  transition: linear 2s all;
+
+  &.blink {
+    animation: blink 1s linear infinite;
+  }
+
+  span {
+    color: $m-marley;
+    font-size: 15px;
+    font-weight: 400;
+  }
+}
+
 m-card {
   .card-body {
     @extend .m-flex-column;
@@ -26,5 +47,20 @@ m-card {
     .card-body {
       padding: 0 20px;
     }
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }

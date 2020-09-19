@@ -19,16 +19,19 @@ import dateUtils from 'src/app/shared/utils/date-utils';
 export class RelayDetailsComponent implements OnInit, OnDestroy {
 
   @Input() relay: IRelayPopulated;
+  @Input() disabled: boolean;
 
   public value: ITSValue;
   public tsFromNow = '—';
 
   private onDestroy: Subject<void> = new Subject<void>();
 
-  chartData: ChartDataSets[];
-  chartLabels: Label[];
-  chartOptions: ChartOptions;
-  chartColors: Color[];
+  public chartData: ChartDataSets[];
+  public chartLabels: Label[];
+  public chartOptions: ChartOptions;
+  public chartColors: Color[];
+
+  public loaded = false;
 
   constructor(
     private relayService: RelayService
@@ -50,6 +53,8 @@ export class RelayDetailsComponent implements OnInit, OnDestroy {
         this.addDataPoint(value.value, moment(value.ts));
       }
     });
+
+    this.loaded = true;
   }
 
   public getTSFromNow(): void {
@@ -61,9 +66,15 @@ export class RelayDetailsComponent implements OnInit, OnDestroy {
   }
 
   public toggleRelay(event: MatSlideToggleChange): void {
-    event.source.writeValue(this.value.value);
+    if (this.value) {
+      event.source.writeValue(this.value.value);
 
-    this.relayService.insertTSData(this.relay.thing.project._id, this.relay.thing._id, this.relay._id, !this.value.value);
+      this.relayService.insertTSData(this.relay.thing.project._id, this.relay.thing._id, this.relay._id, !this.value.value);
+    } else {
+      event.source.writeValue(false);
+
+      this.relayService.insertTSData(this.relay.thing.project._id, this.relay.thing._id, this.relay._id, true );
+    }
   }
 
   private initChart() {

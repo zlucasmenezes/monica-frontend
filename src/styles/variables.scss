@@ -4,6 +4,7 @@ $m-dark-orange: #fe500eff;
 $m-green: #55dd3dff;
 $m-purple: #8a05beff;
 $m-blue: #10a5f5ff;
+$m-red: #ea1d2cff;
 
 $m-marley: #f7f7f7ff;
 
@@ -12,8 +13,9 @@ $m-orange-gradient-90: linear-gradient(90deg, $m-orange, $m-dark-orange);
 $m-orange-gradient-180: linear-gradient(180deg, $m-orange, $m-dark-orange);
 $m-orange-gradient-270: linear-gradient(270deg, $m-orange, $m-dark-orange);
 
-$m-gray: #333333;
+$m-red-gradient-60: linear-gradient(60deg, $m-red, darken($m-red, 5));
 
+$m-gray: #333333;
 $m-gray-gradient-270: linear-gradient(270deg, rgba($m-gray, .5), rgba($m-gray, .3));
 
 $m-shadow-1: 0px 10px 15px 0px rgba($m-gray, 0.5);

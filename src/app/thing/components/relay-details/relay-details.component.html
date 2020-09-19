@@ -19,10 +19,11 @@
 
     <div class="spacer"></div>
 
-    <div class="slide" *ngIf="value">
+    <div class="slide" *ngIf="loaded">
       <mat-slide-toggle
-      [checked]="value.value"
-      (change)="toggleRelay($event)">
+      [checked]="value?.value"
+      (change)="toggleRelay($event)"
+      [disabled]="disabled">
       <mat-icon class="slide-toggle-icon">
         {{ value?.value ? 'power' : 'power_off' }}
       </mat-icon>

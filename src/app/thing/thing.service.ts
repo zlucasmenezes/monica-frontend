@@ -35,7 +35,7 @@ export class ThingService extends BaseService {
       });
 
       dialogRef.afterClosed().subscribe(() => {
-        this.router.navigate([`/project/${thing.project}/thing/${(board.data as IBoard)._id}/sensor/create`]);
+        this.router.navigate([`/project/${thing.project}/thing/${(board.data as IBoard)._id}`]);
       });
     }
     catch (e) {
