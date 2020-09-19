@@ -1,12 +1,12 @@
-import { IThingPopulated } from '../thing/thing.model';
 import { IDocument } from '../shared/models/backend.model';
-import { IThing } from '../thing/thing.model';
+import { IThing, IThingPopulated } from '../thing/thing.model';
 
 export interface IRelay extends IDocument {
   name: string;
   thing: IThing['_id'];
   pin: number;
   store: boolean;
+  nc: boolean;
 }
 
 export type IRelayPopulated = Pick<IRelay, Exclude<keyof IRelay, 'thing'>> & {

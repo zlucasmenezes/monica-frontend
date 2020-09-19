@@ -48,6 +48,7 @@ export class RelayCreateComponent implements OnInit {
     this.form = this.fb.group({
       name: [relay ? relay.name ? relay.name : null : null, [Validators.required, Validators.maxLength(64)]],
       pin: [relay ? relay.pin ? relay.pin : null : null, [Validators.required, Validators.min(1)]],
+      nc: [relay ? relay.nc !== null ? relay.nc : false : false, [Validators.required]],
       store: [relay ? relay.store !== null ? relay.store : true : true, [Validators.required]],
       thing: [this.getThingId(), [Validators.required]],
     });
