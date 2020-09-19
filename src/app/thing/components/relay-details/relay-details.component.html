@@ -31,7 +31,7 @@
     </div>
 
     <div class="value">
-      <span>{{ value?.value ? 'ON' : 'OFF' }}</span>
+      <span>{{ value?.value ? 'ON' : value?.value === false ? 'OFF' : 'unknown' }}</span>
     </div>
   
     <div class="footer" *ngIf="value">

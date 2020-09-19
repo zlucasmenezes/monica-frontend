@@ -25,7 +25,7 @@
     <div class="spacer"></div>
   
     <div class="value">
-      <span>{{ value?.value }}</span>
+      <span>{{ value?.value !== null ? value.value : 'unknown' }}</span>
     </div>
   
     <div class="footer" *ngIf="value">
