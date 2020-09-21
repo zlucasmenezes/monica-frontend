@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ChartDataSets, ChartOptions } from 'chart.js';
-import * as moment from 'moment';
+import * as dayjs from 'dayjs';
 import { Color, Label } from 'ng2-charts';
 import { interval, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -47,7 +47,7 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
     value$.pipe(takeUntil(this.onDestroy)).subscribe(value => {
       this.value = value;
       if (value) {
-        this.addDataPoint(value.value, moment(value.ts));
+        this.addDataPoint(value.value, dayjs(value.ts));
       }
     });
   }
@@ -70,7 +70,7 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
     this.chartColors = chartUtils.getSingleDeviceColors();
   }
 
-  private addDataPoint(y: any, x: moment.Moment) {
+  private addDataPoint(y: any, x: dayjs.Dayjs) {
     this.chartData[0].data.push(y);
     this.chartLabels.push(x.toString());
 

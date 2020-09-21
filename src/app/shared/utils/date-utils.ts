@@ -1,4 +1,7 @@
-import * as moment from 'moment';
+import * as dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+
+dayjs.extend(duration);
 
 class DateUtils {
 
@@ -6,22 +9,22 @@ class DateUtils {
     if (!milliseconds) { return; }
 
     if (milliseconds < 60000) {
-      const seconds = Math.round(moment.duration(milliseconds, 'milliseconds').asSeconds()
+      const seconds = Math.round(dayjs.duration(milliseconds, 'milliseconds').asSeconds()
       * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces);
       return `${seconds} ${seconds === 1 ? 'second' : 'seconds'}`;
     }
     if (milliseconds < 60 * 60000) {
-      const minutes = Math.round(moment.duration(milliseconds, 'milliseconds').asMinutes()
+      const minutes = Math.round(dayjs.duration(milliseconds, 'milliseconds').asMinutes()
       * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces);
       return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`;
     }
     if (milliseconds < 24 * 60 * 60000) {
-      const hours = Math.round(moment.duration(milliseconds, 'milliseconds').asHours()
+      const hours = Math.round(dayjs.duration(milliseconds, 'milliseconds').asHours()
       * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces);
       return `${hours} ${hours === 1 ? 'hour' : 'hours'}`;
     }
 
-    const days = Math.round(moment.duration(milliseconds, 'milliseconds').asDays()
+    const days = Math.round(dayjs.duration(milliseconds, 'milliseconds').asDays()
     * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces);
     return `${days} ${days === 1 ? 'day' : 'days'}`;
   }
@@ -29,25 +32,25 @@ class DateUtils {
   public fromNow(milliseconds: number): string {
     if (!milliseconds) { return; }
 
-    const millisecondsFromNow = moment().diff(moment(milliseconds), 'ms');
+    const millisecondsFromNow = dayjs().diff(dayjs(milliseconds), 'ms');
 
     if (millisecondsFromNow < 1000) {
       return `updated now`;
     }
     if (millisecondsFromNow < 60000) {
-      const seconds = Math.floor(moment.duration(millisecondsFromNow, 'milliseconds').asSeconds());
+      const seconds = Math.floor(dayjs.duration(millisecondsFromNow, 'milliseconds').asSeconds());
       return `${seconds} ${seconds === 1 ? 'second ago' : 'seconds ago'}`;
     }
     if (millisecondsFromNow < 60 * 60000) {
-      const minutes = Math.floor(moment.duration(millisecondsFromNow, 'milliseconds').asMinutes());
+      const minutes = Math.floor(dayjs.duration(millisecondsFromNow, 'milliseconds').asMinutes());
       return `about ${minutes} ${minutes === 1 ? 'minute ago' : 'minutes ago'}`;
     }
     if (millisecondsFromNow < 24 * 60 * 60000) {
-      const hours = Math.floor(moment.duration(millisecondsFromNow, 'milliseconds').asHours());
+      const hours = Math.floor(dayjs.duration(millisecondsFromNow, 'milliseconds').asHours());
       return `about ${hours} ${hours === 1 ? 'hour ago' : 'hours ago'}`;
     }
 
-    const days = Math.floor(moment.duration(millisecondsFromNow, 'milliseconds').asDays());
+    const days = Math.floor(dayjs.duration(millisecondsFromNow, 'milliseconds').asDays());
     return `about ${days} ${days === 1 ? 'day ago' : 'days ago'}`;
   }
 }
