@@ -5,6 +5,7 @@ export interface IRelay extends IDocument {
   name: string;
   thing: IThing['_id'];
   pin: number;
+  button: number;
   store: boolean;
   nc: boolean;
 }

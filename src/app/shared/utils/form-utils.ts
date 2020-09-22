@@ -1,4 +1,4 @@
-import { ValidationErrors, FormGroup, AbstractControl } from '@angular/forms';
+import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
 
 class FormUtils {
 
@@ -14,6 +14,7 @@ class FormUtils {
     if (errors.min) { error = `minimum ${control} is ${errors.min.min}`; }
     if (errors.max) { error = `maximum ${control} is ${errors.max.max}`; }
     if (errors.code) { error = `${errors.error}`; }
+    if (errors.pin) { error = `${errors.error}`; }
 
     return error.charAt(0).toUpperCase() + error.slice(1);
   }

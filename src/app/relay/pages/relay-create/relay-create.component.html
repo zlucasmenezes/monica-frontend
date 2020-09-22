@@ -64,6 +64,26 @@
         <mat-checkbox formControlName="store" [labelPosition]="'before'">store data</mat-checkbox>
       </div> -->
 
+      <h4>BUTTON</h4>
+
+      <div class="m-form-field" style="margin-top: -15px;">
+        <mat-icon class="m-field-icon">videogame_asset</mat-icon>
+    
+        <mat-form-field floatLabel='never'>
+          <input
+          matInput
+          formControlName="button"
+          type="number"
+          min="1"
+          placeholder="pin">
+          
+          <mat-error *ngIf="form.get('button').invalid">
+            <mat-icon>info_outline</mat-icon>
+            <span>{{ getError('button') }}</span>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
       <div class="m-btn-area">
         <button *ngIf="!loading" mat-button type="submit">{{ relayId ? 'EDIT' : 'ADD' }}</button>
         <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
