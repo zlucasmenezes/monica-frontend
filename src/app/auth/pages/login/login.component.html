@@ -1,59 +1,45 @@
 <m-auth-page-container>
-
   <m-auth-card [title]="'login'">
-
     <form class="form" [formGroup]="form" (submit)="login()">
-      
       <div class="m-form-field">
         <mat-icon class="m-field-icon">face</mat-icon>
 
-        <mat-form-field floatLabel='never'>
-          <input
-          matInput
-          formControlName="username"
-          type="text"
-          placeholder="username"
-          oninput="value = value.toLowerCase()">
-          
+        <mat-form-field floatLabel="never">
+          <input matInput formControlName="username" type="text" placeholder="username" oninput="value = value.toLowerCase()" />
+
           <mat-error *ngIf="form.get('username').invalid">
             <mat-icon>info_outline</mat-icon>
-            <span>{{getError('username')}}</span>
+            <span>{{ getError('username') }}</span>
           </mat-error>
         </mat-form-field>
       </div>
-      
+
       <div class="m-form-field">
         <mat-icon class="m-field-icon">lock</mat-icon>
 
-        <mat-form-field floatLabel='never'>
-          <input
-          formControlName="password"
-          matInput
-          placeholder="password"
-          [type]="hidePassword ? 'password' : 'text'">
+        <mat-form-field floatLabel="never">
+          <input formControlName="password" matInput placeholder="password" [type]="hidePassword ? 'password' : 'text'" />
 
-          <button
-          type="button"
-          mat-icon-button
-          matSuffix
-          (click)="hidePassword = !hidePassword">
+          <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
             <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
           </button>
 
           <mat-error *ngIf="form.get('password').invalid">
             <mat-icon>info_outline</mat-icon>
-            <span>{{getError('password')}}</span>
+            <span>{{ getError('password') }}</span>
           </mat-error>
         </mat-form-field>
       </div>
 
       <div class="m-btn-area">
         <button *ngIf="!loading" mat-button type="submit">LET'S GO</button>
-        <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+        <div *ngIf="loading" class="lds-ellipsis">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
       </div>
-
     </form>
-
   </m-auth-card>
-
 </m-auth-page-container>

@@ -1,25 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
+import { MRoute } from '../shared/models/angular.model';
 import { LoginComponent } from './pages/login/login.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
-import { MRoute } from '../shared/models/angular.model';
-
 
 const routes: MRoute[] = [
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     path: 'signup',
-    component: SignUpComponent
-  }
+    component: SignUpComponent,
+  },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(routes)
-  ]
+  imports: [RouterModule.forChild(routes)],
 })
-export class AuthRoutes { }
+export class AuthRoutes {}

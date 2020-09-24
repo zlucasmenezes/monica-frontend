@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AuthPageContainerComponent } from './auth-page-container.component';
 
 describe('AuthPageContainerComponent', () => {
@@ -8,9 +7,8 @@ describe('AuthPageContainerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AuthPageContainerComponent ]
-    })
-    .compileComponents();
+      declarations: [AuthPageContainerComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

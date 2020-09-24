@@ -1,4 +1,4 @@
-.m-dialog {  
+.m-dialog {
   position: relative !important;
   max-width: 80vw;
   max-height: 80vh;
@@ -6,7 +6,7 @@
   .mat-dialog-container {
     @extend .m-box-shadow-1;
     padding: 20px 20px 24px;
-    border-left: 5px solid $m-orange;    
+    border-left: 5px solid $m-orange;
     border-radius: $m-border-radius;
     background-color: $m-marley;
 
@@ -29,10 +29,10 @@
 
     mat-icon {
       height: 18px;
-      width:  18px;
+      width: 18px;
       font-size: 18px;
       margin-top: -9px;
-      color: rgba($m-gray, .5);
+      color: rgba($m-gray, 0.5);
     }
   }
 }
@@ -41,7 +41,7 @@
   @extend .m-dialog;
 
   .mat-dialog-container {
-    border-left: 5px solid $m-dark-orange;    
+    border-left: 5px solid $m-dark-orange;
   }
 }
 

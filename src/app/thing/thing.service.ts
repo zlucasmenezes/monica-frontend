@@ -11,16 +11,10 @@ import { BoardCredentialsDialogComponent } from './components/board-credentials-
 import { IBoard, IBoardStatus, IThing, IThingPopulated } from './thing.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ThingService extends BaseService {
-
-  constructor(
-    http: HttpClient,
-    private router: Router,
-    public dialog: MatDialog,
-    private socketIOService: SocketIOService
-    ) {
+  constructor(http: HttpClient, private router: Router, public dialog: MatDialog, private socketIOService: SocketIOService) {
     super('project/:0/thing', http);
   }
 
@@ -31,14 +25,13 @@ export class ThingService extends BaseService {
       const dialogRef = this.dialog.open(BoardCredentialsDialogComponent, {
         data: board?.data,
         panelClass: 'm-dialog',
-        disableClose: true
+        disableClose: true,
       });
 
       dialogRef.afterClosed().subscribe(() => {
         this.router.navigate([`/project/${thing.project}/thing/${(board.data as IBoard)._id}`]);
       });
-    }
-    catch (e) {
+    } catch (e) {
       throw e;
     }
   }
@@ -47,20 +40,20 @@ export class ThingService extends BaseService {
     try {
       const things = await this.http.get<IResponse>(`${this.getUrl(projectId)}`).toPromise();
       return things.data as IThingPopulated[];
-    }
-    catch (e) {
+    } catch (e) {
       throw e;
     }
   }
 
   public async getThing(projectId: string, thingId: string): Promise<IThingPopulated> {
     try {
-      if (!thingId) { return; }
+      if (!thingId) {
+        return;
+      }
 
       const thing = await this.http.get<IResponse>(`${this.getUrl(projectId)}/${thingId}`).toPromise();
       return thing.data as IThingPopulated;
-    }
-    catch (e) {
+    } catch (e) {
       throw e;
     }
   }
@@ -69,8 +62,7 @@ export class ThingService extends BaseService {
     try {
       const editedThing = await this.http.put<IResponse>(`${this.getUrl(thing.project)}/${thingId}`, thing).toPromise();
       this.router.navigate([`/project/${thing.project}/thing`]);
-    }
-    catch (e) {
+    } catch (e) {
       throw e;
     }
   }
@@ -79,8 +71,7 @@ export class ThingService extends BaseService {
     try {
       const types = await this.http.get<IResponse>(`${this.getUrl(projectId)}/types`).toPromise();
       return types.data;
-    }
-    catch (e) {
+    } catch (e) {
       throw e;
     }
   }
@@ -90,13 +81,20 @@ export class ThingService extends BaseService {
 
     const status$ = new BehaviorSubject<IBoardStatus>(status ? status.data : null);
     const unsubscribeStatus$ = new Subject<void>();
-    status$.pipe(finalize(() => { unsubscribeStatus$.next(); unsubscribeStatus$.complete(); }));
+    status$.pipe(
+      finalize(() => {
+        unsubscribeStatus$.next();
+        unsubscribeStatus$.complete();
+      })
+    );
 
-    this.socketIOService.on('board_status').pipe(takeUntil(unsubscribeStatus$)).subscribe((data) => {
-      status$.next(data);
-    });
+    this.socketIOService
+      .on('board_status')
+      .pipe(takeUntil(unsubscribeStatus$))
+      .subscribe(data => {
+        status$.next(data);
+      });
 
     return status$.asObservable();
   }
-
 }

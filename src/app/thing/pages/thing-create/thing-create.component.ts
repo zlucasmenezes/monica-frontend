@@ -1,23 +1,21 @@
-import { ProjectService } from './../../../project/project.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-
-import formUtils from 'src/app/shared/utils/form-utils';
-import { ThingService } from '../../thing.service';
-import { IProjectPopulated } from 'src/app/project/project.model';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { takeUntil, startWith } from 'rxjs/operators';
-import { IThing, IThingPopulated } from '../../thing.model';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { ReplaySubject, Subject } from 'rxjs';
+import { startWith, takeUntil } from 'rxjs/operators';
+import { IProjectPopulated } from 'src/app/project/project.model';
 import arrayUtils from 'src/app/shared/utils/array-utils';
+import formUtils from 'src/app/shared/utils/form-utils';
+import { IThing, IThingPopulated } from '../../thing.model';
+import { ThingService } from '../../thing.service';
+import { ProjectService } from './../../../project/project.service';
 
 @Component({
   selector: 'm-thing-create',
   templateUrl: './thing-create.component.html',
-  styleUrls: ['./thing-create.component.scss']
+  styleUrls: ['./thing-create.component.scss'],
 })
 export class ThingCreateComponent implements OnInit, OnDestroy {
-
   public form: FormGroup;
   public loading = false;
 
@@ -35,17 +33,12 @@ export class ThingCreateComponent implements OnInit, OnDestroy {
     private thingService: ThingService,
     private activatedRoute: ActivatedRoute,
     private projectService: ProjectService
-    ) { }
+  ) {}
 
   async ngOnInit() {
     this.project = await this.getProject();
-    this.filteredTypes$.next(this.types = arrayUtils.orderBy(await this.getTypes(), 'ASC'));
-    this.initForm(
-      await this.getThing(
-        this.getProjectId(),
-        this.thingId = this.getThingId()
-      )
-    );
+    this.filteredTypes$.next((this.types = arrayUtils.orderBy(await this.getTypes(), 'ASC')));
+    this.initForm(await this.getThing(this.getProjectId(), (this.thingId = this.getThingId())));
     this.subscribeForm();
   }
 
@@ -78,14 +71,18 @@ export class ThingCreateComponent implements OnInit, OnDestroy {
   }
 
   private async subscribeForm() {
-    this.form.get('type').valueChanges.pipe(takeUntil(this.onDestroy), startWith(''))
-    .subscribe((value: string) => {
-      this.filterTypes(value);
-    });
+    this.form
+      .get('type')
+      .valueChanges.pipe(takeUntil(this.onDestroy), startWith(''))
+      .subscribe((value: string) => {
+        this.filterTypes(value);
+      });
   }
 
   public save() {
-    if (!this.validate()) { return; }
+    if (!this.validate()) {
+      return;
+    }
 
     this.loading = true;
 
@@ -102,7 +99,9 @@ export class ThingCreateComponent implements OnInit, OnDestroy {
   }
 
   private validate(): boolean {
-    if (this.form.invalid){ return false; }
+    if (this.form.invalid) {
+      return false;
+    }
     return true;
   }
 
@@ -118,5 +117,4 @@ export class ThingCreateComponent implements OnInit, OnDestroy {
     this.onDestroy.next();
     this.onDestroy.complete();
   }
-
 }

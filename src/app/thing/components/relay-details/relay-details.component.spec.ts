@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { RelayDetailsComponent } from './relay-details.component';
 
 describe('RelayDetailsComponent', () => {
@@ -8,9 +7,8 @@ describe('RelayDetailsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RelayDetailsComponent ]
-    })
-    .compileComponents();
+      declarations: [RelayDetailsComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

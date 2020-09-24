@@ -1,7 +1,5 @@
 <m-auth-page-container>
-
   <div class="signup-container">
-
     <div class="info-container">
       <div class="info">
         <mat-icon>domain</mat-icon>
@@ -30,113 +28,86 @@
     </div>
 
     <m-auth-card [title]="'sign up'">
-
       <form class="form" [formGroup]="form" (submit)="signup()">
-        
         <div class="m-form-field">
           <mat-icon class="m-field-icon">emoji_people</mat-icon>
-  
-          <mat-form-field floatLabel='never'>
-            <input
-            matInput
-            formControlName="firstName"
-            type="text"
-            placeholder="first name">
-            
+
+          <mat-form-field floatLabel="never">
+            <input matInput formControlName="firstName" type="text" placeholder="first name" />
+
             <mat-error *ngIf="form.get('firstName').invalid">
               <mat-icon>info_outline</mat-icon>
-              <span>{{getError('firstName')}}</span>
+              <span>{{ getError('firstName') }}</span>
             </mat-error>
           </mat-form-field>
         </div>
 
         <div class="m-form-field">
           <mat-icon class="m-field-icon">family_restroom</mat-icon>
-  
-          <mat-form-field floatLabel='never'>
-            <input
-            matInput
-            formControlName="lastName"
-            type="text"
-            placeholder="last name">
-            
+
+          <mat-form-field floatLabel="never">
+            <input matInput formControlName="lastName" type="text" placeholder="last name" />
+
             <mat-error *ngIf="form.get('lastName').invalid">
               <mat-icon>info_outline</mat-icon>
-              <span>{{getError('lastName')}}</span>
+              <span>{{ getError('lastName') }}</span>
             </mat-error>
           </mat-form-field>
         </div>
 
         <div class="m-form-field">
           <mat-icon class="m-field-icon">email</mat-icon>
-  
-          <mat-form-field floatLabel='never'>
-            <input
-            matInput
-            formControlName="email"
-            type="email"
-            placeholder="email"
-            oninput="value = value.toLowerCase()">
-            
+
+          <mat-form-field floatLabel="never">
+            <input matInput formControlName="email" type="email" placeholder="email" oninput="value = value.toLowerCase()" />
+
             <mat-error *ngIf="form.get('email').invalid">
               <mat-icon>info_outline</mat-icon>
-              <span>{{getError('email')}}</span>
+              <span>{{ getError('email') }}</span>
             </mat-error>
           </mat-form-field>
         </div>
 
         <div class="m-form-field">
           <mat-icon class="m-field-icon">face</mat-icon>
-  
-          <mat-form-field floatLabel='never'>
-            <input
-            matInput
-            formControlName="username"
-            type="text"
-            placeholder="username"
-            oninput="value = value.toLowerCase()">
-            
+
+          <mat-form-field floatLabel="never">
+            <input matInput formControlName="username" type="text" placeholder="username" oninput="value = value.toLowerCase()" />
+
             <mat-error *ngIf="form.get('username').invalid">
               <mat-icon>info_outline</mat-icon>
-              <span>{{getError('username')}}</span>
+              <span>{{ getError('username') }}</span>
             </mat-error>
           </mat-form-field>
         </div>
-        
+
         <div class="m-form-field">
           <mat-icon class="m-field-icon">lock</mat-icon>
-  
-          <mat-form-field floatLabel='never'>
-            <input
-            formControlName="password"
-            matInput
-            placeholder="password"
-            [type]="hidePassword ? 'password' : 'text'">
-  
-            <button
-            type="button"
-            mat-icon-button
-            matSuffix
-            (click)="hidePassword = !hidePassword">
+
+          <mat-form-field floatLabel="never">
+            <input formControlName="password" matInput placeholder="password" [type]="hidePassword ? 'password' : 'text'" />
+
+            <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
               <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
-  
+
             <mat-error *ngIf="form.get('password').invalid">
               <mat-icon>info_outline</mat-icon>
-              <span>{{getError('password')}}</span>
+              <span>{{ getError('password') }}</span>
             </mat-error>
           </mat-form-field>
         </div>
-  
+
         <div class="m-btn-area">
           <button *ngIf="!loading" mat-button type="submit">LET'S DO IT</button>
-          <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-        </div>        
-  
-      </form>  
-
+          <div *ngIf="loading" class="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </form>
     </m-auth-card>
-  
   </div>
-
 </m-auth-page-container>

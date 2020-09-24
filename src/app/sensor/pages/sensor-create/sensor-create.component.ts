@@ -19,10 +19,9 @@ import { SensorService } from '../../sensor.service';
 @Component({
   selector: 'm-sensor-create',
   templateUrl: './sensor-create.component.html',
-  styleUrls: ['./sensor-create.component.scss']
+  styleUrls: ['./sensor-create.component.scss'],
 })
 export class SensorCreateComponent implements OnInit, OnDestroy {
-
   public form: FormGroup;
   public loading = false;
 
@@ -44,33 +43,27 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
     private sensorTypeService: SensorTypeService,
     private sensorService: SensorService,
     private thingService: ThingService,
-    private projectService: ProjectService,
-  ) { }
+    private projectService: ProjectService
+  ) {}
 
   async ngOnInit() {
     this.project = await this.getProject();
     this.thing = await this.getThing();
-    this.filteredTypes$.next(this.types = arrayUtils.orderBy(await this.getTypes(), 'ASC', 'type'));
-    this.initForm(
-      await this.getSensor(
-        this.getProjectId(),
-        this.getThingId(),
-        this.sensorId = this.getSensorId()
-      )
-    );
+    this.filteredTypes$.next((this.types = arrayUtils.orderBy(await this.getTypes(), 'ASC', 'type')));
+    this.initForm(await this.getSensor(this.getProjectId(), this.getThingId(), (this.sensorId = this.getSensorId())));
     this.subscribeForm();
   }
 
   private initForm(sensor: ISensorPopulated) {
     this.form = this.fb.group({
-      name: [sensor ? sensor.name ? sensor.name : null : null, [Validators.required, Validators.maxLength(64)]],
-      type: [sensor ? sensor.type ? sensor.type._id : null : null, [Validators.required]],
-      pin: [sensor ? sensor.pin ? sensor.pin : null : null, [Validators.required, Validators.min(1)]],
-      pollTime: [sensor ? sensor.pollTime ? sensor.pollTime : null : null, [Validators.required, Validators.min(1000)]],
-      store: [sensor ? sensor.store !== null ? sensor.store : true : true, [Validators.required]],
+      name: [sensor ? (sensor.name ? sensor.name : null) : null, [Validators.required, Validators.maxLength(64)]],
+      type: [sensor ? (sensor.type ? sensor.type._id : null) : null, [Validators.required]],
+      pin: [sensor ? (sensor.pin ? sensor.pin : null) : null, [Validators.required, Validators.min(1)]],
+      pollTime: [sensor ? (sensor.pollTime ? sensor.pollTime : null) : null, [Validators.required, Validators.min(1000)]],
+      store: [sensor ? (sensor.store !== null ? sensor.store : true) : true, [Validators.required]],
       thing: [this.getThingId(), [Validators.required]],
-      function: [sensor ? sensor.function ? sensor.function : null : null],
-      config: this.fb.array([])
+      function: [sensor ? (sensor.function ? sensor.function : null) : null],
+      config: this.fb.array([]),
     });
 
     if (sensor) {
@@ -78,26 +71,26 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
         (this.form.get('config') as FormArray).push(
           this.fb.group({
             parameter: [param.parameter, Validators.required],
-            value: [param.value, Validators.required]
+            value: [param.value, Validators.required],
           })
         );
       });
 
       this.form.get('type').disable();
     }
-
   }
 
   private async subscribeForm() {
-    this.typeFilter.valueChanges.pipe(takeUntil(this.onDestroy))
-    .subscribe((value: string) => {
+    this.typeFilter.valueChanges.pipe(takeUntil(this.onDestroy)).subscribe((value: string) => {
       this.filterTypes(value);
     });
 
-    this.form.get('type').valueChanges.pipe(takeUntil(this.onDestroy))
-    .subscribe((value: string) => {
-      this.initConfigForm(this.getType(value));
-    });
+    this.form
+      .get('type')
+      .valueChanges.pipe(takeUntil(this.onDestroy))
+      .subscribe((value: string) => {
+        this.initConfigForm(this.getType(value));
+      });
   }
 
   private initConfigForm(sensorType: ISensorType) {
@@ -107,7 +100,7 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
       (this.form.get('config') as FormArray).push(
         this.fb.group({
           parameter: [config.parameter, Validators.required],
-          value: [config.default, Validators.required]
+          value: [config.default, Validators.required],
         })
       );
     });
@@ -170,7 +163,9 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
   }
 
   public save() {
-    if (!this.validate()) { return; }
+    if (!this.validate()) {
+      return;
+    }
 
     this.loading = true;
 
@@ -187,7 +182,9 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
   }
 
   private validate(): boolean {
-    if (this.form.invalid){ return false; }
+    if (this.form.invalid) {
+      return false;
+    }
     return true;
   }
 
@@ -204,5 +201,4 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
     this.onDestroy.next();
     this.onDestroy.complete();
   }
-
 }

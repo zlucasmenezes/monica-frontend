@@ -11,8 +11,12 @@ export function isPinAvailableValidator(unavailablePins: number[]): ValidatorFn 
 }
 
 export function buttonPinValidator(control: AbstractControl): ValidationErrors {
-  if (!control.parent) { return null; }
-  if (!control.parent.get('pin').value) { return null; }
+  if (!control.parent) {
+    return null;
+  }
+  if (!control.parent.get('pin').value) {
+    return null;
+  }
 
   if (control.parent.get('pin').value === control.value) {
     return { pin: true, error: `pin ${control.value} is unavailable` };

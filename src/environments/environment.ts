@@ -9,8 +9,8 @@ export const environment = {
   backend: {
     host: '192.168.5.116',
     port: 3000,
-    path: 'api'
-  }
+    path: 'api',
+  },
 };
 
 /*

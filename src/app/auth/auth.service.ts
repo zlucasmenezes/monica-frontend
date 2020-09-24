@@ -1,25 +1,20 @@
-import { Injectable } from '@angular/core';
-import { BaseService } from 'src/app/shared/services/base.service';
-import { IResponse } from 'src/app/shared/models/backend.model';
-import { ILoginRequest, IToken, ISignUpRequest } from './auth.model';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { IResponse } from 'src/app/shared/models/backend.model';
+import { BaseService } from 'src/app/shared/services/base.service';
 import { SocketIOService } from 'src/app/shared/socket-io/socket-io.service';
+import { ILoginRequest, ISignUpRequest, IToken } from './auth.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService extends BaseService {
-
   private auth = false;
   private tokenData: IToken;
   private expirationTimer: any;
 
-  constructor(
-    http: HttpClient,
-    private router: Router,
-    private socketIOService: SocketIOService
-    ) {
+  constructor(http: HttpClient, private router: Router, private socketIOService: SocketIOService) {
     super('user/auth', http);
   }
 
@@ -27,7 +22,9 @@ export class AuthService extends BaseService {
     try {
       const response = await this.http.post<IResponse>(`${this.getUrl()}/login`, credentials).toPromise();
 
-      if (response.error) { throw response.error; }
+      if (response.error) {
+        throw response.error;
+      }
 
       const tokenData: IToken = response.data as IToken;
       this.tokenData = tokenData;
@@ -38,8 +35,7 @@ export class AuthService extends BaseService {
       this.auth = true;
 
       this.router.navigate(['/']);
-    }
-    catch (e) {
+    } catch (e) {
       throw e;
     }
   }
@@ -48,11 +44,12 @@ export class AuthService extends BaseService {
     try {
       const response = await this.http.post<IResponse>(`${this.getUrl()}/signup`, newUser).toPromise();
 
-      if (response.error) { throw response.error; }
+      if (response.error) {
+        throw response.error;
+      }
 
       this.router.navigate(['/auth/login']);
-    }
-    catch (e) {
+    } catch (e) {
       throw e;
     }
   }
@@ -71,7 +68,9 @@ export class AuthService extends BaseService {
   public autoLogin(): void {
     const tokenData = this.getCredentials();
 
-    if (!tokenData) { return; }
+    if (!tokenData) {
+      return;
+    }
 
     const expirationTime = tokenData.exp - Math.ceil(new Date().getTime() / 1000);
     if (expirationTime > 0) {
@@ -80,8 +79,7 @@ export class AuthService extends BaseService {
 
       this.socketIOService.connect(tokenData);
       this.auth = true;
-    }
-    else {
+    } else {
       this.logout();
     }
   }
@@ -104,7 +102,7 @@ export class AuthService extends BaseService {
     return {
       token: localStorage.getItem('token'),
       userId: localStorage.getItem('userId'),
-      exp: Number(localStorage.getItem('exp'))
+      exp: Number(localStorage.getItem('exp')),
     };
   }
 
@@ -119,5 +117,4 @@ export class AuthService extends BaseService {
       this.logout();
     }, duration * 1000);
   }
-
 }

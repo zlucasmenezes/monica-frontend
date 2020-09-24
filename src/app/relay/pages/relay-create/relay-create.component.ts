@@ -14,10 +14,9 @@ import { RelayService } from '../../relay.service';
 @Component({
   selector: 'm-relay-create',
   templateUrl: './relay-create.component.html',
-  styleUrls: ['./relay-create.component.scss']
+  styleUrls: ['./relay-create.component.scss'],
 })
 export class RelayCreateComponent implements OnInit {
-
   public form: FormGroup;
   public loading = false;
 
@@ -32,31 +31,31 @@ export class RelayCreateComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private relayService: RelayService,
     private thingService: ThingService,
-    private projectService: ProjectService,
-  ) { }
+    private projectService: ProjectService
+  ) {}
 
   async ngOnInit() {
     this.project = await this.getProject();
     this.thing = await this.getThing();
 
-    this.initForm(
-      this.relay = await this.getRelay(
-        this.getProjectId(),
-        this.getThingId(),
-        this.relayId = this.getRelayId()
-      )
-    );
+    this.initForm((this.relay = await this.getRelay(this.getProjectId(), this.getThingId(), (this.relayId = this.getRelayId()))));
     this.subscribeForm();
   }
 
   private initForm(relay: IRelayPopulated) {
     // tslint:disable: max-line-length
     this.form = this.fb.group({
-      name: [relay ? relay.name ? relay.name : null : null, [Validators.required, Validators.maxLength(64)]],
-      pin: [relay ? relay.pin ? relay.pin : null : null, [Validators.required, Validators.min(1), isPinAvailableValidator(this.getUnavailablePins(this.thing))]],
-      nc: [relay ? relay.nc !== null ? relay.nc : false : false, [Validators.required]],
-      store: [relay ? relay.store !== null ? relay.store : true : true, [Validators.required]],
-      button: [relay ? relay.button ? relay.button : null : null, [Validators.min(1), isPinAvailableValidator(this.getUnavailablePins(this.thing)), buttonPinValidator]],
+      name: [relay ? (relay.name ? relay.name : null) : null, [Validators.required, Validators.maxLength(64)]],
+      pin: [
+        relay ? (relay.pin ? relay.pin : null) : null,
+        [Validators.required, Validators.min(1), isPinAvailableValidator(this.getUnavailablePins(this.thing))],
+      ],
+      nc: [relay ? (relay.nc !== null ? relay.nc : false) : false, [Validators.required]],
+      store: [relay ? (relay.store !== null ? relay.store : true) : true, [Validators.required]],
+      button: [
+        relay ? (relay.button ? relay.button : null) : null,
+        [Validators.min(1), isPinAvailableValidator(this.getUnavailablePins(this.thing)), buttonPinValidator],
+      ],
       thing: [this.getThingId(), [Validators.required]],
     });
   }
@@ -92,14 +91,15 @@ export class RelayCreateComponent implements OnInit {
   }
 
   private getUnavailablePins(thing: IThingPopulated): number[] {
-    return [
-      ...thing.relays.map(relay => relay.pin),
-      ...thing.sensors.map(sensor => sensor.pin)
-    ].filter(pin => pin !== (this.relay ? this.relay.pin : null));
+    return [...thing.relays.map(relay => relay.pin), ...thing.sensors.map(sensor => sensor.pin)].filter(
+      pin => pin !== (this.relay ? this.relay.pin : null)
+    );
   }
 
   public save() {
-    if (!this.validate()) { return; }
+    if (!this.validate()) {
+      return;
+    }
 
     this.loading = true;
 
@@ -116,12 +116,13 @@ export class RelayCreateComponent implements OnInit {
   }
 
   private validate(): boolean {
-    if (this.form.invalid) { return false; }
+    if (this.form.invalid) {
+      return false;
+    }
     return true;
   }
 
   public getError(control: string): string {
     return formUtils.getError(this.form, control);
   }
-
 }

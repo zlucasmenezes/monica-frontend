@@ -5,13 +5,10 @@ import { IResponse } from '../shared/models/backend.model';
 import { ISensorType } from './sensor.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SensorTypeService extends BaseService {
-
-  constructor(
-    http: HttpClient
-    ) {
+  constructor(http: HttpClient) {
     super('sensortype', http);
   }
 
@@ -19,10 +16,8 @@ export class SensorTypeService extends BaseService {
     try {
       const types = await this.http.get<IResponse>(`${this.getUrl()}`).toPromise();
       return types.data;
-    }
-    catch (e) {
+    } catch (e) {
       throw e;
     }
   }
-
 }

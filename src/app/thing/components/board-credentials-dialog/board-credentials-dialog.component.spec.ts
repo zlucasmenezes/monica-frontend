@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { BoardCredentialsDialogComponent } from './board-credentials-dialog.component';
 
 describe('BoardCredentialsDialogComponent', () => {
@@ -8,9 +7,8 @@ describe('BoardCredentialsDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BoardCredentialsDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [BoardCredentialsDialogComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

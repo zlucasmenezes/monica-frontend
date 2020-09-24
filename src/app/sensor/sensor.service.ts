@@ -10,15 +10,10 @@ import { SocketIOService } from './../shared/socket-io/socket-io.service';
 import { ISensor, ISensorPopulated } from './sensor.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SensorService extends BaseService {
-
-  constructor(
-    http: HttpClient,
-    private router: Router,
-    private socketIOService: SocketIOService
-    ) {
+  constructor(http: HttpClient, private router: Router, private socketIOService: SocketIOService) {
     super('project/:0/thing/:1/sensor', http);
   }
 
@@ -26,8 +21,7 @@ export class SensorService extends BaseService {
     try {
       await this.http.post<IResponse>(`${this.getUrl(projectId, sensor.thing)}`, sensor).toPromise();
       this.router.navigate([`project/${projectId}/thing/${sensor.thing}`]);
-    }
-    catch (e) {
+    } catch (e) {
       throw e;
     }
   }
@@ -36,8 +30,7 @@ export class SensorService extends BaseService {
     try {
       const types = await this.http.get<IResponse>(`${this.getUrl(projectId)}/types`).toPromise();
       return types.data;
-    }
-    catch (e) {
+    } catch (e) {
       throw e;
     }
   }
@@ -46,20 +39,20 @@ export class SensorService extends BaseService {
     try {
       const sensors = await this.http.get<IResponse>(`${this.getUrl(projectId, thingId)}`).toPromise();
       return sensors.data;
-    }
-    catch (e) {
+    } catch (e) {
       throw e;
     }
   }
 
   public async getSensor(projectId: string, thingId: string, sensorId: string): Promise<ISensorPopulated> {
     try {
-      if (!sensorId) { return; }
+      if (!sensorId) {
+        return;
+      }
 
       const sensor = await this.http.get<IResponse>(`${this.getUrl(projectId, thingId)}/${sensorId}`).toPromise();
       return sensor.data;
-    }
-    catch (e) {
+    } catch (e) {
       throw e;
     }
   }
@@ -68,8 +61,7 @@ export class SensorService extends BaseService {
     try {
       const editedSensor = await this.http.put<IResponse>(`${this.getUrl(projectId, sensor.thing)}/${sensorId}`, sensor).toPromise();
       this.router.navigate([`project/${projectId}/thing/${sensor.thing}`]);
-    }
-    catch (e) {
+    } catch (e) {
       throw e;
     }
   }
@@ -79,13 +71,20 @@ export class SensorService extends BaseService {
 
     const value$ = new BehaviorSubject<ITSValue>(value.data ? value.data : null);
     const unsubscribeValue$ = new Subject<void>();
-    value$.pipe(finalize(() => { unsubscribeValue$.next(); unsubscribeValue$.complete(); }));
+    value$.pipe(
+      finalize(() => {
+        unsubscribeValue$.next();
+        unsubscribeValue$.complete();
+      })
+    );
 
-    this.socketIOService.on(sensorId).pipe(takeUntil(unsubscribeValue$)).subscribe((data: ITSValue) => {
-      value$.next(data);
-    });
+    this.socketIOService
+      .on(sensorId)
+      .pipe(takeUntil(unsubscribeValue$))
+      .subscribe((data: ITSValue) => {
+        value$.next(data);
+      });
 
     return value$.asObservable();
   }
-
 }

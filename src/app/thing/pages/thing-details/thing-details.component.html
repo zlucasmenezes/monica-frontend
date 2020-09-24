@@ -1,6 +1,5 @@
 <m-page-container>
-
-  <div [hidden]="boardStatus !== false" class="board-status" [ngClass]="{'blink': boardStatus === false}">
+  <div [hidden]="boardStatus !== false" class="board-status" [ngClass]="{ blink: boardStatus === false }">
     <span>{{ boardStatus ? 'BOARD CONNECTED' : 'BOARD DISCONNECTED' }}</span>
   </div>
 
@@ -19,88 +18,94 @@
     </div>
   </div>
 
-  <m-card [title]="'relays'" [icon]="'emoji_objects'"
-  *ngIf="(relaysFiltered$ | async ) && (relaysFiltered$ | async ).length > 0"
-  [actions]="true"
-  [hideGoTo]="true" [hideEdit]="true" [hideRemove]="true"
-  [showEditMenu]="true" [editMenuItems]="(relaysMenuItems | async)"
-  [showRemoveMenu]="true" [removeMenuItems]="(relaysMenuItems | async)"
-  [disableAdd]="!isAdmin()" [disableEdit]="!isAdmin() || !relays || relays.length === 0" [disableRemove]="true"
-  (add)="addRelay()" (editMenu)="editRelay($event)">
+  <m-card
+    [title]="'relays'"
+    [icon]="'emoji_objects'"
+    *ngIf="(relaysFiltered$ | async) && (relaysFiltered$ | async).length > 0"
+    [actions]="true"
+    [hideGoTo]="true"
+    [hideEdit]="true"
+    [hideRemove]="true"
+    [showEditMenu]="true"
+    [editMenuItems]="relaysMenuItems | async"
+    [showRemoveMenu]="true"
+    [removeMenuItems]="relaysMenuItems | async"
+    [disableAdd]="!isAdmin()"
+    [disableEdit]="!isAdmin() || !relays || relays.length === 0"
+    [disableRemove]="true"
+    (add)="addRelay()"
+    (editMenu)="editRelay($event)"
+  >
     <div class="card-body">
-
       <div class="search">
         <div class="m-form-field">
           <mat-icon class="m-field-icon">search</mat-icon>
-      
-          <mat-form-field floatLabel='never'>
-            <input
-            matInput
-            type="text"
-            placeholder="search"
-            [formControl]="relaysFilter">
-      
-            <button
-            type="button"
-            mat-icon-button
-            matSuffix
-            (click)="relaysFilter.setValue(null); filterRelays('')">
+
+          <mat-form-field floatLabel="never">
+            <input matInput type="text" placeholder="search" [formControl]="relaysFilter" />
+
+            <button type="button" mat-icon-button matSuffix (click)="relaysFilter.setValue(null); filterRelays('')">
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
         </div>
       </div>
 
-      <div class="no-devices" *ngIf="(relaysFiltered$ | async ) && (relaysFiltered$ | async ).length === 0">
+      <div class="no-devices" *ngIf="(relaysFiltered$ | async) && (relaysFiltered$ | async).length === 0">
         <span>NO RELAYS FOUND</span>
       </div>
 
-      <m-relay-details *ngFor="let item of relays"
-      [hidden]="!(relaysFiltered$ | async ).includes(item)"
-      [relay]="item" [disabled]="boardStatus ? !boardStatus : true"></m-relay-details>
+      <m-relay-details
+        *ngFor="let item of relays"
+        [hidden]="!(relaysFiltered$ | async).includes(item)"
+        [relay]="item"
+        [disabled]="boardStatus ? !boardStatus : true"
+      ></m-relay-details>
     </div>
   </m-card>
 
-  <m-card [title]="'sensors'" [icon]="'track_changes'"
-  *ngIf="(sensorsFiltered$ | async ) && (sensorsFiltered$ | async ).length > 0"
-  [actions]="true"
-  [hideGoTo]="true" [hideEdit]="true" [hideRemove]="true"
-  [showEditMenu]="true" [editMenuItems]="(sensorsMenuItems | async)"
-  [showRemoveMenu]="true" [removeMenuItems]="(sensorsMenuItems | async)"
-  [disableAdd]="!isAdmin()" [disableEdit]="!isAdmin() || !sensors || sensors.length === 0" [disableRemove]="true"
-  (add)="addSensor()" (editMenu)="editSensor($event)">
+  <m-card
+    [title]="'sensors'"
+    [icon]="'track_changes'"
+    *ngIf="(sensorsFiltered$ | async) && (sensorsFiltered$ | async).length > 0"
+    [actions]="true"
+    [hideGoTo]="true"
+    [hideEdit]="true"
+    [hideRemove]="true"
+    [showEditMenu]="true"
+    [editMenuItems]="sensorsMenuItems | async"
+    [showRemoveMenu]="true"
+    [removeMenuItems]="sensorsMenuItems | async"
+    [disableAdd]="!isAdmin()"
+    [disableEdit]="!isAdmin() || !sensors || sensors.length === 0"
+    [disableRemove]="true"
+    (add)="addSensor()"
+    (editMenu)="editSensor($event)"
+  >
     <div class="card-body">
-
       <div class="search">
         <div class="m-form-field">
           <mat-icon class="m-field-icon">search</mat-icon>
-      
-          <mat-form-field floatLabel='never'>
-            <input
-            matInput
-            type="text"
-            placeholder="search"
-            [formControl]="sensorsFilter">
-      
-            <button
-            type="button"
-            mat-icon-button
-            matSuffix
-            (click)="sensorsFilter.setValue(null); filterSensors('')">
+
+          <mat-form-field floatLabel="never">
+            <input matInput type="text" placeholder="search" [formControl]="sensorsFilter" />
+
+            <button type="button" mat-icon-button matSuffix (click)="sensorsFilter.setValue(null); filterSensors('')">
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
         </div>
       </div>
 
-      <div class="no-devices" *ngIf="(sensorsFiltered$ | async ) && (sensorsFiltered$ | async ).length === 0">
+      <div class="no-devices" *ngIf="(sensorsFiltered$ | async) && (sensorsFiltered$ | async).length === 0">
         <span>NO SENSORS FOUND</span>
       </div>
 
-      <m-sensor-details *ngFor="let item of sensors"
-      [hidden]="!(sensorsFiltered$ | async ).includes(item)"
-      [sensor]="item"></m-sensor-details>
+      <m-sensor-details
+        *ngFor="let item of sensors"
+        [hidden]="!(sensorsFiltered$ | async).includes(item)"
+        [sensor]="item"
+      ></m-sensor-details>
     </div>
   </m-card>
-
 </m-page-container>

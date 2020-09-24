@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AuthFooterComponent } from './auth-footer.component';
 
 describe('AuthFooterComponent', () => {
@@ -8,9 +7,8 @@ describe('AuthFooterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AuthFooterComponent ]
-    })
-    .compileComponents();
+      declarations: [AuthFooterComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

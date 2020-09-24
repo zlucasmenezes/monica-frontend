@@ -13,10 +13,9 @@ import { SensorService } from './../../../sensor/sensor.service';
 @Component({
   selector: 'm-sensor-details',
   templateUrl: './sensor-details.component.html',
-  styleUrls: ['./sensor-details.component.scss']
+  styleUrls: ['./sensor-details.component.scss'],
 })
 export class SensorDetailsComponent implements OnInit, OnDestroy {
-
   @Input() sensor: ISensorPopulated;
 
   public value: ITSValue;
@@ -29,16 +28,13 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
   chartOptions: ChartOptions;
   chartColors: Color[];
 
-  constructor(
-    private sensorService: SensorService
-  ) { }
+  constructor(private sensorService: SensorService) {}
 
   async ngOnInit(): Promise<void> {
     this.initChart();
 
     this.getTSFromNow();
     this.getValue();
-
   }
 
   public async getValue() {
@@ -53,17 +49,19 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
   }
 
   public getTSFromNow(): void {
-    interval(1000).pipe(takeUntil(this.onDestroy))
-    .subscribe(() => {
-      if (this.value && this.value.ts) { this.tsFromNow = dateUtils.fromNow(this.value.ts); }
-      else { this.tsFromNow = '—'; }
-    });
+    interval(1000)
+      .pipe(takeUntil(this.onDestroy))
+      .subscribe(() => {
+        if (this.value && this.value.ts) {
+          this.tsFromNow = dateUtils.fromNow(this.value.ts);
+        } else {
+          this.tsFromNow = '—';
+        }
+      });
   }
 
   private initChart() {
-    this.chartData = [
-      { data: [], label: this.sensor.name, steppedLine: 'before', fill: false }
-    ];
+    this.chartData = [{ data: [], label: this.sensor.name, steppedLine: 'before', fill: false }];
     this.chartLabels = [];
 
     this.chartOptions = chartUtils.getSingleDeviceOptions(this.sensor.pollTime);
@@ -81,7 +79,9 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
   }
 
   public getPollTime(): string {
-    if (!this.sensor) { return '—'; }
+    if (!this.sensor) {
+      return '—';
+    }
 
     return dateUtils.formatMillis(this.sensor.pollTime);
   }
@@ -90,5 +90,4 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
     this.onDestroy.next();
     this.onDestroy.complete();
   }
-
 }

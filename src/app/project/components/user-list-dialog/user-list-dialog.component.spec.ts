@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { UserListDialogComponent } from './user-list-dialog.component';
 
 describe('UserListDialogComponent', () => {
@@ -8,9 +7,8 @@ describe('UserListDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserListDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [UserListDialogComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

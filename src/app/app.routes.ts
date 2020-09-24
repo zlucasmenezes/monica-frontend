@@ -8,37 +8,37 @@ const routes: MRoute[] = [
   {
     path: 'auth',
     loadChildren: './auth/auth.routes#AuthRoutes',
-    canActivate: [ NoAuthGuard ]
+    canActivate: [NoAuthGuard],
   },
   {
     path: 'project',
     loadChildren: './project/project.routes#ProjectRoutes',
-    canActivate: [ AuthGuard ]
+    canActivate: [AuthGuard],
   },
   {
     path: 'project/:projectId/thing',
     loadChildren: './thing/thing.routes#ThingRoutes',
-    canActivate: [ AuthGuard ]
+    canActivate: [AuthGuard],
   },
   {
     path: 'project/:projectId/thing/:thingId/sensor',
     loadChildren: './sensor/sensor.routes#SensorRoutes',
-    canActivate: [ AuthGuard ]
+    canActivate: [AuthGuard],
   },
   {
     path: 'project/:projectId/thing/:thingId/relay',
     loadChildren: './relay/relay.routes#RelayRoutes',
-    canActivate: [ AuthGuard ]
+    canActivate: [AuthGuard],
   },
   {
     path: '',
     redirectTo: 'project',
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutes { }
+export class AppRoutes {}

@@ -2,95 +2,101 @@ import { ChartOptions } from 'chart.js';
 import { Color } from 'ng2-charts';
 
 class ChartUtils {
-
   private marleyColor = '#f7f7f7';
 
   public getSingleDeviceOptions(stepX?: number, stepY?: number): ChartOptions {
     return {
       responsive: true,
       legend: {
-        display: false
+        display: false,
       },
       tooltips: {
-        displayColors: false
+        displayColors: false,
       },
       elements: {
         line: {
-          borderWidth: 4
-        }
+          borderWidth: 4,
+        },
       },
       scales: {
-        xAxes: [{
-          type: 'time',
-          gridLines: {
-            color: this.marleyColor,
-            lineWidth: .3,
-            zeroLineColor: this.marleyColor,
-            zeroLineWidth: 0
+        xAxes: [
+          {
+            type: 'time',
+            gridLines: {
+              color: this.marleyColor,
+              lineWidth: 0.3,
+              zeroLineColor: this.marleyColor,
+              zeroLineWidth: 0,
+            },
+            ticks: {
+              fontColor: this.marleyColor,
+            },
+            time: {
+              ...this.getUnitStep(stepX ? stepX : null),
+              tooltipFormat: 'YYYY-MM-DD HH:mm:ss',
+              displayFormats: {
+                millisecond: 'MM/DD HH:mm:ss',
+                second: 'MM/DD HH:mm:ss',
+                minute: 'MM/DD HH:mm',
+                hour: 'MM/DD HH',
+                day: 'MM/DD/YY',
+              },
+            },
           },
-          ticks: {
-            fontColor: this.marleyColor
+        ],
+        yAxes: [
+          {
+            gridLines: {
+              color: this.marleyColor,
+              lineWidth: 0.3,
+              zeroLineColor: this.marleyColor,
+              zeroLineWidth: 0.3,
+            },
+            ticks: {
+              fontColor: this.marleyColor,
+              stepSize: stepY,
+            },
           },
-          time: {
-            ... this.getUnitStep(stepX ? stepX : null),
-            tooltipFormat: 'YYYY-MM-DD HH:mm:ss',
-            displayFormats: {
-              millisecond: 'MM/DD HH:mm:ss',
-              second: 'MM/DD HH:mm:ss',
-              minute: 'MM/DD HH:mm',
-              hour: 'MM/DD HH',
-              day: 'MM/DD/YY',
-            }
-          }
-        }],
-        yAxes: [{
-          gridLines: {
-            color: this.marleyColor,
-            lineWidth: .3,
-            zeroLineColor: this.marleyColor,
-            zeroLineWidth: .3
-          },
-          ticks: {
-            fontColor: this.marleyColor,
-            stepSize: stepY,
-          }
-        }]
-      }
+        ],
+      },
     };
   }
 
-  private getUnitStep(stepX?: number): { unit?: Chart.TimeUnit, unitStepSize?: number } {
-    if (stepX === null) { return {}; }
+  private getUnitStep(stepX?: number): { unit?: Chart.TimeUnit; unitStepSize?: number } {
+    if (stepX === null) {
+      return {};
+    }
 
     stepX /= 1000;
 
     if (stepX < 60) {
-      return  { unit: 'second', unitStepSize: stepX } ;
+      return { unit: 'second', unitStepSize: stepX };
     }
     if (stepX < 60 * 60) {
-      return  { unit: 'minute', unitStepSize: stepX / 60 } ;
+      return { unit: 'minute', unitStepSize: stepX / 60 };
     }
     if (stepX < 24 * 60 * 60) {
-      return  { unit: 'hour', unitStepSize: stepX / (60 * 60) } ;
+      return { unit: 'hour', unitStepSize: stepX / (60 * 60) };
     }
 
-    return  { unit: 'day', unitStepSize: stepX / (60 * 60 * 24) } ;
+    return { unit: 'day', unitStepSize: stepX / (60 * 60 * 24) };
   }
 
   public getSingleDeviceColors(): Color[] {
-    return [{
-      backgroundColor: this.marleyColor + '33',
-      borderColor: this.marleyColor,
-      pointBackgroundColor: this.marleyColor,
-      pointBorderColor: this.marleyColor,
-      pointHoverBackgroundColor: this.marleyColor,
-      pointHoverBorderColor: this.marleyColor,
-      pointRadius: 4,
-      pointHoverRadius: 6,
-      pointBorderWidth: 0,
-      pointStyle: 'circle'
-    }];
+    return [
+      {
+        backgroundColor: this.marleyColor + '33',
+        borderColor: this.marleyColor,
+        pointBackgroundColor: this.marleyColor,
+        pointBorderColor: this.marleyColor,
+        pointHoverBackgroundColor: this.marleyColor,
+        pointHoverBorderColor: this.marleyColor,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        pointBorderWidth: 0,
+        pointStyle: 'circle',
+      },
+    ];
   }
-
 }
 export default new ChartUtils();

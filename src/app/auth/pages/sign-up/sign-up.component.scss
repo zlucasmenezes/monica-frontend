@@ -14,7 +14,7 @@
     border-radius: $m-border-radius 0 0 $m-border-radius;
     background: $m-orange-gradient-90;
 
-    .info{
+    .info {
       @extend .m-flex-row;
       justify-content: left;
       align-items: center;
@@ -26,12 +26,12 @@
         margin-right: 10px;
         font-size: 60px;
       }
-      
+
       span {
         color: $m-marley;
         font-weight: 300;
         font-size: 16px;
-      }      
+      }
     }
   }
 

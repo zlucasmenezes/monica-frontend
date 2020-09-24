@@ -1,5 +1,4 @@
 <m-page-container>
-
   <div class="m-parent-page-title">
     <div class="title">
       <mat-icon>domain</mat-icon>
@@ -16,19 +15,13 @@
   </div>
 
   <m-card [title]="relayId ? 'edit relay' : 'new relay'" [icon]="'emoji_objects'">
-
     <form *ngIf="form" [formGroup]="form" (submit)="save()">
-
       <div class="m-form-field">
         <mat-icon class="m-field-icon">visibility</mat-icon>
-    
-        <mat-form-field floatLabel='never'>
-          <input
-          matInput
-          formControlName="name"
-          type="text"
-          placeholder="name">
-          
+
+        <mat-form-field floatLabel="never">
+          <input matInput formControlName="name" type="text" placeholder="name" />
+
           <mat-error *ngIf="form.get('name').invalid">
             <mat-icon>info_outline</mat-icon>
             <span>{{ getError('name') }}</span>
@@ -38,15 +31,10 @@
 
       <div class="m-form-field">
         <mat-icon class="m-field-icon">fiber_pin</mat-icon>
-    
-        <mat-form-field floatLabel='never'>
-          <input
-          matInput
-          formControlName="pin"
-          type="number"
-          min="1"
-          placeholder="pin">
-          
+
+        <mat-form-field floatLabel="never">
+          <input matInput formControlName="pin" type="number" min="1" placeholder="pin" />
+
           <mat-error *ngIf="form.get('pin').invalid">
             <mat-icon>info_outline</mat-icon>
             <span>{{ getError('pin') }}</span>
@@ -66,17 +54,12 @@
 
       <h4>BUTTON</h4>
 
-      <div class="m-form-field" style="margin-top: -15px;">
+      <div class="m-form-field" style="margin-top: -15px">
         <mat-icon class="m-field-icon">videogame_asset</mat-icon>
-    
-        <mat-form-field floatLabel='never'>
-          <input
-          matInput
-          formControlName="button"
-          type="number"
-          min="1"
-          placeholder="pin">
-          
+
+        <mat-form-field floatLabel="never">
+          <input matInput formControlName="button" type="number" min="1" placeholder="pin" />
+
           <mat-error *ngIf="form.get('button').invalid">
             <mat-icon>info_outline</mat-icon>
             <span>{{ getError('button') }}</span>
@@ -86,11 +69,13 @@
 
       <div class="m-btn-area">
         <button *ngIf="!loading" mat-button type="submit">{{ relayId ? 'EDIT' : 'ADD' }}</button>
-        <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-      </div>  
-
+        <div *ngIf="loading" class="lds-ellipsis">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
     </form>
-
   </m-card>
-
 </m-page-container>

@@ -1,5 +1,4 @@
 class SensorUtils {
-
   public getDefaultCode(): string {
     return `/*
   Create a function to calculate the sensor\'s value of interest based on the board pin reading.
@@ -13,6 +12,5 @@ class SensorUtils {
 const result = (value / resolution) * 100;
 return result;`;
   }
-
 }
 export default new SensorUtils();

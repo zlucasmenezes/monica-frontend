@@ -1,5 +1,4 @@
 <m-page-container>
-
   <div class="m-parent-page-title">
     <div class="title">
       <mat-icon>domain</mat-icon>
@@ -21,19 +20,11 @@
   <div class="search">
     <div class="m-form-field">
       <mat-icon class="m-field-icon">search</mat-icon>
-  
-      <mat-form-field floatLabel='never'>
-        <input
-        matInput
-        type="text"
-        placeholder="search"
-        [formControl]="thingsFilter">
-  
-        <button
-        type="button"
-        mat-icon-button
-        matSuffix
-        (click)="thingsFilter.setValue(null); filterThings('')">
+
+      <mat-form-field floatLabel="never">
+        <input matInput type="text" placeholder="search" [formControl]="thingsFilter" />
+
+        <button type="button" mat-icon-button matSuffix (click)="thingsFilter.setValue(null); filterThings('')">
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
@@ -44,13 +35,19 @@
     <span>NO THINGS FOUND</span>
   </div>
 
-  <m-card *ngFor="let item of (thingsFiltered$ | async)"
-  [title]="item.name" [icon]="'emoji_symbols'" [actions]="true"
-  [disableEdit]="!isAdmin()" [disableRemove]="true"
-  [hideAdd]="true"
-  (goTo)="goTo(item)" (edit)="edit(item)" (remove)="remove(item)">
+  <m-card
+    *ngFor="let item of thingsFiltered$ | async"
+    [title]="item.name"
+    [icon]="'emoji_symbols'"
+    [actions]="true"
+    [disableEdit]="!isAdmin()"
+    [disableRemove]="true"
+    [hideAdd]="true"
+    (goTo)="goTo(item)"
+    (edit)="edit(item)"
+    (remove)="remove(item)"
+  >
     <div class="card-body">
-
       <div class="item">
         <div>
           <mat-icon>today</mat-icon>
@@ -81,9 +78,6 @@
           <span>{{ item.relays?.length }} {{ item.relays?.length === 1 ? 'RELAY' : 'RELAYS' }}</span>
         </div>
       </div>
-
-    </div>    
+    </div>
   </m-card>
-
 </m-page-container>
- 

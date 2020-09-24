@@ -1,5 +1,4 @@
 import { browser, by, element } from 'protractor';
-import { allowedNodeEnvironmentFlags } from 'process';
 import { environment } from './../../src/environments/environment';
 
 export class AppPage {

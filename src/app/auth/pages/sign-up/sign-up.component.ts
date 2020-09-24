@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
-
-import { AuthService } from 'src/app/auth/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ISignUpRequest } from 'src/app/auth/auth.model';
+import { AuthService } from 'src/app/auth/auth.service';
 import formUtils from 'src/app/shared/utils/form-utils';
 
 @Component({
   selector: 'm-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss']
+  styleUrls: ['./sign-up.component.scss'],
 })
 export class SignUpComponent implements OnInit {
-
   public form: FormGroup;
   public hidePassword = true;
   public loading = false;
@@ -20,7 +18,7 @@ export class SignUpComponent implements OnInit {
     this.initForm();
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   private initForm(): void {
     this.form = this.fb.group({
@@ -33,16 +31,18 @@ export class SignUpComponent implements OnInit {
   }
 
   public async signup(): Promise<void> {
-    if (this.form.invalid){ return; }
+    if (this.form.invalid) {
+      return;
+    }
 
     this.loading = true;
 
-    this.authService.signup(this.form.value as ISignUpRequest)
-    .finally(() => { this.loading = false; });
+    this.authService.signup(this.form.value as ISignUpRequest).finally(() => {
+      this.loading = false;
+    });
   }
 
   public getError(control: string): string {
     return formUtils.getError(this.form, control);
   }
-
 }

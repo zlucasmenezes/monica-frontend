@@ -1,11 +1,10 @@
-import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { IResponse } from '../models/backend.model';
 
 @Injectable()
 export abstract class BaseService {
-
   private baseUrl: string;
   private url: string;
 
@@ -27,5 +26,4 @@ export abstract class BaseService {
 
     return `${this.baseUrl}/${url}`;
   }
-
 }

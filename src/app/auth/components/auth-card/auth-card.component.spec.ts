@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AuthCardComponent } from './auth-card.component';
 
 describe('AuthCardComponent', () => {
@@ -8,9 +7,8 @@ describe('AuthCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AuthCardComponent ]
-    })
-    .compileComponents();
+      declarations: [AuthCardComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

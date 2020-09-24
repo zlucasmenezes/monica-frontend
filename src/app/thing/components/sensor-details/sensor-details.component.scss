@@ -8,7 +8,7 @@
   border-radius: $m-border-radius;
   margin: 10px 5px;
   margin-right: 35%;
-  color: rgba($m-gray, .7);
+  color: rgba($m-gray, 0.7);
   font-weight: 300;
   background-color: $m-marley;
 
@@ -57,7 +57,7 @@
       @extend .m-flex-row;
       justify-content: flex-end;
       align-items: center;
-      border-top: 1px solid rgba($m-gray, .1);
+      border-top: 1px solid rgba($m-gray, 0.1);
       padding-top: 5px;
       font-size: 12px;
     }

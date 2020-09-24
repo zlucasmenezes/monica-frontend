@@ -10,15 +10,10 @@ import { SocketIOService } from '../shared/socket-io/socket-io.service';
 import { IRelay, IRelayPopulated } from './relay.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RelayService extends BaseService {
-
-  constructor(
-    http: HttpClient,
-    private router: Router,
-    private socketIOService: SocketIOService
-    ) {
+  constructor(http: HttpClient, private router: Router, private socketIOService: SocketIOService) {
     super('project/:0/thing/:1/relay', http);
   }
 
@@ -26,8 +21,7 @@ export class RelayService extends BaseService {
     try {
       await this.http.post<IResponse>(`${this.getUrl(projectId, relay.thing)}`, relay).toPromise();
       this.router.navigate([`project/${projectId}/thing/${relay.thing}`]);
-    }
-    catch (e) {
+    } catch (e) {
       throw e;
     }
   }
@@ -36,20 +30,20 @@ export class RelayService extends BaseService {
     try {
       const relays = await this.http.get<IResponse>(`${this.getUrl(projectId, thingId)}`).toPromise();
       return relays.data;
-    }
-    catch (e) {
+    } catch (e) {
       throw e;
     }
   }
 
   public async getRelay(projectId: string, thingId: string, relayId: string): Promise<IRelayPopulated> {
     try {
-      if (!relayId) { return; }
+      if (!relayId) {
+        return;
+      }
 
       const relay = await this.http.get<IResponse>(`${this.getUrl(projectId, thingId)}/${relayId}`).toPromise();
       return relay.data;
-    }
-    catch (e) {
+    } catch (e) {
       throw e;
     }
   }
@@ -58,8 +52,7 @@ export class RelayService extends BaseService {
     try {
       const editedRelay = await this.http.put<IResponse>(`${this.getUrl(projectId, relay.thing)}/${relayId}`, relay).toPromise();
       this.router.navigate([`project/${projectId}/thing/${relay.thing}`]);
-    }
-    catch (e) {
+    } catch (e) {
       throw e;
     }
   }
@@ -69,22 +62,30 @@ export class RelayService extends BaseService {
 
     const value$ = new BehaviorSubject<ITSValue>(value.data ? value.data : null);
     const unsubscribeValue$ = new Subject<void>();
-    value$.pipe(finalize(() => { unsubscribeValue$.next(); unsubscribeValue$.complete(); }));
+    value$.pipe(
+      finalize(() => {
+        unsubscribeValue$.next();
+        unsubscribeValue$.complete();
+      })
+    );
 
-    this.socketIOService.on(relayId).pipe(takeUntil(unsubscribeValue$)).subscribe((data: ITSValue) => {
-      value$.next(data);
-    });
+    this.socketIOService
+      .on(relayId)
+      .pipe(takeUntil(unsubscribeValue$))
+      .subscribe((data: ITSValue) => {
+        value$.next(data);
+      });
 
     return value$.asObservable();
   }
 
   public async insertTSData(projectId: string, thingId: string, relayId: string, value: boolean): Promise<void> {
     try {
-      this.http.post<IResponse>(`${this.getUrl(projectId, thingId)}/${relayId}/ts`, {value}).toPromise();
-    }
-    catch (e) {
+      this.http
+        .post<IResponse>(`${this.getUrl(projectId, thingId)}/${relayId}/ts`, { value })
+        .toPromise();
+    } catch (e) {
       throw e;
     }
   }
-
 }

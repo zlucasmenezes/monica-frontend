@@ -5,13 +5,7 @@ import { SensorCreateComponent } from './pages/sensor-create/sensor-create.compo
 import { SensorRoutes } from './sensor.routes';
 
 @NgModule({
-  declarations: [
-    SensorCreateComponent,
-    SensorConfigComponent
-  ],
-  imports: [
-    SharedModule,
-    SensorRoutes
-  ]
+  declarations: [SensorCreateComponent, SensorConfigComponent],
+  imports: [SharedModule, SensorRoutes],
 })
-export class SensorModule { }
+export class SensorModule {}

@@ -2,33 +2,22 @@
 <h2 mat-dialog-title>Users</h2>
 
 <div mat-dialog-content>
-
   <div class="m-form-field">
     <mat-icon class="m-field-icon">search</mat-icon>
 
-    <mat-form-field floatLabel='never'>
-      <input
-      matInput
-      type="text"
-      placeholder="search"
-      [formControl]="usersFilter">
+    <mat-form-field floatLabel="never">
+      <input matInput type="text" placeholder="search" [formControl]="usersFilter" />
 
-      <button
-      type="button"
-      mat-icon-button
-      matSuffix
-      (click)="usersFilter.setValue(null); filterUsers('')">
+      <button type="button" mat-icon-button matSuffix (click)="usersFilter.setValue(null); filterUsers('')">
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
   </div>
 
-  <div class="user-info-container"
-  *ngFor="let user of (usersFiltered$ | async)">
-
+  <div class="user-info-container" *ngFor="let user of usersFiltered$ | async">
     <div class="info">
       <div class="photo">
-        <span>{{ getInitials(user) | uppercase }}</span>        
+        <span>{{ getInitials(user) | uppercase }}</span>
       </div>
 
       <div class="name">
@@ -44,13 +33,10 @@
           <span>{{ user.email }}</span>
         </div>
       </div>
-
     </div>
 
     <div class="info email">
       <span>{{ user.email }}</span>
     </div>
-
   </div>
-
 </div>

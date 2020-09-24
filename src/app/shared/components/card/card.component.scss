@@ -1,5 +1,5 @@
 @import 'src/styles/styles.scss';
-    
+
 .card {
   @extend .m-flex-column, .m-box-shadow-1;
   margin: 20px;
@@ -24,7 +24,7 @@
         padding: 25px;
         border-radius: $m-mini-border-radius;
         background: $m-orange-gradient-90;
-  
+
         .mat-icon {
           height: 35px;
           width: 35px;
@@ -42,7 +42,7 @@
           font-weight: 300;
           word-break: break-word;
         }
-      }      
+      }
     }
 
     .card-actions {
@@ -68,7 +68,7 @@
         &.delete {
           order: 1;
           color: $m-dark-orange;
-        }        
+        }
       }
     }
 
@@ -76,7 +76,7 @@
       .card-actions {
         flex-direction: column;
         margin: -10px 15px 0 20px;
-  
+
         div {
           &.go-to {
             order: 1;
@@ -94,6 +94,5 @@
         }
       }
     }
-
   }
 }

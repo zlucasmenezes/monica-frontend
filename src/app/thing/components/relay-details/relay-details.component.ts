@@ -14,10 +14,9 @@ import dateUtils from 'src/app/shared/utils/date-utils';
 @Component({
   selector: 'm-relay-details',
   templateUrl: './relay-details.component.html',
-  styleUrls: ['./relay-details.component.scss']
+  styleUrls: ['./relay-details.component.scss'],
 })
 export class RelayDetailsComponent implements OnInit, OnDestroy {
-
   @Input() relay: IRelayPopulated;
   @Input() disabled: boolean;
 
@@ -33,9 +32,7 @@ export class RelayDetailsComponent implements OnInit, OnDestroy {
 
   public loaded = false;
 
-  constructor(
-    private relayService: RelayService
-  ) { }
+  constructor(private relayService: RelayService) {}
 
   async ngOnInit(): Promise<void> {
     this.initChart();
@@ -58,11 +55,15 @@ export class RelayDetailsComponent implements OnInit, OnDestroy {
   }
 
   public getTSFromNow(): void {
-    interval(1000).pipe(takeUntil(this.onDestroy))
-    .subscribe(() => {
-      if (this.value && this.value.ts) { this.tsFromNow = dateUtils.fromNow(this.value.ts); }
-      else { this.tsFromNow = '—'; }
-    });
+    interval(1000)
+      .pipe(takeUntil(this.onDestroy))
+      .subscribe(() => {
+        if (this.value && this.value.ts) {
+          this.tsFromNow = dateUtils.fromNow(this.value.ts);
+        } else {
+          this.tsFromNow = '—';
+        }
+      });
   }
 
   public toggleRelay(event: MatSlideToggleChange): void {
@@ -73,14 +74,12 @@ export class RelayDetailsComponent implements OnInit, OnDestroy {
     } else {
       event.source.writeValue(false);
 
-      this.relayService.insertTSData(this.relay.thing.project._id, this.relay.thing._id, this.relay._id, true );
+      this.relayService.insertTSData(this.relay.thing.project._id, this.relay.thing._id, this.relay._id, true);
     }
   }
 
   private initChart() {
-    this.chartData = [
-      { data: [], label: this.relay.name, steppedLine: 'before' }
-    ];
+    this.chartData = [{ data: [], label: this.relay.name, steppedLine: 'before' }];
     this.chartLabels = [];
 
     this.chartOptions = chartUtils.getSingleDeviceOptions();
@@ -101,5 +100,4 @@ export class RelayDetailsComponent implements OnInit, OnDestroy {
     this.onDestroy.next();
     this.onDestroy.complete();
   }
-
 }

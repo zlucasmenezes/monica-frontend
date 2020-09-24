@@ -1,23 +1,21 @@
-import { ProjectService } from './../../../project/project.service';
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { ReplaySubject, Subject } from 'rxjs';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
-import { ThingService } from './../../thing.service';
-import { IThingPopulated } from '../../thing.model';
 import { AuthService } from 'src/app/auth/auth.service';
-import arrayUtils from 'src/app/shared/utils/array-utils';
 import { IProjectPopulated } from 'src/app/project/project.model';
+import arrayUtils from 'src/app/shared/utils/array-utils';
+import { IThingPopulated } from '../../thing.model';
+import { ProjectService } from './../../../project/project.service';
+import { ThingService } from './../../thing.service';
 
 @Component({
   selector: 'm-thing-list',
   templateUrl: './thing-list.component.html',
-  styleUrls: ['./thing-list.component.scss']
+  styleUrls: ['./thing-list.component.scss'],
 })
 export class ThingListComponent implements OnInit {
-
   public project: IProjectPopulated;
 
   public things: IThingPopulated[];
@@ -33,11 +31,11 @@ export class ThingListComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private projectService: ProjectService
-  ) { }
+  ) {}
 
   async ngOnInit() {
     this.project = await this.getProject();
-    this.thingsFiltered$.next(this.things = arrayUtils.orderBy(await this.getThings(this.project._id), 'DESC', 'updatedAt'));
+    this.thingsFiltered$.next((this.things = arrayUtils.orderBy(await this.getThings(this.project._id), 'DESC', 'updatedAt')));
     this.subscribeForm();
   }
 
@@ -54,8 +52,7 @@ export class ThingListComponent implements OnInit {
   }
 
   private async subscribeForm() {
-    this.thingsFilter.valueChanges.pipe(takeUntil(this.onDestroy))
-    .subscribe((value: string) => {
+    this.thingsFilter.valueChanges.pipe(takeUntil(this.onDestroy)).subscribe((value: string) => {
       this.filterThings(value);
     });
   }
@@ -81,7 +78,9 @@ export class ThingListComponent implements OnInit {
   }
 
   public isAdmin(): boolean {
-    if (!this.project) { return false; }
+    if (!this.project) {
+      return false;
+    }
     return this.project.admin._id === this.authService.getTokenData().userId;
   }
 
@@ -89,5 +88,4 @@ export class ThingListComponent implements OnInit {
     const fields = ['name', 'type'];
     this.thingsFiltered$.next(arrayUtils.filter(this.things, filter, fields));
   }
-
 }

@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder, ValidationErrors } from '@angular/forms';
-import { AuthService } from 'src/app/auth/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ILoginRequest } from 'src/app/auth/auth.model';
+import { AuthService } from 'src/app/auth/auth.service';
 import formUtils from 'src/app/shared/utils/form-utils';
 
 @Component({
   selector: 'm-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-
   public form: FormGroup;
   public hidePassword = true;
   public loading = false;
@@ -19,7 +18,7 @@ export class LoginComponent implements OnInit {
     this.initForm();
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   private initForm(): void {
     this.form = this.fb.group({
@@ -29,16 +28,18 @@ export class LoginComponent implements OnInit {
   }
 
   public async login(): Promise<void> {
-    if (this.form.invalid){ return; }
+    if (this.form.invalid) {
+      return;
+    }
 
     this.loading = true;
 
-    this.authService.login(this.form.value as ILoginRequest)
-    .finally(() => { this.loading = false; });
+    this.authService.login(this.form.value as ILoginRequest).finally(() => {
+      this.loading = false;
+    });
   }
 
   public getError(control: string): string {
     return formUtils.getError(this.form, control);
   }
-
 }

@@ -8,7 +8,7 @@
   border-radius: $m-border-radius;
   margin: 10px 5px;
   margin-right: 35%;
-  color: rgba($m-gray, .7);
+  color: rgba($m-gray, 0.7);
   font-weight: 300;
   background-color: $m-marley;
 
@@ -62,8 +62,8 @@
 
       .mat-slide-toggle {
         transform: scale(1.2);
-      }      
-      
+      }
+
       .slide-toggle-icon {
         margin-right: 0;
         margin-top: 4px;
@@ -80,7 +80,7 @@
           margin-right: 0;
           background: $m-gray-gradient-270;
           transition: all 0ms linear;
-          transition-delay: 0ms;          
+          transition-delay: 0ms;
         }
 
         .mat-slide-toggle-thumb-container {
@@ -106,7 +106,7 @@
           background-color: $m-gray;
         }
 
-        .mat-slide-toggle.mat-checked { 
+        .mat-slide-toggle.mat-checked {
           .mat-slide-toggle-bar {
             background: $m-orange-gradient-270;
           }
@@ -139,11 +139,11 @@
           transition: all 400ms linear;
           transition-delay: 0ms;
           -webkit-touch-callout: none; /* iOS Safari */
-            -webkit-user-select: none; /* Safari */
-             -khtml-user-select: none; /* Konqueror HTML */
-               -moz-user-select: none; /* Old versions of Firefox */
-                -ms-user-select: none; /* Internet Explorer/Edge */
-                    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+          -webkit-user-select: none; /* Safari */
+          -khtml-user-select: none; /* Konqueror HTML */
+          -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
         }
 
         .mat-slide-toggle-ripple {
@@ -159,7 +159,7 @@
       @extend .m-flex-row;
       justify-content: flex-end;
       align-items: center;
-      border-top: 1px solid rgba($m-gray, .1);
+      border-top: 1px solid rgba($m-gray, 0.1);
       padding-top: 5px;
       font-size: 12px;
     }

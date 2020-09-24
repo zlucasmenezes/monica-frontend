@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SensorCreateComponent } from './sensor-create.component';
 
 describe('SensorCreateComponent', () => {
@@ -8,9 +7,8 @@ describe('SensorCreateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SensorCreateComponent ]
-    })
-    .compileComponents();
+      declarations: [SensorCreateComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

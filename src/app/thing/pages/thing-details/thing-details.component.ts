@@ -20,10 +20,9 @@ import { IBoardStatus } from './../../thing.model';
 @Component({
   selector: 'm-thing-details',
   templateUrl: './thing-details.component.html',
-  styleUrls: ['./thing-details.component.scss']
+  styleUrls: ['./thing-details.component.scss'],
 })
 export class ThingDetailsComponent implements OnInit, OnDestroy {
-
   public project: IProjectPopulated;
   public thing: IThingPopulated;
 
@@ -60,8 +59,8 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
     this.project = await this.getProject();
     this.thing = await this.getThing();
 
-    this.sensorsFiltered$.next(this.sensors = arrayUtils.orderBy(await this.getSensors(), 'ASC', 'name'));
-    this.relaysFiltered$.next(this.relays = arrayUtils.orderBy(await this.getRelays(), 'ASC', 'name'));
+    this.sensorsFiltered$.next((this.sensors = arrayUtils.orderBy(await this.getSensors(), 'ASC', 'name')));
+    this.relaysFiltered$.next((this.relays = arrayUtils.orderBy(await this.getRelays(), 'ASC', 'name')));
     this.subscribeForm();
 
     this.subscribeSensorsMenuItems();
@@ -69,12 +68,10 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
   }
 
   private subscribeForm(): void {
-    this.sensorsFilter.valueChanges.pipe(takeUntil(this.onDestroy))
-    .subscribe((value: string) => {
+    this.sensorsFilter.valueChanges.pipe(takeUntil(this.onDestroy)).subscribe((value: string) => {
       this.filterSensors(value);
     });
-    this.relaysFilter.valueChanges.pipe(takeUntil(this.onDestroy))
-    .subscribe((value: string) => {
+    this.relaysFilter.valueChanges.pipe(takeUntil(this.onDestroy)).subscribe((value: string) => {
       this.filterRelays(value);
     });
   }
@@ -106,19 +103,24 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
   public async subscribeBoardStatus(): Promise<void> {
     const status$ = await this.thingService.getBoardStatus(this.getProjectId(), this.getThingId());
 
-    status$.pipe(takeUntil(this.onDestroy), map((status: IBoardStatus) => status.status))
-    .subscribe(status => {
-      this.boardStatus = status;
-    });
+    status$
+      .pipe(
+        takeUntil(this.onDestroy),
+        map((status: IBoardStatus) => status.status)
+      )
+      .subscribe(status => {
+        this.boardStatus = status;
+      });
   }
 
   public subscribeSensorsMenuItems(): void {
-    this.sensorsFiltered$.pipe(takeUntil(this.onDestroy))
-    .subscribe((sensorsFiltered) => {
+    this.sensorsFiltered$.pipe(takeUntil(this.onDestroy)).subscribe(sensorsFiltered => {
       const sensors = {};
 
       sensorsFiltered.forEach(s => {
-        if (!sensors[s.type.type]) { sensors[s.type.type] = {}; }
+        if (!sensors[s.type.type]) {
+          sensors[s.type.type] = {};
+        }
         sensors[s.type.type][s.name] = s._id;
       });
 
@@ -138,9 +140,7 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
   }
 
   public subscribeRelaysMenuItems(): void {
-    this.relaysFiltered$.pipe(takeUntil(this.onDestroy))
-    .subscribe((relaysFiltered) => {
-
+    this.relaysFiltered$.pipe(takeUntil(this.onDestroy)).subscribe(relaysFiltered => {
       const items: ICardMenuItem[] = relaysFiltered.map(relay => {
         return { _id: relay._id, label: relay.name };
       });
@@ -150,7 +150,9 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
   }
 
   public isAdmin(): boolean {
-    if (!this.project) { return false; }
+    if (!this.project) {
+      return false;
+    }
     return this.project.admin._id === this.authService.getTokenData().userId;
   }
 

@@ -3,11 +3,12 @@
   "version": "0.0.12",
   "scripts": {
     "ng": "ng",
-    "dev": "ng serve --host 0.0.0.0",
+    "dev": "yarn prettier && yarn lint && ng serve --host 0.0.0.0",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "prettier": "prettier --write ."
   },
   "private": true,
   "dependencies": {
@@ -47,6 +48,8 @@
     "karma-coverage-istanbul-reporter": "~3.0.3",
     "karma-jasmine": "~4.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
+    "prettier": "^2.1.2",
+    "prettier-plugin-organize-imports": "^1.1.1",
     "protractor": "~7.0.0",
     "ts-node": "~9.0.0",
     "tslint": "~6.1.3",

@@ -4,12 +4,7 @@ import { RelayCreateComponent } from './pages/relay-create/relay-create.componen
 import { RelayRoutes } from './relay.routes';
 
 @NgModule({
-  declarations: [
-    RelayCreateComponent
-  ],
-  imports: [
-    SharedModule,
-    RelayRoutes
-  ]
+  declarations: [RelayCreateComponent],
+  imports: [SharedModule, RelayRoutes],
 })
-export class RelayModule { }
+export class RelayModule {}

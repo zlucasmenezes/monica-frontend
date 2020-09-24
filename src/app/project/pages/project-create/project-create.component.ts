@@ -1,24 +1,22 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl, FormControl } from '@angular/forms';
-import { ReplaySubject, Subject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
-import formUtils from 'src/app/shared/utils/form-utils';
-import arrayUtils from 'src/app/shared/utils/array-utils';
-import { AuthService } from 'src/app/auth/auth.service';
 import { IUser } from 'src/app/auth/auth.model';
+import { AuthService } from 'src/app/auth/auth.service';
 import { UserService } from 'src/app/auth/user.service';
+import arrayUtils from 'src/app/shared/utils/array-utils';
+import formUtils from 'src/app/shared/utils/form-utils';
 import { IProject, IProjectPopulated } from '../../project.model';
 import { ProjectService } from '../../project.service';
 
 @Component({
   selector: 'm-project-create',
   templateUrl: './project-create.component.html',
-  styleUrls: ['./project-create.component.scss']
+  styleUrls: ['./project-create.component.scss'],
 })
 export class ProjectCreateComponent implements OnInit, OnDestroy {
-
   public form: FormGroup;
   public loading = false;
 
@@ -36,15 +34,12 @@ export class ProjectCreateComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private userService: UserService,
     private projectService: ProjectService,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   async ngOnInit() {
-    this.userFilteredList$.next(this.userList = arrayUtils.orderBy(await this.userService.getUsers(), 'ASC', 'username'));
-    this.initForm(
-      await this.getProject(
-        this.projectId = this.getProjectId()
-        )
-      );
+    this.userFilteredList$.next((this.userList = arrayUtils.orderBy(await this.userService.getUsers(), 'ASC', 'username')));
+    this.initForm(await this.getProject((this.projectId = this.getProjectId())));
     this.subscribeForm();
   }
 
@@ -53,7 +48,9 @@ export class ProjectCreateComponent implements OnInit, OnDestroy {
   }
 
   private async getProject(projectId: string): Promise<IProjectPopulated> {
-    if (!projectId) { return; }
+    if (!projectId) {
+      return;
+    }
     return await this.projectService.getProject(projectId);
   }
 
@@ -63,21 +60,24 @@ export class ProjectCreateComponent implements OnInit, OnDestroy {
       description: [project ? project.description : null, Validators.maxLength(240)],
       admin: [this.authService.getTokenData().userId, [Validators.required]],
       privacy: [project ? project.privacy : null, [Validators.required]],
-      users: [project ? project.users ? project.users.map((user: IUser) => user._id) : null : null],
+      users: [project ? (project.users ? project.users.map((user: IUser) => user._id) : null) : null],
     });
 
-    if (this.userList.length === 0) { this.form.get('users').disable(); }
+    if (this.userList.length === 0) {
+      this.form.get('users').disable();
+    }
   }
 
   private async subscribeForm() {
-    this.userFilter.valueChanges.pipe(takeUntil(this.onDestroy))
-    .subscribe((value: string) => {
+    this.userFilter.valueChanges.pipe(takeUntil(this.onDestroy)).subscribe((value: string) => {
       this.filterUsers(value);
     });
   }
 
   public save() {
-    if (!this.validate()) { return; }
+    if (!this.validate()) {
+      return;
+    }
 
     this.loading = true;
 
@@ -100,7 +100,9 @@ export class ProjectCreateComponent implements OnInit, OnDestroy {
   private validate(): boolean {
     this.form.get('privacy').markAsDirty();
 
-    if (this.form.invalid){ return false; }
+    if (this.form.invalid) {
+      return false;
+    }
     return true;
   }
 
@@ -139,5 +141,4 @@ export class ProjectCreateComponent implements OnInit, OnDestroy {
     this.onDestroy.next();
     this.onDestroy.complete();
   }
-
 }

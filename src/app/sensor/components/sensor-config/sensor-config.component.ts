@@ -1,22 +1,21 @@
 import { Component, Input } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
-import { ISensorType } from '../../sensor.model';
 import formUtils from 'src/app/shared/utils/form-utils';
+import { ISensorType } from '../../sensor.model';
 
 @Component({
   selector: 'm-sensor-config',
   templateUrl: './sensor-config.component.html',
-  styleUrls: ['./sensor-config.component.scss']
+  styleUrls: ['./sensor-config.component.scss'],
 })
 export class SensorConfigComponent {
-
   @Input() form: FormGroup;
   @Input() type: ISensorType;
 
-  constructor() { }
+  constructor() {}
 
   public getFormArray(): FormArray {
-    return (this.form.get('config') as FormArray);
+    return this.form.get('config') as FormArray;
   }
 
   public getError(control: string, index?: number): string {
@@ -26,5 +25,4 @@ export class SensorConfigComponent {
 
     return formUtils.getError(this.form, control);
   }
-
 }

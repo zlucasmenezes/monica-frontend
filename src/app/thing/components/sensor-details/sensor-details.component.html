@@ -1,5 +1,4 @@
 <div class="sensor">
-
   <div class="info-container">
     <div class="header">
       <span>{{ sensor?.name | uppercase }}</span>
@@ -17,17 +16,17 @@
       </div>
 
       <div>
-        <mat-icon [ngClass]="{disabled: !sensor?.store}">save</mat-icon>
-        <span>{{sensor?.store ? 'store' : 'don\'t store'}}</span>
-      </div>      
+        <mat-icon [ngClass]="{ disabled: !sensor?.store }">save</mat-icon>
+        <span>{{ sensor?.store ? 'store' : "don't store" }}</span>
+      </div>
     </div>
 
     <div class="spacer"></div>
-  
+
     <div class="value">
       <span>{{ value?.value !== null ? value.value : 'unknown' }}</span>
     </div>
-  
+
     <div class="footer" *ngIf="value">
       <mat-icon>history</mat-icon>
       <span>{{ tsFromNow }}</span>
@@ -35,14 +34,7 @@
   </div>
 
   <div class="chart-container">
-    <canvas
-      baseChart
-      [colors]="chartColors"
-      [chartType]="'line'"
-      [datasets]="chartData"
-      [labels]="chartLabels"
-      [options]="chartOptions">
+    <canvas baseChart [colors]="chartColors" [chartType]="'line'" [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions">
     </canvas>
   </div>
-
 </div>

@@ -1,25 +1,19 @@
-import { Component, ViewChild, ElementRef, Input, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-
 import * as ace from 'ace-builds';
-
-import 'ace-builds/src-min-noconflict/ext-language_tools';
 import 'ace-builds/src-min-noconflict/ext-beautify';
-
+import 'ace-builds/src-min-noconflict/ext-language_tools';
 import 'ace-builds/src-min-noconflict/mode-javascript';
 import 'ace-builds/src-min-noconflict/snippets/javascript';
 import 'ace-builds/src-min-noconflict/snippets/text';
-
 import 'ace-builds/src-min-noconflict/theme-github';
-
 
 @Component({
   selector: 'm-code',
   templateUrl: './code.component.html',
-  styleUrls: ['./code.component.scss']
+  styleUrls: ['./code.component.scss'],
 })
 export class CodeComponent implements AfterViewInit {
-
   @Input() public code: AbstractControl;
 
   @ViewChild('codeEditorRef') private codeEditorRef: ElementRef;
@@ -52,7 +46,7 @@ export class CodeComponent implements AfterViewInit {
     });
   }
 
-  private getEditorOptions(): Partial<ace.Ace.EditorOptions> & { enableBasicAutocompletion?: boolean; } {
+  private getEditorOptions(): Partial<ace.Ace.EditorOptions> & { enableBasicAutocompletion?: boolean } {
     const basicEditorOptions: Partial<ace.Ace.EditorOptions> = {
       highlightActiveLine: true,
       highlightSelectedWord: true,
@@ -75,5 +69,4 @@ export class CodeComponent implements AfterViewInit {
 
     return Object.assign(basicEditorOptions, extraEditorOptions);
   }
-
 }

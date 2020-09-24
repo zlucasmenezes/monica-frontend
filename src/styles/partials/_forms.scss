@@ -6,7 +6,7 @@
   caret-color: $m-dark-orange;
 }
 
-.mat-form-field{
+.mat-form-field {
   width: 100%;
 
   .mat-form-field-wrapper {
@@ -14,18 +14,15 @@
   }
 
   &.mat-focused {
-
     .mat-form-field-label {
       color: $m-orange;
     }
     .mat-form-field-ripple {
       background-color: $m-orange;
     }
-
   }
 
   &.mat-form-field-invalid {
-
     .mat-input-placeholder {
       color: $m-dark-orange;
     }
@@ -37,7 +34,6 @@
     .mat-form-field-label {
       color: $m-dark-orange;
     }
-
   }
 
   &.mat-form-field-disabled .mat-form-field-underline {
@@ -48,7 +44,7 @@
   .mat-error {
     display: flex;
     align-items: flex-start;
-    
+
     mat-icon {
       color: $m-dark-orange;
       margin-right: 2px;
@@ -62,7 +58,6 @@
   .mat-form-field-suffix {
     margin-left: -21px;
   }
-
 }
 
 .m-form-field {
@@ -129,12 +124,11 @@ mat-radio-group {
 
   mat-radio-button {
     margin-bottom: 10px;
-  
-    ::ng-deep {   
 
+    ::ng-deep {
       .mat-radio-label {
         align-items: center;
-  
+
         .mat-radio-label-content {
           display: flex;
           align-items: center;
@@ -145,38 +139,33 @@ mat-radio-group {
             margin-right: 5px;
           }
         }
-  
       }
-  
+
       .mat-radio-container {
-        margin: .5px 2px 0 0;
+        margin: 0.5px 2px 0 0;
       }
-      
+
       .mat-radio-outer-circle {
         @extend .m-box-shadow-2;
         border: none;
       }
     }
-  
+
     &.mat-radio-checked {
-  
       ::ng-deep {
-  
         .mat-radio-outer-circle {
           @extend .m-box-shadow-2;
-          border: .5px solid $m-orange;
+          border: 0.5px solid $m-orange;
         }
-  
-        .mat-radio-inner-circle{
+
+        .mat-radio-inner-circle {
           background-color: $m-orange;
         }
-
       }
     }
-    
+
     &.mat-accent {
       ::ng-deep {
-
         .mat-radio-ripple .mat-ripple-element {
           opacity: 0;
         }
@@ -188,10 +177,8 @@ mat-radio-group {
         .mat-radio-inner-circle {
           background-color: $m-orange;
         }
-
       }
     }
-        
   }
 }
 
@@ -246,16 +233,15 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-input[type=number] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 
 ::ng-deep .mat-checkbox {
-
   &:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
     background-color: $m-orange !important;
   }
-    
+
   .mat-checkbox-frame {
     @extend .m-box-shadow-2;
     border-radius: $m-mini-border-radius;
@@ -280,7 +266,7 @@ input[type=number] {
 
   .mat-checkbox-label {
     text-align: left;
-    white-space: normal;      
+    white-space: normal;
   }
 
   .mat-checkbox-background {
@@ -290,10 +276,10 @@ input[type=number] {
   .mat-checkbox-checkmark-path {
     stroke: $m-orange !important;
   }
-
 }
 
-mat-radio-group > mat-error, mat-error.m-error {
+mat-radio-group > mat-error,
+mat-error.m-error {
   @extend .m-flex-row, .m-box-shadow-2;
   align-items: center;
   margin: 5px 0 10px;
@@ -304,7 +290,7 @@ mat-radio-group > mat-error, mat-error.m-error {
   animation-name: animation;
   animation-iteration-count: 1;
   animation-timing-function: linear;
-  animation-duration: .5s;
+  animation-duration: 0.5s;
 
   @keyframes animation {
     0% {
@@ -322,7 +308,7 @@ mat-radio-group > mat-error, mat-error.m-error {
 
   @media screen and (max-width: $breakpoint-phone) {
     max-width: 100%;
-  } 
+  }
 
   mat-icon {
     width: 13.5px;

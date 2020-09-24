@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'm-auth-header',
   templateUrl: './auth-header.component.html',
-  styleUrls: ['./auth-header.component.scss']
+  styleUrls: ['./auth-header.component.scss'],
 })
 export class AuthHeaderComponent implements OnInit {
-
   public name = environment.name;
   public link: string;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.link = this.getLink();
@@ -32,6 +31,4 @@ export class AuthHeaderComponent implements OnInit {
         return 'log in';
     }
   }
-
-
 }

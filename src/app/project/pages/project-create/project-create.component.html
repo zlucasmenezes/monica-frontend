@@ -1,42 +1,37 @@
 <m-page-container>
-
   <m-card [title]="projectId ? 'edit project' : 'new project'" [icon]="'domain'">
-
     <form *ngIf="form" [formGroup]="form" (submit)="save()">
-        
       <div class="m-form-field">
         <mat-icon class="m-field-icon">domain</mat-icon>
-    
-        <mat-form-field floatLabel='never'>
-          <input
-          matInput
-          formControlName="name"
-          type="text"
-          placeholder="name">
-          
+
+        <mat-form-field floatLabel="never">
+          <input matInput formControlName="name" type="text" placeholder="name" />
+
           <mat-error *ngIf="form.get('name').invalid">
             <mat-icon>info_outline</mat-icon>
-            <span>{{getError('name')}}</span>
+            <span>{{ getError('name') }}</span>
           </mat-error>
         </mat-form-field>
       </div>
-    
+
       <div class="m-form-field">
         <mat-icon class="m-field-icon">note</mat-icon>
-    
-        <mat-form-field floatLabel='never'>
-          <textarea class="m-textarea"
-          #textarea
-          matInput
-          formControlName="description"
-          placeholder="description"
-          (input)="resizeTextArea(textarea, form.get('description'))"
-          (window:resize)="resizeTextArea(textarea, form.get('description'))"
-          rows="1"></textarea>
-          
+
+        <mat-form-field floatLabel="never">
+          <textarea
+            class="m-textarea"
+            #textarea
+            matInput
+            formControlName="description"
+            placeholder="description"
+            (input)="resizeTextArea(textarea, form.get('description'))"
+            (window:resize)="resizeTextArea(textarea, form.get('description'))"
+            rows="1"
+          ></textarea>
+
           <mat-error *ngIf="form.get('description').invalid">
             <mat-icon>info_outline</mat-icon>
-            <span>{{getError('description')}}</span>
+            <span>{{ getError('description') }}</span>
           </mat-error>
         </mat-form-field>
       </div>
@@ -55,21 +50,19 @@
 
         <mat-error *ngIf="form.get('privacy').invalid && form.get('privacy').dirty">
           <mat-icon>info_outline</mat-icon>
-          <span>{{getError('privacy')}}</span>
+          <span>{{ getError('privacy') }}</span>
         </mat-error>
       </mat-radio-group>
 
       <ng-container *ngIf="form.get('privacy').value === 'private'">
         <h4>USERS</h4>
 
-        <div class="m-form-field" style="margin-top: -15px;">
+        <div class="m-form-field" style="margin-top: -15px">
           <mat-icon class="m-field-icon">person_add_alt_1</mat-icon>
 
-          <mat-form-field floatLabel='never'>
-            <mat-label>{{ userList.length === 0 ? 'there are no users' : 'users' }}</mat-label>        
-            <mat-select
-            formControlName="users"
-            multiple>
+          <mat-form-field floatLabel="never">
+            <mat-label>{{ userList.length === 0 ? 'there are no users' : 'users' }}</mat-label>
+            <mat-select formControlName="users" multiple>
               <mat-select-trigger>
                 {{ form.get('users').value ? getUsername(form.get('users').value[0]) : '' }}
                 <span *ngIf="form.get('users').value?.length > 1" class="additional-selection">
@@ -78,27 +71,24 @@
               </mat-select-trigger>
 
               <div class="mat-option" (click)="toogleSelectAllUsers()">
-                <mat-icon class="m-select-icon">{{ isAllUsersSelected() ? 'check_box' : ( form.get('users').value?.length > 0 ? 'indeterminate_check_box' : 'check_box_outline_blank' ) }}</mat-icon>
+                <mat-icon class="m-select-icon">{{
+                  isAllUsersSelected()
+                    ? 'check_box'
+                    : form.get('users').value?.length > 0
+                    ? 'indeterminate_check_box'
+                    : 'check_box_outline_blank'
+                }}</mat-icon>
                 <span>select all</span>
               </div>
 
               <div class="mat-option m-select-search">
                 <div class="m-form-field">
                   <mat-icon class="m-field-icon">search</mat-icon>
-              
-                  <mat-form-field floatLabel='never'>
-                    <input
-                    matInput
-                    type="text"
-                    placeholder="search"
-                    [formControl]="userFilter"
-                    (keydown)="$event.stopPropagation()">
 
-                    <button
-                    type="button"
-                    mat-icon-button
-                    matSuffix
-                    (click)="userFilter.setValue(null); filterUsers('')">
+                  <mat-form-field floatLabel="never">
+                    <input matInput type="text" placeholder="search" [formControl]="userFilter" (keydown)="$event.stopPropagation()" />
+
+                    <button type="button" mat-icon-button matSuffix (click)="userFilter.setValue(null); filterUsers('')">
                       <mat-icon>close</mat-icon>
                     </button>
                   </mat-form-field>
@@ -110,9 +100,12 @@
                 <span>No users found</span>
               </div>
 
-              <mat-option *ngFor="let user of userList"
-              [style.display]="(userFilteredList$ | async).includes(user) ? 'flex' : 'none'"
-              [value]="user._id">{{ user.username }}</mat-option>
+              <mat-option
+                *ngFor="let user of userList"
+                [style.display]="(userFilteredList$ | async).includes(user) ? 'flex' : 'none'"
+                [value]="user._id"
+                >{{ user.username }}</mat-option
+              >
             </mat-select>
           </mat-form-field>
         </div>
@@ -120,12 +113,13 @@
 
       <div class="m-btn-area">
         <button *ngIf="!loading" mat-button type="submit">{{ projectId ? 'UPDATE' : 'CREATE' }}</button>
-        <div *ngIf="loading" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-      </div>        
-    
+        <div *ngIf="loading" class="lds-ellipsis">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
     </form>
-
   </m-card>
-  
 </m-page-container>
- 

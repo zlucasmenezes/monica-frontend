@@ -1,13 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ICardMenuItem } from './card.model';
 
 @Component({
   selector: 'm-card',
   templateUrl: './card.component.html',
-  styleUrls: ['./card.component.scss']
+  styleUrls: ['./card.component.scss'],
 })
 export class CardComponent implements OnInit {
-
   @Input() title: string;
   @Input() icon = 'emoji_nature';
 
@@ -36,10 +35,9 @@ export class CardComponent implements OnInit {
 
   @Output('editMenu') editMenuEmitter = new EventEmitter<string>();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   public goTo() {
     this.goToEmitter.emit();

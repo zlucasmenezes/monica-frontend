@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AuthHeaderComponent } from './auth-header.component';
 
 describe('AuthHeaderComponent', () => {
@@ -8,9 +7,8 @@ describe('AuthHeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AuthHeaderComponent ]
-    })
-    .compileComponents();
+      declarations: [AuthHeaderComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

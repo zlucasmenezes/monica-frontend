@@ -29,7 +29,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ClipboardModule,
     MatTooltipModule,
     MatMenuModule,
-    MatSlideToggleModule
-  ]
+    MatSlideToggleModule,
+  ],
 })
-export class AngularMaterialModule { }
+export class AngularMaterialModule {}
