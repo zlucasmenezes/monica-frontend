@@ -31,6 +31,11 @@ const routes: MRoute[] = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'ts',
+    loadChildren: './ts/ts.routes#TsRoutes',
+    canActivate: [AuthGuard],
+  },
+  {
     path: '',
     redirectTo: 'project',
     pathMatch: 'full',

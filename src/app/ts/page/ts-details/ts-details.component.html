@@ -1,0 +1,98 @@
+<m-page-container>
+  <div class="m-page-title">
+    <div class="title">
+      <mat-icon>analytics</mat-icon>
+      <h1>TIME SERIES DATA</h1>
+    </div>
+  </div>
+
+  <form *ngIf="form" [formGroup]="form" (submit)="getTSData()">
+    <div class="m-form-field">
+      <mat-icon class="m-field-icon">domain</mat-icon>
+
+      <mat-form-field floatLabel="never">
+        <mat-label>{{ projectList?.length === 0 ? 'there are no projects' : 'project' }}</mat-label>
+        <mat-select formControlName="project">
+          <mat-select-trigger>
+            {{ getProjectName(form.get('project').value) }}
+          </mat-select-trigger>
+
+          <div class="mat-option m-select-search">
+            <div class="m-form-field">
+              <mat-icon class="m-field-icon">search</mat-icon>
+
+              <mat-form-field floatLabel="never">
+                <input matInput type="text" placeholder="search" [formControl]="projectFilter" (keydown)="$event.stopPropagation()" />
+
+                <button type="button" mat-icon-button matSuffix (click)="projectFilter.setValue(null); filterProjects('')">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="mat-option" *ngIf="(projectFilteredList$ | async)?.length === 0">
+            <mat-icon class="m-select-icon">info_outline</mat-icon>
+            <span>No project found</span>
+          </div>
+
+          <mat-option
+            *ngFor="let project of projectList"
+            [style.display]="(projectFilteredList$ | async)?.includes(project) ? 'flex' : 'none'"
+            [value]="project._id"
+            >{{ project.name }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="m-form-field">
+      <mat-icon class="m-field-icon">emoji_symbols</mat-icon>
+
+      <mat-form-field floatLabel="never">
+        <mat-label>{{ thingList?.length === 0 ? 'there are no things' : 'thing' }}</mat-label>
+        <mat-select formControlName="thing">
+          <mat-select-trigger>
+            {{ getThingName(form.get('thing').value) }}
+          </mat-select-trigger>
+
+          <div class="mat-option m-select-search">
+            <div class="m-form-field">
+              <mat-icon class="m-field-icon">search</mat-icon>
+
+              <mat-form-field floatLabel="never">
+                <input matInput type="text" placeholder="search" [formControl]="thingFilter" (keydown)="$event.stopPropagation()" />
+
+                <button type="button" mat-icon-button matSuffix (click)="thingFilter.setValue(null); filterThings('')">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="mat-option" *ngIf="(thingFilteredList$ | async)?.length === 0">
+            <mat-icon class="m-select-icon">info_outline</mat-icon>
+            <span>No thing found</span>
+          </div>
+
+          <mat-option
+            *ngFor="let thing of thingList"
+            [style.display]="(thingFilteredList$ | async)?.includes(thing) ? 'flex' : 'none'"
+            [value]="thing._id"
+            >{{ thing.name }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="m-btn-area">
+      <button *ngIf="!loading" mat-button type="submit">GET DATA</button>
+      <div *ngIf="loading" class="lds-ellipsis">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </form>
+</m-page-container>

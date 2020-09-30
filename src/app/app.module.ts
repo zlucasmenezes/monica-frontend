@@ -9,6 +9,7 @@ import { ProjectModule } from './project/project.module';
 import { RelayModule } from './relay/relay.module';
 import { SensorModule } from './sensor/sensor.module';
 import { ThingModule } from './thing/thing.module';
+import { TsModule } from './ts/ts.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +23,7 @@ import { ThingModule } from './thing/thing.module';
     ThingModule,
     SensorModule,
     RelayModule,
+    TsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
