@@ -13,6 +13,6 @@ form {
   }
 }
 
-// ::ng-deep .mat-select-panel {
-//   max-height: 232px !important;
-// }
+::ng-deep .mat-select-panel {
+  max-height: 232px !important;
+}

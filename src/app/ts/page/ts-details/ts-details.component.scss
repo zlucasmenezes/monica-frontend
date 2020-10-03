@@ -1,8 +1,34 @@
 @import 'src/styles/styles.scss';
+
 form {
   padding: 0 40px;
 
-  // .m-btn-area {
-  //   margin-top: 40px;
-  // }
+  .additional-selection {
+    opacity: 0.75;
+    font-size: 0.75em;
+  }
+
+  .m-btn-area {
+    margin-top: 40px;
+  }
+}
+
+::ng-deep {
+  .mat-select-panel {
+    max-height: 232px !important;
+  }
+
+  .mat-optgroup {
+    .mat-optgroup-label {
+      font-size: 12px !important;
+      font-weight: 400;
+    }
+
+    &.device-type {
+      .mat-optgroup-label {
+        color: $m-orange;
+        font-size: 15px !important;
+      }
+    }
+  }
 }
