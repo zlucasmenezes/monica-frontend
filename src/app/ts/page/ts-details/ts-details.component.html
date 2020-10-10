@@ -90,9 +90,11 @@
 
       <mat-form-field floatLabel="never">
         <mat-label>{{ sensorList?.length === 0 ? 'there are no devices' : 'devices' }}</mat-label>
-        <mat-select formControlName="devices" multiple>
+        <!-- <mat-select formControlName="devices" multiple> -->
+        <mat-select formControlName="devices">
           <mat-select-trigger>
-            {{ form.get('devices').value ? getDeviceName(form.get('devices').value[0]) : '' }}
+            <!-- {{ form.get('devices').value ? getDeviceName(form.get('devices').value[0]) : '' }} -->
+            {{ form.get('devices').value ? getDeviceName(form.get('devices').value) : '' }}
             <span *ngIf="form.get('devices').value?.length > 1" class="additional-selection">
               (+{{ form.get('devices').value.length - 1 }} {{ form.get('devices').value?.length === 2 ? 'other' : 'others' }})
             </span>
