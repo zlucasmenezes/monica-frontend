@@ -21,7 +21,7 @@
   <m-card
     [title]="'relays'"
     [icon]="'emoji_objects'"
-    *ngIf="(relaysFiltered$ | async) && (relaysFiltered$ | async).length > 0"
+    *ngIf="relaysFiltered$ | async"
     [actions]="true"
     [hideGoTo]="true"
     [hideEdit]="true"
@@ -67,7 +67,7 @@
   <m-card
     [title]="'sensors'"
     [icon]="'track_changes'"
-    *ngIf="(sensorsFiltered$ | async) && (sensorsFiltered$ | async).length > 0"
+    *ngIf="sensorsFiltered$ | async"
     [actions]="true"
     [hideGoTo]="true"
     [hideEdit]="true"

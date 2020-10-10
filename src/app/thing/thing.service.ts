@@ -8,7 +8,7 @@ import { BaseService } from 'src/app/shared/services/base.service';
 import { SocketIOService } from 'src/app/shared/socket-io/socket-io.service';
 import { IResponse } from '../shared/models/backend.model';
 import { BoardCredentialsDialogComponent } from './components/board-credentials-dialog/board-credentials-dialog.component';
-import { IBoard, IBoardStatus, IThing, IThingPopulated } from './thing.model';
+import { IBoardStatus, IThing, IThingPopulated } from './thing.model';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +29,8 @@ export class ThingService extends BaseService {
       });
 
       dialogRef.afterClosed().subscribe(() => {
-        this.router.navigate([`/project/${thing.project}/thing/${(board.data as IBoard)._id}`]);
+        // this.router.navigate([`/project/${thing.project}/thing/${(board.data as IBoard)._id}`]);
+        this.router.navigate([`/project/${thing.project}`]);
       });
     } catch (e) {
       throw e;
