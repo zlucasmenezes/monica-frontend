@@ -60,6 +60,8 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
       project: [null, [Validators.required]],
       thing: [{ value: null, disabled: true }, [Validators.required]],
       devices: [{ value: null, disabled: true }, [Validators.required]],
+      start: [{ value: null }, [Validators.required]],
+      end: [{ value: null }, [Validators.required]],
     });
   }
 
@@ -131,7 +133,7 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
   }
 
   private async getSensors(project: string, thing: string): Promise<ISensorPopulated[]> {
-    return await this.sensorService.getSensors(project, thing);
+    return (await this.sensorService.getSensors(project, thing)).filter(sensor => sensor.store);
   }
 
   private async getRelays(project: string, thing: string): Promise<IRelayPopulated[]> {

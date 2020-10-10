@@ -89,7 +89,7 @@
       <mat-icon class="m-field-icon">category</mat-icon>
 
       <mat-form-field floatLabel="never">
-        <mat-label>{{ sensorList?.length === 0 ? 'there are no devices' : 'devices' }}</mat-label>
+        <mat-label>{{ sensorList?.length === 0 && relayList?.length === 0 ? 'there are no devices' : 'devices' }}</mat-label>
         <!-- <mat-select formControlName="devices" multiple> -->
         <mat-select formControlName="devices">
           <mat-select-trigger>
@@ -125,7 +125,7 @@
             </div>
           </div>
 
-          <div class="mat-option" *ngIf="(sensorFilteredList$ | async)?.length === 0">
+          <div class="mat-option" *ngIf="(sensorFilteredList$ | async)?.length === 0 && (relayFilteredList$ | async)?.length === 0">
             <mat-icon class="m-select-icon">info_outline</mat-icon>
             <span>No devices found</span>
           </div>
@@ -148,6 +148,25 @@
             >
           </mat-optgroup>
         </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="m-form-field">
+      <mat-icon class="m-field-icon">date_range</mat-icon>
+
+      <mat-form-field floatLabel="never">
+        <mat-label>date range</mat-label>
+
+        <mat-date-range-input [formGroup]="form" [rangePicker]="picker">
+          <input matStartDate formControlName="start" />
+          <input matEndDate formControlName="end" />
+        </mat-date-range-input>
+
+        <mat-datepicker-toggle matSuffix [for]="picker">
+          <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
+        </mat-datepicker-toggle>
+
+        <mat-date-range-picker #picker></mat-date-range-picker>
       </mat-form-field>
     </div>
 

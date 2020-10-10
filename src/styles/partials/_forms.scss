@@ -321,3 +321,39 @@ mat-error.m-error {
     font-size: 10px;
   }
 }
+
+.mat-datepicker-toggle-active {
+  color: $m-orange;
+}
+
+.mat-datepicker-content {
+  @extend .m-box-shadow-1;
+  border-radius: $m-mini-border-radius;
+  background-color: $m-marley;
+  color: $m-gray;
+
+  .mat-calendar-period-button:hover {
+    background-color: rgba($m-gray, 0.03);
+  }
+
+  .mat-calendar-body-cell-content {
+    border-radius: 2px;
+
+    &:hover {
+      background-color: rgba($m-gray, 0.02);
+    }
+
+    &.mat-calendar-body-today {
+      border-color: rgba($m-orange, 0.3);
+      background-color: rgba($m-gray, 0.02);
+    }
+
+    &.mat-calendar-body-selected {
+      background-color: $m-orange;
+    }
+  }
+
+  .mat-calendar-body-in-range::before {
+    background-color: rgba($m-orange, 0.1);
+  }
+}
