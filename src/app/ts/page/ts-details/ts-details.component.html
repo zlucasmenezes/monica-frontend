@@ -6,7 +6,7 @@
     </div>
   </div>
 
-  <form *ngIf="form" [formGroup]="form" (submit)="getTSData()">
+  <form *ngIf="form" [formGroup]="form" (submit)="downloadTSData()">
     <div class="m-form-field">
       <mat-icon class="m-field-icon">domain</mat-icon>
 
@@ -43,6 +43,11 @@
             >{{ project.name }}</mat-option
           >
         </mat-select>
+
+        <mat-error *ngIf="form.get('project').invalid">
+          <mat-icon>info_outline</mat-icon>
+          <span>{{ getError('project') }}</span>
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -82,6 +87,11 @@
             >{{ thing.name }}</mat-option
           >
         </mat-select>
+
+        <mat-error *ngIf="form.get('thing').invalid">
+          <mat-icon>info_outline</mat-icon>
+          <span>{{ getError('thing') }}</span>
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -148,6 +158,11 @@
             >
           </mat-optgroup>
         </mat-select>
+
+        <mat-error *ngIf="form.get('devices').invalid">
+          <mat-icon>info_outline</mat-icon>
+          <span>{{ getError('devices') }}</span>
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -157,7 +172,7 @@
       <mat-form-field floatLabel="never">
         <mat-label>date range</mat-label>
 
-        <mat-date-range-input [formGroup]="form" [rangePicker]="picker">
+        <mat-date-range-input [formGroup]="form" [rangePicker]="picker" [min]="year2020" [max]="today">
           <input matStartDate formControlName="start" />
           <input matEndDate formControlName="end" />
         </mat-date-range-input>
@@ -167,11 +182,20 @@
         </mat-datepicker-toggle>
 
         <mat-date-range-picker #picker></mat-date-range-picker>
+
+        <mat-error *ngIf="form.get('start').invalid">
+          <mat-icon>info_outline</mat-icon>
+          <span>{{ getError('start') }}</span>
+        </mat-error>
+        <mat-error *ngIf="form.get('end').invalid">
+          <mat-icon>info_outline</mat-icon>
+          <span>{{ getError('end') }}</span>
+        </mat-error>
       </mat-form-field>
     </div>
 
     <div class="m-btn-area">
-      <button *ngIf="!loading" mat-button type="submit">GET DATA</button>
+      <button *ngIf="!loading" mat-button type="submit">DOWNLOAD</button>
       <div *ngIf="loading" class="lds-ellipsis">
         <div></div>
         <div></div>

@@ -1,4 +1,5 @@
 import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
+import * as dayjs from 'dayjs';
 
 class FormUtils {
   public getError(form: FormGroup, control: string): string {
@@ -29,6 +30,14 @@ class FormUtils {
     }
     if (errors.pin) {
       error = `${errors.error}`;
+    }
+    if (errors.matDatepickerMin) {
+      error = `${control} date must be after ${errors.matDatepickerMin.min.toLocaleDateString()}`;
+    }
+    if (errors.matDatepickerMax) {
+      error = `${control} date cannot be after ${
+        dayjs(errors.matDatepickerMax.max).isSame(dayjs(), 'day') ? 'today' : errors.matDatepickerMax.max.toLocaleDateString()
+      }`;
     }
 
     return error.charAt(0).toUpperCase() + error.slice(1);

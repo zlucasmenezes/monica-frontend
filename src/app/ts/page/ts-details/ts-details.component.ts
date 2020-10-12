@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import * as dayjs from 'dayjs';
 import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IProjectPopulated } from 'src/app/project/project.model';
@@ -9,6 +10,7 @@ import { RelayService } from 'src/app/relay/relay.service';
 import { ISensorPopulated } from 'src/app/sensor/sensor.model';
 import { SensorService } from 'src/app/sensor/sensor.service';
 import arrayUtils from 'src/app/shared/utils/array-utils';
+import formUtils from 'src/app/shared/utils/form-utils';
 import { IThingPopulated } from 'src/app/thing/thing.model';
 import { ThingService } from 'src/app/thing/thing.service';
 
@@ -38,6 +40,9 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
 
   public loading = false;
 
+  public today = dayjs().endOf('day').toDate();
+  public year2020 = new Date(2020, 0, 1);
+
   private onDestroy = new Subject<any>();
 
   constructor(
@@ -65,7 +70,7 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  private subscribeForm() {
+  private subscribeForm(): void {
     this.projectFilter.valueChanges.pipe(takeUntil(this.onDestroy)).subscribe(value => {
       this.projectFilteredList$.next(this.filterProjects(value));
     });
@@ -101,9 +106,21 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
     this.form
       .get('devices')
       .valueChanges.pipe(takeUntil(this.onDestroy))
-      .subscribe(async value => {
+      .subscribe(value => {
         if (value && value.length === 0) {
           this.form.get('devices').setValue(null);
+        }
+      });
+    this.form
+      .get('end')
+      .valueChanges.pipe(takeUntil(this.onDestroy))
+      .subscribe(value => {
+        console.log(value);
+        /* if (value) {
+          this.form.get('end').setValue(dayjs(value).endOf('day').toDate(), { emitEvent: true });
+        } */
+        if (value && !dayjs(value as Date).isSame(dayjs(value as Date).endOf('day'))) {
+          this.form.get('end').setValue(dayjs(value).endOf('day').toDate());
         }
       });
 
@@ -122,6 +139,10 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
         this.form.get('devices').enable();
       }
     });
+  }
+
+  public getError(control: string): string {
+    return formUtils.getError(this.form, control);
   }
 
   private async getProjects(): Promise<IProjectPopulated[]> {
@@ -203,7 +224,11 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
     return arrayUtils.filter(this.relayList, filter, fields);
   }
 
-  public getTSData() {
+  public downloadTSData(): void {
+    if (this.form.invalid) {
+      this.form.get('start').markAsTouched();
+      this.form.get('end').markAsTouched();
+    }
     this.loading = true;
     console.log(this.form.getRawValue());
     this.loading = false;
