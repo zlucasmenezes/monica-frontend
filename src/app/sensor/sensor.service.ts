@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { BaseService } from 'src/app/shared/services/base.service';
 import { IResponse } from '../shared/models/backend.model';
-import { ITSValue } from '../shared/models/ts.model';
+import { ITSValue } from '../ts/ts.model';
 import { SocketIOService } from './../shared/socket-io/socket-io.service';
 import { ISensor, ISensorPopulated } from './sensor.model';
 

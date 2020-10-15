@@ -4,9 +4,9 @@ import * as dayjs from 'dayjs';
 import { Color, Label } from 'ng2-charts';
 import { interval, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ITSValue } from 'src/app/shared/models/ts.model';
 import chartUtils from 'src/app/shared/utils/chart-utils';
 import dateUtils from 'src/app/shared/utils/date-utils';
+import { ITSValue } from 'src/app/ts/ts.model';
 import { ISensorPopulated } from './../../../sensor/sensor.model';
 import { SensorService } from './../../../sensor/sensor.service';
 

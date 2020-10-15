@@ -13,6 +13,7 @@ import arrayUtils from 'src/app/shared/utils/array-utils';
 import formUtils from 'src/app/shared/utils/form-utils';
 import { IThingPopulated } from 'src/app/thing/thing.model';
 import { ThingService } from 'src/app/thing/thing.service';
+import { TSService } from './../../ts.service';
 
 @Component({
   selector: 'm-ts-details',
@@ -50,7 +51,8 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
     private projectService: ProjectService,
     private thingService: ThingService,
     private sensorService: SensorService,
-    private relayService: RelayService
+    private relayService: RelayService,
+    private tsService: TSService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -115,7 +117,6 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
       .get('end')
       .valueChanges.pipe(takeUntil(this.onDestroy))
       .subscribe(value => {
-        console.log(value);
         /* if (value) {
           this.form.get('end').setValue(dayjs(value).endOf('day').toDate(), { emitEvent: true });
         } */
@@ -224,13 +225,21 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
     return arrayUtils.filter(this.relayList, filter, fields);
   }
 
-  public downloadTSData(): void {
+  public async downloadTSData(): Promise<void> {
     if (this.form.invalid) {
       this.form.get('start').markAsTouched();
       this.form.get('end').markAsTouched();
     }
     this.loading = true;
-    console.log(this.form.getRawValue());
+    const tsQuery = this.form.getRawValue();
+    await this.tsService.downloadTSData(
+      tsQuery.project,
+      tsQuery.thing,
+      tsQuery.devices.device,
+      tsQuery.devices._id,
+      tsQuery.start,
+      tsQuery.end
+    );
     this.loading = false;
   }
 

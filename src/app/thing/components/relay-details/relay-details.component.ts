@@ -7,9 +7,9 @@ import { interval, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IRelayPopulated } from 'src/app/relay/relay.model';
 import { RelayService } from 'src/app/relay/relay.service';
-import { ITSValue } from 'src/app/shared/models/ts.model';
 import chartUtils from 'src/app/shared/utils/chart-utils';
 import dateUtils from 'src/app/shared/utils/date-utils';
+import { ITSValue } from 'src/app/ts/ts.model';
 
 @Component({
   selector: 'm-relay-details',
