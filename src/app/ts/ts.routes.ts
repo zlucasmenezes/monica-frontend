@@ -7,9 +7,6 @@ const routes: MRoute[] = [
   {
     path: '',
     component: TsDetailsComponent,
-    data: {
-      backRoute: '/',
-    },
   },
 ];
 

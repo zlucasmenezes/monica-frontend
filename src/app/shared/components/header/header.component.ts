@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { environment } from 'src/environments/environment';
+import headerUtils from '../../utils/header-utils';
+import { IHeaderLink } from './header.model';
 
 @Component({
   selector: 'm-header',
@@ -12,8 +14,11 @@ export class HeaderComponent implements OnInit {
   public name = environment.name;
 
   public backRoute: string;
+  public routes: IHeaderLink[];
 
-  constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute) {
+    this.routes = headerUtils.getHeaderLinks();
+  }
 
   ngOnInit() {
     this.backRoute = this.setRouteParams(this.getBackRoute());
@@ -38,11 +43,19 @@ export class HeaderComponent implements OnInit {
     return route;
   }
 
-  public back() {
+  public isCurrentRoute(route: string): boolean {
+    return this.router.url.includes(`/${route}`);
+  }
+
+  public back(): void {
     this.router.navigate([this.backRoute]);
   }
 
-  public logout() {
+  public goTo(route: string): void {
+    this.router.navigate([`/${route}`]);
+  }
+
+  public logout(): void {
     this.authService.logout();
   }
 }

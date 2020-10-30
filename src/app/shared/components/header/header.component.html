@@ -9,6 +9,12 @@
 
   <div class="spacer"></div>
 
+  <ng-container *ngFor="let route of routes">
+    <div class="links" *ngIf="!isCurrentRoute(route.route)">
+      <a mat-button (click)="goTo(route.route)">{{ route.name | uppercase }}</a>
+    </div>
+  </ng-container>
+
   <div class="links">
     <a mat-button (click)="logout()">{{ 'logout' | uppercase }}</a>
   </div>
