@@ -40,6 +40,7 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
   public deviceFilter = new FormControl();
 
   public loading = false;
+  public downloading = false;
 
   public today = dayjs().endOf('day').toDate();
   public year2020 = new Date(2020, 0, 1);
@@ -117,9 +118,6 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
       .get('end')
       .valueChanges.pipe(takeUntil(this.onDestroy))
       .subscribe(value => {
-        /* if (value) {
-          this.form.get('end').setValue(dayjs(value).endOf('day').toDate(), { emitEvent: true });
-        } */
         if (value && !dayjs(value as Date).isSame(dayjs(value as Date).endOf('day'))) {
           this.form.get('end').setValue(dayjs(value).endOf('day').toDate());
         }
@@ -225,7 +223,7 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
     return arrayUtils.filter(this.relayList, filter, fields);
   }
 
-  public async downloadTSData(): Promise<void> {
+  public async showChart(): Promise<void> {
     if (this.form.invalid) {
       this.form.get('start').markAsTouched();
       this.form.get('end').markAsTouched();
@@ -235,10 +233,28 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
 
     const tsQuery = this.form.getRawValue();
     this.tsService
-      .downloadTSData(tsQuery.project, tsQuery.thing, tsQuery.devices.device, tsQuery.devices._id, tsQuery.start, tsQuery.end)
+      .getTSData(tsQuery.project, tsQuery.thing, tsQuery.devices.device, tsQuery.devices._id, tsQuery.start, tsQuery.end)
+      .then(console.log)
       .catch(console.error)
       .finally(() => {
         this.loading = false;
+      });
+  }
+
+  public async downloadTSData(): Promise<void> {
+    if (this.form.invalid) {
+      this.form.get('start').markAsTouched();
+      this.form.get('end').markAsTouched();
+      return;
+    }
+    this.downloading = true;
+
+    const tsQuery = this.form.getRawValue();
+    this.tsService
+      .downloadTSData(tsQuery.project, tsQuery.thing, tsQuery.devices.device, tsQuery.devices._id, tsQuery.start, tsQuery.end)
+      .catch(console.error)
+      .finally(() => {
+        this.downloading = false;
       });
   }
 

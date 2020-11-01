@@ -12,11 +12,27 @@
   }
 }
 
+.m-multi-btn-area {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+  .mat-button {
+    margin: 0 10px;
+
+    .mat-button-wrapper {
+      color: $m-orange;
+      font-size: 14px;
+      font-weight: 400;
+    }
+  }
+}
+
 .m-btn-primary {
   background: $m-orange-gradient-180;
 
   .mat-button-wrapper {
-    color: $m-marley;
+    color: $m-marley !important;
     font-size: 14px;
     font-weight: 400;
   }

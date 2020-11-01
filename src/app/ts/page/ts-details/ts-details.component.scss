@@ -8,8 +8,17 @@ form {
     font-size: 0.75em;
   }
 
-  .m-btn-area {
+  .m-multi-btn-area {
     margin-top: 40px;
+
+    .m-lds-ellipsis {
+      &.chart {
+        margin: 0 30px;
+      }
+      &.download {
+        margin: 0 24px;
+      }
+    }
   }
 }
 
