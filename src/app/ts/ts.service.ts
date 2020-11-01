@@ -20,12 +20,34 @@ export class TSService extends BaseService {
     end?: Date
   ): Promise<void> {
     const response = await this.http
-      .get(`${this.getUrl(projectId, thingId, deviceType, deviceId)}/download?start=${start.toISOString()}&end=${end.toISOString()}`, {
+      .get(`${this.getUrl(projectId, thingId, deviceType, deviceId)}/download${this.buildQuery(start, end)}`, {
         observe: 'response',
         responseType: 'blob',
       })
       .toPromise();
 
     return this.fileService.download(response.body, response.headers.get('Content-Type'), this.fileService.getFileNameFromHeader(response));
+  }
+
+  private buildQuery(start: Date, end: Date): string {
+    let query = '';
+
+    if (start || end) {
+      query = '?';
+
+      if (start) {
+        query += `start=${start.toISOString()}`;
+
+        if (end) {
+          query += '&';
+        }
+      }
+
+      if (end) {
+        query += `end=${end.toISOString()}`;
+      }
+    }
+
+    return query;
   }
 }

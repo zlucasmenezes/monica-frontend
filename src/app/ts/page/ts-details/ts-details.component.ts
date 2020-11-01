@@ -67,8 +67,8 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
       project: [null, [Validators.required]],
       thing: [{ value: null, disabled: true }, [Validators.required]],
       devices: [{ value: null, disabled: true }, [Validators.required]],
-      start: [{ value: null }, [Validators.required]],
-      end: [{ value: null }, [Validators.required]],
+      start: [null],
+      end: [null],
     });
   }
 
@@ -229,18 +229,17 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
     if (this.form.invalid) {
       this.form.get('start').markAsTouched();
       this.form.get('end').markAsTouched();
+      return;
     }
     this.loading = true;
+
     const tsQuery = this.form.getRawValue();
-    await this.tsService.downloadTSData(
-      tsQuery.project,
-      tsQuery.thing,
-      tsQuery.devices.device,
-      tsQuery.devices._id,
-      tsQuery.start,
-      tsQuery.end
-    );
-    this.loading = false;
+    this.tsService
+      .downloadTSData(tsQuery.project, tsQuery.thing, tsQuery.devices.device, tsQuery.devices._id, tsQuery.start, tsQuery.end)
+      .catch(console.error)
+      .finally(() => {
+        this.loading = false;
+      });
   }
 
   ngOnDestroy(): void {
