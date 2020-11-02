@@ -41,3 +41,16 @@ form {
     }
   }
 }
+
+.chart-container {
+  max-width: 100%;
+  overflow: auto;
+  margin: 40px 20px 20px;
+  box-shadow: $m-shadow-2;
+  border-radius: $m-border-radius;
+  background: $m-marley;
+
+  .chart {
+    padding: 0 30px 30px;
+  }
+}

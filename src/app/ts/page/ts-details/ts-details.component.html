@@ -6,7 +6,7 @@
     </div>
   </div>
 
-  <form *ngIf="form" [formGroup]="form" (submit)="showChart()">
+  <form *ngIf="form" [formGroup]="form" (submit)="getData()">
     <div class="m-form-field">
       <mat-icon class="m-field-icon">domain</mat-icon>
 
@@ -212,4 +212,11 @@
       </div>
     </div>
   </form>
+
+  <div class="chart-container" *ngIf="showChart">
+    <div class="chart">
+      <canvas baseChart [colors]="chartColors" [chartType]="'line'" [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions">
+      </canvas>
+    </div>
+  </div>
 </m-page-container>

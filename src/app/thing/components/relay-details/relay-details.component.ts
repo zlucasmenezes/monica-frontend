@@ -41,7 +41,7 @@ export class RelayDetailsComponent implements OnInit, OnDestroy {
     this.getValue();
   }
 
-  public async getValue() {
+  public async getValue(): Promise<void> {
     const value$ = await this.relayService.getValue(this.relay.thing.project._id, this.relay.thing._id, this.relay._id);
 
     value$.pipe(takeUntil(this.onDestroy)).subscribe(value => {
@@ -78,15 +78,15 @@ export class RelayDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private initChart() {
+  private initChart(): void {
     this.chartData = [{ data: [], label: this.relay.name, steppedLine: 'before' }];
     this.chartLabels = [];
 
-    this.chartOptions = chartUtils.getSingleDeviceOptions();
-    this.chartColors = chartUtils.getSingleDeviceColors();
+    this.chartOptions = chartUtils.getSingleDeviceDataOptions();
+    this.chartColors = chartUtils.getSingleDeviceDataColors();
   }
 
-  private addDataPoint(y: any, x: dayjs.Dayjs) {
+  private addDataPoint(y: any, x: dayjs.Dayjs): void {
     this.chartData[0].data.push(y);
     this.chartLabels.push(x.toString());
 

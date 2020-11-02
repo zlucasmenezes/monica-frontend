@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BaseService } from 'src/app/shared/services/base.service';
 import { IResponse } from '../shared/models/backend.model';
 import { FileService } from '../shared/services/file.service';
+import { ITSValue } from './ts.model';
 
 @Injectable({
   providedIn: 'root',
@@ -19,12 +20,12 @@ export class TSService extends BaseService {
     deviceId: string,
     start?: Date,
     end?: Date
-  ): Promise<void> {
+  ): Promise<ITSValue[]> {
     const response = await this.http
       .get<IResponse>(`${this.getUrl(projectId, thingId, deviceType, deviceId)}${this.buildQuery(start, end)}`)
       .toPromise();
 
-    return response.data;
+    return response.data as ITSValue[];
   }
 
   public async downloadTSData(
