@@ -32,13 +32,6 @@ export class UserListDialogComponent implements OnInit {
     });
   }
 
-  public getInitials(user: IUser): string {
-    const names = user.lastName.split(' ');
-    const lastName = names[names.length - 1];
-
-    return `${user.firstName[0]}${lastName[0]}`;
-  }
-
   public filterUsers(filter: string) {
     const fields = ['fullName', 'username', 'email'];
     this.usersFiltered$.next(arrayUtils.filter(this.users, filter, fields));

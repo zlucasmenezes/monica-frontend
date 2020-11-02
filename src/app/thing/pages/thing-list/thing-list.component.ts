@@ -73,10 +73,6 @@ export class ThingListComponent implements OnInit {
     console.log(`${thing._id}`);
   }
 
-  public getDate(date: string): Date {
-    return new Date(date);
-  }
-
   public isAdmin(): boolean {
     if (!this.project) {
       return false;

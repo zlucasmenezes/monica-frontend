@@ -17,7 +17,7 @@
   <div class="user-info-container" *ngFor="let user of usersFiltered$ | async">
     <div class="info">
       <div class="photo">
-        <span>{{ getInitials(user) | uppercase }}</span>
+        <span>{{ user | userInitials | uppercase }}</span>
       </div>
 
       <div class="name">

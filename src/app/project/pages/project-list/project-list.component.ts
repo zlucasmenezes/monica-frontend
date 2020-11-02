@@ -61,10 +61,6 @@ export class ProjectListComponent implements OnInit {
     console.log(`${project._id}`);
   }
 
-  public getDate(date: string): Date {
-    return new Date(date);
-  }
-
   public isAdmin(project: IProjectPopulated): boolean {
     return project.admin._id === this.authService.getTokenData().userId;
   }

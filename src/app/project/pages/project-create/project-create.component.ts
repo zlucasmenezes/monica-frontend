@@ -114,12 +114,6 @@ export class ProjectCreateComponent implements OnInit, OnDestroy {
     return formUtils.resizeTextArea(textarea, control);
   }
 
-  public getUsername(id: string): string {
-    const user = this.userList.filter(u => u._id === id);
-
-    return user[0] ? user[0].username : '';
-  }
-
   public filterUsers(filter: string) {
     const fields = ['username', 'email'];
     this.userFilteredList$.next(arrayUtils.filter(this.userList, filter, fields));

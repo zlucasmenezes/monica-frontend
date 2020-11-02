@@ -16,6 +16,7 @@ import chartUtils from 'src/app/shared/utils/chart-utils';
 import formUtils from 'src/app/shared/utils/form-utils';
 import { IThingPopulated } from 'src/app/thing/thing.model';
 import { ThingService } from 'src/app/thing/thing.service';
+import { GetNameFromListPipe } from './../../../shared/pipes/get-name-from-list.pipe';
 import { ITSValue } from './../../ts.model';
 import { TSService } from './../../ts.service';
 
@@ -170,33 +171,6 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
     return await this.relayService.getRelays(project, thing);
   }
 
-  public getProjectName(id: string): string {
-    if (!this.projectList) {
-      return;
-    }
-
-    const project = this.projectList.filter(u => u._id === id);
-    return project[0] ? project[0].name : '';
-  }
-
-  public getThingName(id: string): string {
-    if (!this.thingList) {
-      return;
-    }
-
-    const thing = this.thingList.filter(u => u._id === id);
-    return thing[0] ? thing[0].name : '';
-  }
-
-  public getDeviceName(device: { device: string; _id: string }): string {
-    if (!this[`${device.device}List`]) {
-      return;
-    }
-
-    const selectedDevice = this[`${device.device}List`].filter(u => u._id === device._id);
-    return selectedDevice[0] ? selectedDevice[0].name : '';
-  }
-
   public filterProjects(filter: string): IProjectPopulated[] {
     if (!filter) {
       return this.projectList;
@@ -263,10 +237,10 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
       .getTSData(tsQuery.project, tsQuery.thing, tsQuery.devices.device, tsQuery.devices._id, tsQuery.start, tsQuery.end)
       .then(data => {
         this.setupChart(
-          this.getProjectName(tsQuery.project),
-          this.getThingName(tsQuery.thing),
+          GetNameFromListPipe.prototype.transform(tsQuery.project, this.projectList),
+          GetNameFromListPipe.prototype.transform(tsQuery.thing, this.thingList),
           tsQuery.devices.device,
-          this.getDeviceName(tsQuery.devices),
+          GetNameFromListPipe.prototype.transform(tsQuery.devices._id, this[`${tsQuery.devices.device}List`]),
           data
         );
       })
