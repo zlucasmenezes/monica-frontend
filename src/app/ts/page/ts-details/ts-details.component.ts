@@ -218,7 +218,6 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
     const tsQuery = this.form.getRawValue();
     this.tsService
       .downloadTSData(tsQuery.project, tsQuery.thing, tsQuery.devices.device, tsQuery.devices._id, tsQuery.start, tsQuery.end)
-      .catch(console.error)
       .finally(() => {
         this.downloading = false;
       });
