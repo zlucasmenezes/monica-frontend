@@ -44,7 +44,7 @@
         <div>
           <mat-icon>today</mat-icon>
           <h4>CREATED</h4>
-          <span>{{ getDate(item.createdAt).toLocaleDateString() }}</span>
+          <span>{{ item.createdAt | date: 'shortDate' }}</span>
         </div>
       </div>
 

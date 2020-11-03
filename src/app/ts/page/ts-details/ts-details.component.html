@@ -6,16 +6,16 @@
     </div>
   </div>
 
-  <form *ngIf="form" [formGroup]="form" (submit)="downloadTSData()">
+  <form *ngIf="form" [formGroup]="form" (submit)="getData()">
     <div class="m-form-field">
       <mat-icon class="m-field-icon">domain</mat-icon>
 
       <mat-form-field floatLabel="never">
         <mat-label>{{ projectList?.length === 0 ? 'there are no projects' : 'project' }}</mat-label>
         <mat-select formControlName="project">
-          <mat-select-trigger>
-            {{ getProjectName(form.get('project').value) }}
-          </mat-select-trigger>
+          <!-- <mat-select-trigger>
+            {{ form.get('project').value | getNameFromList: projectList }}
+          </mat-select-trigger> -->
 
           <div class="mat-option m-select-search">
             <div class="m-form-field">
@@ -57,9 +57,9 @@
       <mat-form-field floatLabel="never">
         <mat-label>{{ thingList?.length === 0 ? 'there are no things' : 'thing' }}</mat-label>
         <mat-select formControlName="thing">
-          <mat-select-trigger>
-            {{ getThingName(form.get('thing').value) }}
-          </mat-select-trigger>
+          <!-- <mat-select-trigger>
+            {{ form.get('thing').value | getNameFromList: thingList }}
+          </mat-select-trigger> -->
 
           <div class="mat-option m-select-search">
             <div class="m-form-field">
@@ -102,13 +102,16 @@
         <mat-label>{{ sensorList?.length === 0 && relayList?.length === 0 ? 'there are no devices' : 'devices' }}</mat-label>
         <!-- <mat-select formControlName="devices" multiple> -->
         <mat-select formControlName="devices">
-          <mat-select-trigger>
-            <!-- {{ form.get('devices').value ? getDeviceName(form.get('devices').value[0]) : '' }} -->
-            {{ form.get('devices').value ? getDeviceName(form.get('devices').value) : '' }}
+          <!-- <mat-select-trigger>
+            {{
+              form.get('devices').value
+                ? (form.get('devices').value[0]._id | getNameFromList: this[form.get('devices').value[0].device + 'List'])
+                : ''
+            }}
             <span *ngIf="form.get('devices').value?.length > 1" class="additional-selection">
               (+{{ form.get('devices').value.length - 1 }} {{ form.get('devices').value?.length === 2 ? 'other' : 'others' }})
             </span>
-          </mat-select-trigger>
+          </mat-select-trigger> -->
 
           <!-- <div class="mat-option" (click)="toogleSelectAllDevices()">
             <mat-icon class="m-select-icon">{{
@@ -194,9 +197,17 @@
       </mat-form-field>
     </div>
 
-    <div class="m-btn-area">
-      <button *ngIf="!loading" mat-button type="submit">DOWNLOAD</button>
-      <div *ngIf="loading" class="lds-ellipsis">
+    <div class="m-multi-btn-area">
+      <button *ngIf="!loading" mat-button type="submit" class="m-btn-primary">SHOW CHART</button>
+      <div *ngIf="loading" class="m-lds-ellipsis chart">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+
+      <button *ngIf="!downloading" mat-button type="button" (click)="downloadTSData()">DOWNLOAD</button>
+      <div *ngIf="downloading" class="m-lds-ellipsis download">
         <div></div>
         <div></div>
         <div></div>
@@ -204,4 +215,11 @@
       </div>
     </div>
   </form>
+
+  <div class="chart-container" *ngIf="showChart">
+    <div class="chart">
+      <canvas baseChart [colors]="chartColors" [chartType]="'line'" [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions">
+      </canvas>
+    </div>
+  </div>
 </m-page-container>

@@ -64,7 +64,7 @@
             <mat-label>{{ userList.length === 0 ? 'there are no users' : 'users' }}</mat-label>
             <mat-select formControlName="users" multiple>
               <mat-select-trigger>
-                {{ form.get('users').value ? getUsername(form.get('users').value[0]) : '' }}
+                {{ form.get('users').value ? (form.get('users').value[0] | getNameFromList: userList:'username') : '' }}
                 <span *ngIf="form.get('users').value?.length > 1" class="additional-selection">
                   (+{{ form.get('users').value.length - 1 }} {{ form.get('users').value?.length === 2 ? 'other' : 'others' }})
                 </span>
@@ -113,7 +113,7 @@
 
       <div class="m-btn-area">
         <button *ngIf="!loading" mat-button type="submit">{{ projectId ? 'UPDATE' : 'CREATE' }}</button>
-        <div *ngIf="loading" class="lds-ellipsis">
+        <div *ngIf="loading" class="m-lds-ellipsis">
           <div></div>
           <div></div>
           <div></div>

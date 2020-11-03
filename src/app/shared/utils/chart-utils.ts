@@ -3,8 +3,10 @@ import { Color } from 'ng2-charts';
 
 class ChartUtils {
   private marleyColor = '#f7f7f7';
+  private orangeColor = '#ff8801';
+  private grayColor = '#333333';
 
-  public getSingleDeviceOptions(stepX?: number, stepY?: number): ChartOptions {
+  public getSingleDeviceDataOptions(stepX?: number, stepY?: number): ChartOptions {
     return {
       responsive: true,
       legend: {
@@ -62,6 +64,105 @@ class ChartUtils {
     };
   }
 
+  public getSingleDeviceDataColors(): Color[] {
+    return [
+      {
+        backgroundColor: this.marleyColor + '33',
+        borderColor: this.marleyColor,
+        pointBackgroundColor: this.marleyColor,
+        pointBorderColor: this.marleyColor,
+        pointHoverBackgroundColor: this.marleyColor,
+        pointHoverBorderColor: this.marleyColor,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        pointBorderWidth: 0,
+        pointStyle: 'circle',
+      },
+    ];
+  }
+
+  public getTSDataOptions(title: string | string[]): ChartOptions {
+    return {
+      title: {
+        text: title,
+        display: true,
+        fontSize: 16,
+        fontStyle: 'normal',
+        fontFamily: 'Roboto',
+        fontColor: this.orangeColor,
+        padding: 20,
+      },
+      responsive: true,
+      legend: {
+        display: false,
+      },
+      tooltips: {
+        displayColors: false,
+      },
+      elements: {
+        line: {
+          borderWidth: 1,
+        },
+      },
+      scales: {
+        xAxes: [
+          {
+            type: 'time',
+            gridLines: {
+              color: this.grayColor,
+              lineWidth: 0.3,
+              zeroLineColor: this.grayColor,
+              zeroLineWidth: 0,
+            },
+            ticks: {
+              fontColor: this.grayColor,
+            },
+            time: {
+              tooltipFormat: 'YYYY-MM-DD HH:mm:ss',
+              displayFormats: {
+                millisecond: 'MM/DD/YY HH:mm:ss',
+                second: 'MM/DD/YY HH:mm:ss',
+                minute: 'MM/DD/YY HH:mm',
+                hour: 'MM/DD/YY HH',
+                day: 'MM/DD/YY',
+              },
+            },
+          },
+        ],
+        yAxes: [
+          {
+            gridLines: {
+              color: this.grayColor,
+              lineWidth: 0.3,
+              zeroLineColor: this.grayColor,
+              zeroLineWidth: 0.3,
+            },
+            ticks: {
+              fontColor: this.grayColor,
+            },
+          },
+        ],
+      },
+    };
+  }
+
+  public getTSDataColors(): Color[] {
+    return [
+      {
+        backgroundColor: this.orangeColor + '33',
+        borderColor: this.orangeColor,
+        pointBackgroundColor: this.orangeColor,
+        pointBorderColor: this.orangeColor,
+        pointHoverBackgroundColor: this.orangeColor,
+        pointHoverBorderColor: this.orangeColor,
+        pointRadius: 1,
+        pointHoverRadius: 2,
+        pointBorderWidth: 0,
+        pointStyle: 'circle',
+      },
+    ];
+  }
+
   private getUnitStep(stepX?: number): { unit?: Chart.TimeUnit; unitStepSize?: number } {
     if (stepX === null) {
       return {};
@@ -80,23 +181,6 @@ class ChartUtils {
     }
 
     return { unit: 'day', unitStepSize: stepX / (60 * 60 * 24) };
-  }
-
-  public getSingleDeviceColors(): Color[] {
-    return [
-      {
-        backgroundColor: this.marleyColor + '33',
-        borderColor: this.marleyColor,
-        pointBackgroundColor: this.marleyColor,
-        pointBorderColor: this.marleyColor,
-        pointHoverBackgroundColor: this.marleyColor,
-        pointHoverBorderColor: this.marleyColor,
-        pointRadius: 4,
-        pointHoverRadius: 6,
-        pointBorderWidth: 0,
-        pointStyle: 'circle',
-      },
-    ];
   }
 }
 export default new ChartUtils();

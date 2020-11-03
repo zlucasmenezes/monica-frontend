@@ -23,10 +23,10 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
 
   private onDestroy: Subject<void> = new Subject<void>();
 
-  chartData: ChartDataSets[];
-  chartLabels: Label[];
-  chartOptions: ChartOptions;
-  chartColors: Color[];
+  public chartData: ChartDataSets[];
+  public chartLabels: Label[];
+  public chartOptions: ChartOptions;
+  public chartColors: Color[];
 
   constructor(private sensorService: SensorService) {}
 
@@ -37,7 +37,7 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
     this.getValue();
   }
 
-  public async getValue() {
+  public async getValue(): Promise<void> {
     const value$ = await this.sensorService.getValue(this.sensor.thing.project._id, this.sensor.thing._id, this.sensor._id);
 
     value$.pipe(takeUntil(this.onDestroy)).subscribe(value => {
@@ -60,12 +60,12 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
       });
   }
 
-  private initChart() {
+  private initChart(): void {
     this.chartData = [{ data: [], label: this.sensor.name, steppedLine: 'before', fill: false }];
     this.chartLabels = [];
 
-    this.chartOptions = chartUtils.getSingleDeviceOptions(this.sensor.pollTime);
-    this.chartColors = chartUtils.getSingleDeviceColors();
+    this.chartOptions = chartUtils.getSingleDeviceDataOptions(this.sensor.pollTime);
+    this.chartColors = chartUtils.getSingleDeviceDataColors();
   }
 
   private addDataPoint(y: any, x: dayjs.Dayjs) {

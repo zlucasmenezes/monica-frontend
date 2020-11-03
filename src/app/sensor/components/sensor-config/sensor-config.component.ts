@@ -19,7 +19,7 @@ export class SensorConfigComponent {
   }
 
   public getError(control: string, index?: number): string {
-    if (index !== null) {
+    if (Number.isInteger(index)) {
       return formUtils.getError(this.getFormArray().at(index) as FormGroup, control);
     }
 

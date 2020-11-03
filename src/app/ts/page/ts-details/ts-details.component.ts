@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ChartDataSets, ChartOptions } from 'chart.js';
 import * as dayjs from 'dayjs';
+import { Color, Label } from 'ng2-charts';
 import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IProjectPopulated } from 'src/app/project/project.model';
@@ -10,9 +12,12 @@ import { RelayService } from 'src/app/relay/relay.service';
 import { ISensorPopulated } from 'src/app/sensor/sensor.model';
 import { SensorService } from 'src/app/sensor/sensor.service';
 import arrayUtils from 'src/app/shared/utils/array-utils';
+import chartUtils from 'src/app/shared/utils/chart-utils';
 import formUtils from 'src/app/shared/utils/form-utils';
 import { IThingPopulated } from 'src/app/thing/thing.model';
 import { ThingService } from 'src/app/thing/thing.service';
+import { GetNameFromListPipe } from './../../../shared/pipes/get-name-from-list.pipe';
+import { ITSValue } from './../../ts.model';
 import { TSService } from './../../ts.service';
 
 @Component({
@@ -40,9 +45,16 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
   public deviceFilter = new FormControl();
 
   public loading = false;
+  public downloading = false;
 
   public today = dayjs().endOf('day').toDate();
   public year2020 = new Date(2020, 0, 1);
+
+  public showChart = false;
+  public chartData: ChartDataSets[];
+  public chartLabels: Label[];
+  public chartOptions: ChartOptions;
+  public chartColors: Color[];
 
   private onDestroy = new Subject<any>();
 
@@ -67,8 +79,8 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
       project: [null, [Validators.required]],
       thing: [{ value: null, disabled: true }, [Validators.required]],
       devices: [{ value: null, disabled: true }, [Validators.required]],
-      start: [{ value: null }, [Validators.required]],
-      end: [{ value: null }, [Validators.required]],
+      start: [null],
+      end: [null],
     });
   }
 
@@ -117,9 +129,6 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
       .get('end')
       .valueChanges.pipe(takeUntil(this.onDestroy))
       .subscribe(value => {
-        /* if (value) {
-          this.form.get('end').setValue(dayjs(value).endOf('day').toDate(), { emitEvent: true });
-        } */
         if (value && !dayjs(value as Date).isSame(dayjs(value as Date).endOf('day'))) {
           this.form.get('end').setValue(dayjs(value).endOf('day').toDate());
         }
@@ -162,33 +171,6 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
     return await this.relayService.getRelays(project, thing);
   }
 
-  public getProjectName(id: string): string {
-    if (!this.projectList) {
-      return;
-    }
-
-    const project = this.projectList.filter(u => u._id === id);
-    return project[0] ? project[0].name : '';
-  }
-
-  public getThingName(id: string): string {
-    if (!this.thingList) {
-      return;
-    }
-
-    const thing = this.thingList.filter(u => u._id === id);
-    return thing[0] ? thing[0].name : '';
-  }
-
-  public getDeviceName(device: { device: string; _id: string }): string {
-    if (!this[`${device.device}List`]) {
-      return;
-    }
-
-    const selectedDevice = this[`${device.device}List`].filter(u => u._id === device._id);
-    return selectedDevice[0] ? selectedDevice[0].name : '';
-  }
-
   public filterProjects(filter: string): IProjectPopulated[] {
     if (!filter) {
       return this.projectList;
@@ -229,18 +211,56 @@ export class TsDetailsComponent implements OnInit, OnDestroy {
     if (this.form.invalid) {
       this.form.get('start').markAsTouched();
       this.form.get('end').markAsTouched();
+      return;
+    }
+    this.downloading = true;
+
+    const tsQuery = this.form.getRawValue();
+    this.tsService
+      .downloadTSData(tsQuery.project, tsQuery.thing, tsQuery.devices.device, tsQuery.devices._id, tsQuery.start, tsQuery.end)
+      .finally(() => {
+        this.downloading = false;
+      });
+  }
+
+  public async getData(): Promise<void> {
+    if (this.form.invalid) {
+      this.form.get('start').markAsTouched();
+      this.form.get('end').markAsTouched();
+      return;
     }
     this.loading = true;
+
     const tsQuery = this.form.getRawValue();
-    await this.tsService.downloadTSData(
-      tsQuery.project,
-      tsQuery.thing,
-      tsQuery.devices.device,
-      tsQuery.devices._id,
-      tsQuery.start,
-      tsQuery.end
-    );
-    this.loading = false;
+    await this.tsService
+      .getTSData(tsQuery.project, tsQuery.thing, tsQuery.devices.device, tsQuery.devices._id, tsQuery.start, tsQuery.end)
+      .then(data => {
+        this.setupChart(
+          GetNameFromListPipe.prototype.transform(tsQuery.project, this.projectList),
+          GetNameFromListPipe.prototype.transform(tsQuery.thing, this.thingList),
+          tsQuery.devices.device,
+          GetNameFromListPipe.prototype.transform(tsQuery.devices._id, this[`${tsQuery.devices.device}List`]),
+          data
+        );
+      })
+      .catch(console.error)
+      .finally(() => {
+        this.loading = false;
+      });
+  }
+
+  private setupChart(project: string, thing: string, deviceType: string, device: string, data: ITSValue[]): void {
+    this.chartData = [{ data: data.map(d => d.value), label: device, steppedLine: 'before', fill: false }];
+    this.chartLabels = data.map(d => dayjs(d.ts).toString());
+
+    this.chartOptions = chartUtils.getTSDataOptions([
+      `${project.toLocaleUpperCase()}`,
+      `${thing.toLocaleUpperCase()}`,
+      `${deviceType.toLocaleUpperCase()}: ${device.toLocaleUpperCase()}`,
+    ]);
+    this.chartColors = chartUtils.getTSDataColors();
+
+    this.showChart = true;
   }
 
   ngOnDestroy(): void {

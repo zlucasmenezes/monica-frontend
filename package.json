@@ -3,12 +3,12 @@
   "version": "0.0.13",
   "scripts": {
     "ng": "ng",
-    "dev": "yarn prettier && yarn lint && ng serve --host 0.0.0.0",
+    "dev": "ng serve --host 0.0.0.0",
     "build": "ng build",
-    "test": "ng test",
+    "prettier": "prettier --write .",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "prettier": "prettier --write ."
+    "test": "ng test",
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {

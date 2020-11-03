@@ -9,7 +9,7 @@ import { ProjectService } from './project.service';
 export class IsUserGuard implements CanActivate {
   constructor(private authService: AuthService, private projectService: ProjectService, private router: Router) {}
 
-  async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+  async canActivate(next: ActivatedRouteSnapshot, _: RouterStateSnapshot): Promise<boolean> {
     const projectId = next.paramMap.get('projectId');
     const project = await this.projectService.getProject(projectId);
 
