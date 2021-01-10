@@ -11,6 +11,16 @@ export interface ISensor extends IDocument {
   store: boolean;
   function: string;
   config: ISensorParameters[];
+  upcomingChanges: ISensorChanges;
+}
+
+interface ISensorChanges {
+  name: string;
+  pin: number;
+  pollTime: number;
+  store: boolean;
+  function: string;
+  config: ISensorParameters[];
 }
 
 export type ISensorPopulated = Pick<ISensor, Exclude<keyof ISensor, 'type' | 'thing'>> & {

@@ -8,6 +8,15 @@ export interface IRelay extends IDocument {
   button: number;
   store: boolean;
   nc: boolean;
+  upcomingChanges: IRelayChanges;
+}
+
+interface IRelayChanges {
+  name: string;
+  pin: number;
+  button: number;
+  store: boolean;
+  nc: boolean;
 }
 
 export type IRelayPopulated = Pick<IRelay, Exclude<keyof IRelay, 'thing'>> & {

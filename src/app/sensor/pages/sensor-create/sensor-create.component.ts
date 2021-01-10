@@ -55,6 +55,12 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
   }
 
   private initForm(sensor: ISensorPopulated) {
+    if (sensor.upcomingChanges) {
+      sensor = { ...sensor, ...sensor.upcomingChanges };
+    }
+
+    console.log('sensor', sensor);
+
     this.form = this.fb.group({
       name: [sensor ? (sensor.name ? sensor.name : null) : null, [Validators.required, Validators.maxLength(64)]],
       type: [sensor ? (sensor.type ? sensor.type._id : null) : null, [Validators.required]],

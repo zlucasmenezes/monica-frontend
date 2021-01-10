@@ -43,7 +43,10 @@ export class RelayCreateComponent implements OnInit {
   }
 
   private initForm(relay: IRelayPopulated) {
-    // tslint:disable: max-line-length
+    if (relay.upcomingChanges) {
+      relay = { ...relay, ...relay.upcomingChanges };
+    }
+
     this.form = this.fb.group({
       name: [relay ? (relay.name ? relay.name : null) : null, [Validators.required, Validators.maxLength(64)]],
       pin: [
