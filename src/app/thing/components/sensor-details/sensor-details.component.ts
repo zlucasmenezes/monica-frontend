@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import * as dayjs from 'dayjs';
 import { Color, Label } from 'ng2-charts';
@@ -17,6 +17,7 @@ import { SensorService } from './../../../sensor/sensor.service';
 })
 export class SensorDetailsComponent implements OnInit, OnDestroy {
   @Input() sensor: ISensorPopulated;
+  @Output() edit = new EventEmitter<null>();
 
   public value: ITSValue;
   public tsFromNow = '—';
@@ -35,6 +36,11 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
 
     this.getTSFromNow();
     this.getValue();
+  }
+
+  ngOnDestroy() {
+    this.onDestroy.next();
+    this.onDestroy.complete();
   }
 
   public async getValue(): Promise<void> {
@@ -84,10 +90,5 @@ export class SensorDetailsComponent implements OnInit, OnDestroy {
     }
 
     return dateUtils.formatMillis(this.sensor.pollTime);
-  }
-
-  ngOnDestroy() {
-    this.onDestroy.next();
-    this.onDestroy.complete();
   }
 }

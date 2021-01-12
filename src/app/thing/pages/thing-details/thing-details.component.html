@@ -105,6 +105,7 @@
         *ngFor="let item of sensors"
         [hidden]="!(sensorsFiltered$ | async).includes(item)"
         [sensor]="item"
+        (edit)="editSensor(item._id)"
       ></m-sensor-details>
     </div>
   </m-card>

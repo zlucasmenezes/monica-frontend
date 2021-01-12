@@ -38,6 +38,11 @@
         justify-content: flex-start;
         align-items: center;
         font-size: 12px;
+
+        &.upcoming-changes {
+          margin-bottom: 5px;
+          cursor: pointer;
+        }
       }
     }
 
