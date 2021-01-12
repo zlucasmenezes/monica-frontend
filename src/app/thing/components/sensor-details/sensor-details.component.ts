@@ -17,7 +17,7 @@ import { SensorService } from './../../../sensor/sensor.service';
 })
 export class SensorDetailsComponent implements OnInit, OnDestroy {
   @Input() sensor: ISensorPopulated;
-  @Output() edit = new EventEmitter<null>();
+  @Output() edit = new EventEmitter<void>();
 
   public value: ITSValue;
   public tsFromNow = '—';

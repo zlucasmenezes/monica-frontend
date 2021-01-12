@@ -58,6 +58,18 @@
         </button>
       </div>
 
+      <div class="update" *ngIf="!hideUpdate">
+        <button
+          mat-icon-button
+          (click)="update()"
+          matTooltip="APPLY UPCOMING CHANGES"
+          matTooltipClass="m-tooltip"
+          [disabled]="disableUpdate"
+        >
+          <mat-icon>publish</mat-icon>
+        </button>
+      </div>
+
       <mat-menu #editMatMenu="matMenu">
         <ng-container *ngFor="let item of editMenuItems">
           <ng-container *ngIf="item.items">

@@ -69,6 +69,10 @@
           order: 1;
           color: $m-dark-orange;
         }
+        &.update {
+          order: 0;
+          color: $m-dark-orange;
+        }
       }
     }
 

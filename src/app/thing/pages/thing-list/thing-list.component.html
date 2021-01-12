@@ -42,10 +42,13 @@
     [actions]="true"
     [disableEdit]="!isAdmin()"
     [disableRemove]="true"
+    [disableUpdate]="!isAdmin()"
     [hideAdd]="true"
+    [hideUpdate]="!hasUpcomingChanges(item)"
     (goTo)="goTo(item)"
     (edit)="edit(item)"
     (remove)="remove(item)"
+    (update)="update(item)"
   >
     <div class="card-body">
       <div class="item">

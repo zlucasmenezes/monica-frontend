@@ -73,6 +73,17 @@ export class ThingListComponent implements OnInit {
     console.log(`${thing._id}`);
   }
 
+  public update(thing: IThingPopulated) {
+    this.thingService
+      .applyUpcomingChanges(thing.project._id, thing._id)
+      .then(statusMessage => {
+        console.log(statusMessage);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
   public isAdmin(): boolean {
     if (!this.project) {
       return false;
@@ -83,5 +94,11 @@ export class ThingListComponent implements OnInit {
   public filterThings(filter: string) {
     const fields = ['name', 'type'];
     this.thingsFiltered$.next(arrayUtils.filter(this.things, filter, fields));
+  }
+
+  public hasUpcomingChanges(thing: IThingPopulated): boolean {
+    return thing.sensors.some(sensor => {
+      return sensor.upcomingChanges ? true : false;
+    });
   }
 }

@@ -8,7 +8,7 @@ import { BaseService } from 'src/app/shared/services/base.service';
 import { SocketIOService } from 'src/app/shared/socket-io/socket-io.service';
 import { IResponse } from '../shared/models/backend.model';
 import { BoardCredentialsDialogComponent } from './components/board-credentials-dialog/board-credentials-dialog.component';
-import { IBoardStatus, IThing, IThingPopulated } from './thing.model';
+import { IBoard, IBoardStatus, IThing, IThingPopulated } from './thing.model';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +23,7 @@ export class ThingService extends BaseService {
       const board = await this.http.post<IResponse>(`${this.getUrl(thing.project)}`, thing).toPromise();
 
       const dialogRef = this.dialog.open(BoardCredentialsDialogComponent, {
-        data: board?.data,
+        data: board?.data as IBoard,
         panelClass: 'm-dialog',
         disableClose: true,
       });
@@ -61,8 +61,16 @@ export class ThingService extends BaseService {
 
   public async editThing(thingId: string, thing: IThing): Promise<void> {
     try {
-      const editedThing = await this.http.put<IResponse>(`${this.getUrl(thing.project)}/${thingId}`, thing).toPromise();
+      await this.http.put<IResponse>(`${this.getUrl(thing.project)}/${thingId}`, thing).toPromise();
       this.router.navigate([`/project/${thing.project}/thing`]);
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  public async applyUpcomingChanges(projectId: string, thingId: string): Promise<string> {
+    try {
+      return (await this.http.patch<IResponse>(`${this.getUrl(projectId)}/${thingId}/board/update`, null).toPromise()).message;
     } catch (e) {
       throw e;
     }
