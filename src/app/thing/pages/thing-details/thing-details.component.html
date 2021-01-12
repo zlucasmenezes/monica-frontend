@@ -60,6 +60,7 @@
         [hidden]="!(relaysFiltered$ | async).includes(item)"
         [relay]="item"
         [disabled]="boardStatus ? !boardStatus : true"
+        (edit)="editRelay(item._id)"
       ></m-relay-details>
     </div>
   </m-card>

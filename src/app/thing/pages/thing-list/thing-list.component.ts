@@ -97,8 +97,13 @@ export class ThingListComponent implements OnInit {
   }
 
   public hasUpcomingChanges(thing: IThingPopulated): boolean {
-    return thing.sensors.some(sensor => {
-      return sensor.upcomingChanges ? true : false;
-    });
+    return (
+      thing.sensors.some(sensor => {
+        return sensor.upcomingChanges ? true : false;
+      }) ||
+      thing.relays.some(relay => {
+        return relay.upcomingChanges ? true : false;
+      })
+    );
   }
 }

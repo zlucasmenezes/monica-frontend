@@ -5,6 +5,13 @@
     </div>
 
     <div class="info">
+      <div *ngIf="relay && relay.upcomingChanges" class="upcoming-changes">
+        <div (click)="edit.emit()" matTooltip="{{ 'view or edit ' + relay.name | uppercase }}" matTooltipClass="m-tooltip">
+          <mat-icon>publish</mat-icon>
+          <span>has upcoming changes</span>
+        </div>
+      </div>
+
       <div>
         <mat-icon>fiber_pin</mat-icon>
         <span>{{ relay?.pin }}</span>
@@ -12,7 +19,7 @@
 
       <div>
         <mat-icon [ngClass]="{ disabled: !relay?.store }">save</mat-icon>
-        <span>{{ relay?.store ? 'store' : "don't store" }}</span>
+        <span>{{ relay?.store ? 'stores data' : "doesn't store data" }}</span>
       </div>
 
       <div *ngIf="relay?.button > 0">

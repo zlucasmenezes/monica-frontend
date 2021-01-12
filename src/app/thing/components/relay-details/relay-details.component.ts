@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import * as dayjs from 'dayjs';
@@ -19,6 +19,7 @@ import { ITSValue } from 'src/app/ts/ts.model';
 export class RelayDetailsComponent implements OnInit, OnDestroy {
   @Input() relay: IRelayPopulated;
   @Input() disabled: boolean;
+  @Output() edit = new EventEmitter<void>();
 
   public value: ITSValue;
   public tsFromNow = '—';
