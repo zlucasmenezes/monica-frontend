@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ReplaySubject, Subject } from 'rxjs';
+import { ReplaySubject, Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { IProjectPopulated } from 'src/app/project/project.model';
+import { SocketIOService } from 'src/app/shared/socket-io/socket-io.service';
 import arrayUtils from 'src/app/shared/utils/array-utils';
 import { IThingPopulated } from '../../thing.model';
 import { ProjectService } from './../../../project/project.service';
@@ -15,7 +16,7 @@ import { ThingService } from './../../thing.service';
   templateUrl: './thing-list.component.html',
   styleUrls: ['./thing-list.component.scss'],
 })
-export class ThingListComponent implements OnInit {
+export class ThingListComponent implements OnInit, OnDestroy {
   public project: IProjectPopulated;
 
   public things: IThingPopulated[];
@@ -23,20 +24,31 @@ export class ThingListComponent implements OnInit {
   public thingsFiltered$: ReplaySubject<IThingPopulated[]> = new ReplaySubject<IThingPopulated[]>(1);
   public thingsFilter = new FormControl();
 
-  private onDestroy: Subject<void> = new Subject<void>();
+  socketIOEventSubscription: Subscription = new Subscription();
+
+  private onDestroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private authService: AuthService,
     private thingService: ThingService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private socketIOService: SocketIOService
   ) {}
 
   async ngOnInit() {
     this.project = await this.getProject();
     this.thingsFiltered$.next((this.things = arrayUtils.orderBy(await this.getThings(this.project._id), 'DESC', 'updatedAt')));
     this.subscribeForm();
+    this.subscribeUpcomingChangesApplied();
+  }
+
+  ngOnDestroy() {
+    this.socketIOService.leaveAll();
+    this.socketIOEventSubscription.unsubscribe();
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
   }
 
   private getProjectId(): string {
@@ -47,13 +59,31 @@ export class ThingListComponent implements OnInit {
     return await this.projectService.getProject(this.getProjectId());
   }
 
+  private async getThing(projectId: string, thingId: string): Promise<IThingPopulated> {
+    return await this.thingService.getThing(projectId, thingId);
+  }
+
   private async getThings(projectId: string): Promise<IThingPopulated[]> {
     return await this.thingService.getThings(projectId);
   }
 
   private async subscribeForm() {
-    this.thingsFilter.valueChanges.pipe(takeUntil(this.onDestroy)).subscribe((value: string) => {
+    this.thingsFilter.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((value: string) => {
       this.filterThings(value);
+    });
+  }
+
+  private async subscribeUpcomingChangesApplied() {
+    this.thingsFiltered$.pipe(takeUntil(this.onDestroy$)).subscribe(things => {
+      this.socketIOEventSubscription.unsubscribe();
+      things.forEach(thing => {
+        this.socketIOService.join(`thing:${thing._id}`);
+      });
+
+      this.socketIOEventSubscription = this.socketIOService.on('update_devices').subscribe(async data => {
+        const updated = await this.getThing(this.getProjectId(), data.id);
+        this.thingsFiltered$.next(things.map(original => (original._id === updated._id ? updated : original)));
+      });
     });
   }
 
@@ -79,9 +109,7 @@ export class ThingListComponent implements OnInit {
       .then(statusMessage => {
         console.log(statusMessage);
       })
-      .catch(e => {
-        console.log(e);
-      });
+      .catch(console.error);
   }
 
   public isAdmin(): boolean {

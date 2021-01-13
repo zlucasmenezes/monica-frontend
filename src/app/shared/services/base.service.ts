@@ -14,7 +14,7 @@ export abstract class BaseService {
   }
 
   public async test(): Promise<IResponse> {
-    return await (await this.http.get<IResponse>(this.baseUrl).toPromise()).data;
+    return (await this.http.get<IResponse>(this.baseUrl).toPromise()).data;
   }
 
   public getUrl(...params: string[]) {

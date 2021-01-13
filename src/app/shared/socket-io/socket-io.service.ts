@@ -58,6 +58,13 @@ export class SocketIOService {
     }
   }
 
+  public leaveAll() {
+    this.rooms.forEach(room => {
+      this.socket.emit('leave_room', room);
+      this.rooms = this.rooms.filter(r => r !== room);
+    });
+  }
+
   public isConnected(): boolean {
     if (!this.socket) {
       return false;
