@@ -24,7 +24,7 @@ export class ThingListComponent implements OnInit, OnDestroy {
   public thingsFiltered$: ReplaySubject<IThingPopulated[]> = new ReplaySubject<IThingPopulated[]>(1);
   public thingsFilter = new FormControl();
 
-  socketIOEventSubscription: Subscription = new Subscription();
+  socketIOEventsSubscription: Subscription[] = [];
 
   private onDestroy$: Subject<void> = new Subject<void>();
 
@@ -46,7 +46,7 @@ export class ThingListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.socketIOService.leaveAll();
-    this.socketIOEventSubscription.unsubscribe();
+    this.socketIOEventsSubscription.forEach(sub => sub.unsubscribe());
     this.onDestroy$.next();
     this.onDestroy$.complete();
   }
@@ -75,15 +75,24 @@ export class ThingListComponent implements OnInit, OnDestroy {
 
   private async subscribeUpcomingChangesApplied() {
     this.thingsFiltered$.pipe(takeUntil(this.onDestroy$)).subscribe(things => {
-      this.socketIOEventSubscription.unsubscribe();
       things.forEach(thing => {
         this.socketIOService.join(`thing:${thing._id}`);
       });
 
-      this.socketIOEventSubscription = this.socketIOService.on('update_devices').subscribe(async data => {
-        const updated = await this.getThing(this.getProjectId(), data.id);
+      const updateThing = async (thingId: string) => {
+        const updated = await this.getThing(this.getProjectId(), thingId);
         this.thingsFiltered$.next(things.map(original => (original._id === updated._id ? updated : original)));
-      });
+      };
+
+      this.socketIOEventsSubscription.forEach(sub => sub.unsubscribe());
+      this.socketIOEventsSubscription = [
+        this.socketIOService.on('update_devices').subscribe(async data => {
+          updateThing(data.id);
+        }),
+        this.socketIOService.on('upcoming_changes').subscribe(async data => {
+          updateThing(data.id);
+        }),
+      ];
     });
   }
 

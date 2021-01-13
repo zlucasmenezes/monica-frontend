@@ -43,7 +43,7 @@ export class RelayCreateComponent implements OnInit {
   }
 
   private initForm(relay: IRelayPopulated) {
-    if (relay.upcomingChanges) {
+    if (relay && relay.upcomingChanges) {
       relay = { ...relay, ...relay.upcomingChanges };
     }
 

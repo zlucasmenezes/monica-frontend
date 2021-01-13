@@ -55,7 +55,7 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
   }
 
   private initForm(sensor: ISensorPopulated) {
-    if (sensor.upcomingChanges) {
+    if (sensor && sensor.upcomingChanges) {
       sensor = { ...sensor, ...sensor.upcomingChanges };
     }
 
