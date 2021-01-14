@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ReplaySubject, Subject } from 'rxjs';
+import { ReplaySubject, Subject, Subscription } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { IProjectPopulated } from 'src/app/project/project.model';
@@ -38,6 +38,7 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
 
   public boardStatus: boolean;
 
+  private socketIOEventsSubscription: Subscription[] = [];
   private onDestroy: Subject<void> = new Subject<void>();
 
   constructor(
@@ -63,8 +64,17 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
     this.relaysFiltered$.next((this.relays = arrayUtils.orderBy(await this.getRelays(), 'ASC', 'name')));
     this.subscribeForm();
 
+    this.subscribeUpcomingChanges();
+
     this.subscribeSensorsMenuItems();
     this.subscribeRelaysMenuItems();
+  }
+
+  ngOnDestroy(): void {
+    this.socketIOService.leave(`thing:${this.getThingId()}`);
+    this.socketIOEventsSubscription.forEach(sub => sub.unsubscribe());
+    this.onDestroy.next();
+    this.onDestroy.complete();
   }
 
   private subscribeForm(): void {
@@ -111,6 +121,22 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
       .subscribe(status => {
         this.boardStatus = status;
       });
+  }
+
+  private async subscribeUpcomingChanges() {
+    const updateDevices = async () => {
+      this.sensorsFiltered$.next((this.sensors = arrayUtils.orderBy(await this.getSensors(), 'ASC', 'name')));
+      this.relaysFiltered$.next((this.relays = arrayUtils.orderBy(await this.getRelays(), 'ASC', 'name')));
+    };
+
+    this.socketIOEventsSubscription = [
+      this.socketIOService.on('update_devices').subscribe(async () => {
+        updateDevices();
+      }),
+      this.socketIOService.on('upcoming_changes').subscribe(async () => {
+        updateDevices();
+      }),
+    ];
   }
 
   public subscribeSensorsMenuItems(): void {
@@ -180,11 +206,5 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
   public filterRelays(filter: string): void {
     const fields = ['name'];
     this.relaysFiltered$.next(arrayUtils.filter(this.relays, filter, fields));
-  }
-
-  ngOnDestroy(): void {
-    this.socketIOService.leave(`thing:${this.getThingId()}`);
-    this.onDestroy.next();
-    this.onDestroy.complete();
   }
 }

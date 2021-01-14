@@ -24,8 +24,7 @@ export class ThingListComponent implements OnInit, OnDestroy {
   public thingsFiltered$: ReplaySubject<IThingPopulated[]> = new ReplaySubject<IThingPopulated[]>(1);
   public thingsFilter = new FormControl();
 
-  socketIOEventsSubscription: Subscription[] = [];
-
+  private socketIOEventsSubscription: Subscription[] = [];
   private onDestroy$: Subject<void> = new Subject<void>();
 
   constructor(
@@ -41,7 +40,7 @@ export class ThingListComponent implements OnInit, OnDestroy {
     this.project = await this.getProject();
     this.thingsFiltered$.next((this.things = arrayUtils.orderBy(await this.getThings(this.project._id), 'DESC', 'updatedAt')));
     this.subscribeForm();
-    this.subscribeUpcomingChangesApplied();
+    this.subscribeUpcomingChanges();
   }
 
   ngOnDestroy() {
@@ -73,7 +72,7 @@ export class ThingListComponent implements OnInit, OnDestroy {
     });
   }
 
-  private async subscribeUpcomingChangesApplied() {
+  private async subscribeUpcomingChanges() {
     this.thingsFiltered$.pipe(takeUntil(this.onDestroy$)).subscribe(things => {
       things.forEach(thing => {
         this.socketIOService.join(`thing:${thing._id}`);
