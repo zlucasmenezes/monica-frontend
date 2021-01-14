@@ -9,6 +9,7 @@ import { ProjectService } from 'src/app/project/project.service';
 import { IRelayPopulated } from 'src/app/relay/relay.model';
 import { RelayService } from 'src/app/relay/relay.service';
 import { ICardMenuItem } from 'src/app/shared/components/card/card.model';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 import { SocketIOService } from 'src/app/shared/socket-io/socket-io.service';
 import arrayUtils from 'src/app/shared/utils/array-utils';
 import { IThingPopulated } from '../../thing.model';
@@ -49,7 +50,8 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
     private projectService: ProjectService,
     private sensorService: SensorService,
     private relayService: RelayService,
-    private socketIOService: SocketIOService
+    private socketIOService: SocketIOService,
+    private notificationService: NotificationService
   ) {
     this.socketIOService.join(`thing:${this.getThingId()}`);
   }
@@ -131,7 +133,10 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
 
     this.socketIOEventsSubscription = [
       this.socketIOService.on('update_devices').subscribe(async () => {
-        updateDevices();
+        const notification = this.notificationService.show('Applying upcoming changes', null);
+        await updateDevices();
+        notification.dismiss();
+        this.notificationService.show('Upcoming changes applied');
       }),
       this.socketIOService.on('upcoming_changes').subscribe(async () => {
         updateDevices();

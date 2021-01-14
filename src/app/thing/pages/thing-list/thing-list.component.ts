@@ -5,6 +5,7 @@ import { ReplaySubject, Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { IProjectPopulated } from 'src/app/project/project.model';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 import { SocketIOService } from 'src/app/shared/socket-io/socket-io.service';
 import arrayUtils from 'src/app/shared/utils/array-utils';
 import { IThingPopulated } from '../../thing.model';
@@ -33,7 +34,8 @@ export class ThingListComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private projectService: ProjectService,
-    private socketIOService: SocketIOService
+    private socketIOService: SocketIOService,
+    private notificationService: NotificationService
   ) {}
 
   async ngOnInit() {
@@ -115,7 +117,7 @@ export class ThingListComponent implements OnInit, OnDestroy {
     this.thingService
       .applyUpcomingChanges(thing.project._id, thing._id)
       .then(statusMessage => {
-        console.log(statusMessage);
+        this.notificationService.show(statusMessage);
       })
       .catch(console.error);
   }
