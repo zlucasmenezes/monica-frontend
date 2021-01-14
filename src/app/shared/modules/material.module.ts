@@ -13,6 +13,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
@@ -34,6 +35,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatSlideToggleModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatSnackBarModule,
   ],
   providers: [MatDatepickerModule],
 })

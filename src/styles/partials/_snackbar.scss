@@ -1,0 +1,22 @@
+.m-snackbar {
+  @extend .m-box-shadow-1;
+  border-left: 5px solid $m-orange;
+  border-radius: $m-border-radius;
+  background-color: $m-marley;
+  color: $m-gray;
+  margin: 24px 24px -100%;
+  animation: moveUp 1s ease-out;
+
+  .mat-simple-snackbar-action {
+    color: $m-orange;
+  }
+}
+
+@keyframes moveUp {
+  from {
+    margin-bottom: -100%;
+  }
+  to {
+    margin-bottom: 24px;
+  }
+}
