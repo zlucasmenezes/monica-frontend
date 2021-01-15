@@ -16,6 +16,18 @@
       <mat-icon>emoji_symbols</mat-icon>
       <h1>{{ thing?.name | uppercase }}</h1>
     </div>
+    <div class="actions">
+      <button
+        *ngIf="isAdmin() && hasUpcomingChanges"
+        mat-button
+        class="m-btn-secondary m-alert"
+        matTooltip="APPLY UPCOMING CHANGES AND SEND TO BOARD"
+        matTooltipClass="m-tooltip"
+        (click)="applyUpcomingChanges()"
+      >
+        <mat-icon>publish</mat-icon>
+      </button>
+    </div>
   </div>
 
   <m-card

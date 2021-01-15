@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ReplaySubject, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { IProjectPopulated } from 'src/app/project/project.model';
@@ -28,19 +28,21 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
   public thing: IThingPopulated;
 
   public sensors: ISensorPopulated[];
-  public sensorsFiltered$: ReplaySubject<ISensorPopulated[]> = new ReplaySubject<ISensorPopulated[]>(1);
-  public sensorsMenuItems: ReplaySubject<ICardMenuItem[]> = new ReplaySubject<ICardMenuItem[]>(1);
+  public sensorsFiltered$: BehaviorSubject<ISensorPopulated[]> = new BehaviorSubject<ISensorPopulated[]>(null);
+  public sensorsMenuItems: BehaviorSubject<ICardMenuItem[]> = new BehaviorSubject<ICardMenuItem[]>(null);
   public sensorsFilter = new FormControl();
 
   public relays: IRelayPopulated[];
-  public relaysFiltered$: ReplaySubject<IRelayPopulated[]> = new ReplaySubject<IRelayPopulated[]>(1);
-  public relaysMenuItems: ReplaySubject<ICardMenuItem[]> = new ReplaySubject<ICardMenuItem[]>(1);
+  public relaysFiltered$: BehaviorSubject<IRelayPopulated[]> = new BehaviorSubject<IRelayPopulated[]>(null);
+  public relaysMenuItems: BehaviorSubject<ICardMenuItem[]> = new BehaviorSubject<ICardMenuItem[]>(null);
   public relaysFilter = new FormControl();
 
   public boardStatus: boolean;
 
+  public hasUpcomingChanges: boolean;
+
   private socketIOEventsSubscription: Subscription[] = [];
-  private onDestroy: Subject<void> = new Subject<void>();
+  private onDestroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private authService: AuthService,
@@ -57,17 +59,19 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    this.subscribeBoardStatus();
+    this.getProject().then((project: IProjectPopulated) => {
+      this.project = project;
+    });
+    this.getThing().then((thing: IThingPopulated) => {
+      this.thing = thing;
+    });
 
-    this.project = await this.getProject();
-    this.thing = await this.getThing();
-
-    this.sensorsFiltered$.next((this.sensors = arrayUtils.orderBy(await this.getSensors(), 'ASC', 'name')));
     this.relaysFiltered$.next((this.relays = arrayUtils.orderBy(await this.getRelays(), 'ASC', 'name')));
+    this.sensorsFiltered$.next((this.sensors = arrayUtils.orderBy(await this.getSensors(), 'ASC', 'name')));
+
+    this.subscribeBoardStatus();
     this.subscribeForm();
-
     this.subscribeUpcomingChanges();
-
     this.subscribeSensorsMenuItems();
     this.subscribeRelaysMenuItems();
   }
@@ -75,15 +79,15 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.socketIOService.leave(`thing:${this.getThingId()}`);
     this.socketIOEventsSubscription.forEach(sub => sub.unsubscribe());
-    this.onDestroy.next();
-    this.onDestroy.complete();
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
   }
 
   private subscribeForm(): void {
-    this.sensorsFilter.valueChanges.pipe(takeUntil(this.onDestroy)).subscribe((value: string) => {
+    this.sensorsFilter.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((value: string) => {
       this.filterSensors(value);
     });
-    this.relaysFilter.valueChanges.pipe(takeUntil(this.onDestroy)).subscribe((value: string) => {
+    this.relaysFilter.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((value: string) => {
       this.filterRelays(value);
     });
   }
@@ -117,7 +121,7 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
 
     status$
       .pipe(
-        takeUntil(this.onDestroy),
+        takeUntil(this.onDestroy$),
         map((status: IBoardStatus) => status.status)
       )
       .subscribe(status => {
@@ -127,8 +131,11 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
 
   private async subscribeUpcomingChanges() {
     const updateDevices = async () => {
-      this.sensorsFiltered$.next((this.sensors = arrayUtils.orderBy(await this.getSensors(), 'ASC', 'name')));
-      this.relaysFiltered$.next((this.relays = arrayUtils.orderBy(await this.getRelays(), 'ASC', 'name')));
+      this.sensors = arrayUtils.orderBy(await this.getSensors(), 'ASC', 'name');
+      this.relays = arrayUtils.orderBy(await this.getRelays(), 'ASC', 'name');
+
+      this.filterRelays(this.relaysFilter.value);
+      this.filterSensors(this.sensorsFilter.value);
     };
 
     this.socketIOEventsSubscription = [
@@ -142,10 +149,27 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
         updateDevices();
       }),
     ];
+
+    this.sensorsFiltered$.pipe(takeUntil(this.onDestroy$)).subscribe(sensors => {
+      this.checkUpcomingChanges(sensors, this.relaysFiltered$.getValue());
+    });
+    this.relaysFiltered$.pipe(takeUntil(this.onDestroy$)).subscribe(relays => {
+      this.checkUpcomingChanges(this.sensorsFiltered$.getValue(), relays);
+    });
   }
 
-  public subscribeSensorsMenuItems(): void {
-    this.sensorsFiltered$.pipe(takeUntil(this.onDestroy)).subscribe(sensorsFiltered => {
+  private checkUpcomingChanges(sensors: ISensorPopulated[], relays: IRelayPopulated[]): void {
+    this.hasUpcomingChanges =
+      sensors.some(sensor => {
+        return sensor.upcomingChanges ? true : false;
+      }) ||
+      relays.some(relay => {
+        return relay.upcomingChanges ? true : false;
+      });
+  }
+
+  private subscribeSensorsMenuItems(): void {
+    this.sensorsFiltered$.pipe(takeUntil(this.onDestroy$)).subscribe(sensorsFiltered => {
       const sensors = {};
 
       sensorsFiltered.forEach(s => {
@@ -170,8 +194,8 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  public subscribeRelaysMenuItems(): void {
-    this.relaysFiltered$.pipe(takeUntil(this.onDestroy)).subscribe(relaysFiltered => {
+  private subscribeRelaysMenuItems(): void {
+    this.relaysFiltered$.pipe(takeUntil(this.onDestroy$)).subscribe(relaysFiltered => {
       const items: ICardMenuItem[] = relaysFiltered.map(relay => {
         return { _id: relay._id, label: relay.name };
       });
@@ -187,29 +211,33 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
     return this.project.admin._id === this.authService.getTokenData().userId;
   }
 
+  public applyUpcomingChanges() {
+    this.thingService.applyUpcomingChanges(this.getProjectId(), this.getThingId()).catch(console.error);
+  }
+
   public addSensor(): void {
-    this.router.navigate([`project/${this.project._id}/thing/${this.thing._id}/sensor/create`]);
+    this.router.navigate([`project/${this.getProjectId()}/thing/${this.getThingId()}/sensor/create`]);
   }
 
   public editSensor(id): void {
-    this.router.navigate([`project/${this.project._id}/thing/${this.thing._id}/sensor/edit/${id}`]);
+    this.router.navigate([`project/${this.getProjectId()}/thing/${this.getThingId()}/sensor/edit/${id}`]);
   }
 
   public filterSensors(filter: string): void {
     const fields = ['name', 'type.type'];
-    this.sensorsFiltered$.next(arrayUtils.filter(this.sensors, filter, fields));
+    this.sensorsFiltered$.next(arrayUtils.filter(this.sensors, filter ? filter : '', fields));
   }
 
   public addRelay(): void {
-    this.router.navigate([`project/${this.project._id}/thing/${this.thing._id}/relay/create`]);
+    this.router.navigate([`project/${this.getProjectId()}/thing/${this.getThingId()}/relay/create`]);
   }
 
   public editRelay(id): void {
-    this.router.navigate([`project/${this.project._id}/thing/${this.thing._id}/relay/edit/${id}`]);
+    this.router.navigate([`project/${this.getProjectId()}/thing/${this.getThingId()}/relay/edit/${id}`]);
   }
 
   public filterRelays(filter: string): void {
     const fields = ['name'];
-    this.relaysFiltered$.next(arrayUtils.filter(this.relays, filter, fields));
+    this.relaysFiltered$.next(arrayUtils.filter(this.relays, filter ? filter : '', fields));
   }
 }

@@ -113,7 +113,7 @@ export class ThingListComponent implements OnInit, OnDestroy {
     console.log(`${thing._id}`);
   }
 
-  public update(thing: IThingPopulated) {
+  public applyUpcomingChanges(thing: IThingPopulated) {
     this.thingService
       .applyUpcomingChanges(thing.project._id, thing._id)
       .then(statusMessage => {

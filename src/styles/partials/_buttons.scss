@@ -32,9 +32,13 @@
   background: $m-orange-gradient-180;
 
   .mat-button-wrapper {
-    color: $m-marley !important;
+    color: $m-marley;
     font-size: 14px;
     font-weight: 400;
+  }
+
+  &.m-alert {
+    background: $m-red-gradient-60;
   }
 }
 
@@ -43,6 +47,12 @@
     color: $m-orange;
     font-size: 14px;
     font-weight: 400;
+  }
+
+  &.m-alert {
+    .mat-button-wrapper {
+      color: $m-dark-orange;
+    }
   }
 }
 
