@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { IProjectPopulated } from 'src/app/project/project.model';
@@ -41,7 +41,6 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
 
   public hasUpcomingChanges: boolean;
 
-  private socketIOEventsSubscription: Subscription[] = [];
   private onDestroy$: Subject<void> = new Subject<void>();
 
   constructor(
@@ -78,7 +77,6 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.socketIOService.leave(`thing:${this.getThingId()}`);
-    this.socketIOEventsSubscription.forEach(sub => sub.unsubscribe());
     this.onDestroy$.next();
     this.onDestroy$.complete();
   }
@@ -138,17 +136,21 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
       this.filterSensors(this.sensorsFilter.value);
     };
 
-    this.socketIOEventsSubscription = [
-      this.socketIOService.on('update_devices').subscribe(async () => {
+    this.socketIOService
+      .on('update_devices')
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(async () => {
         const notification = this.notificationService.show('Applying upcoming changes', null);
         await updateDevices();
         notification.dismiss();
         this.notificationService.show('Upcoming changes applied');
-      }),
-      this.socketIOService.on('upcoming_changes').subscribe(async () => {
+      });
+    this.socketIOService
+      .on('upcoming_changes')
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(async () => {
         updateDevices();
-      }),
-    ];
+      });
 
     this.sensorsFiltered$.pipe(takeUntil(this.onDestroy$)).subscribe(sensors => {
       this.checkUpcomingChanges(sensors, this.relaysFiltered$.getValue());

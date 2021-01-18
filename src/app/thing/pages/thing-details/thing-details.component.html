@@ -18,7 +18,7 @@
     </div>
     <div class="actions">
       <button
-        *ngIf="isAdmin() && hasUpcomingChanges"
+        *ngIf="isAdmin() && hasUpcomingChanges && boardStatus"
         mat-button
         class="m-btn-secondary m-alert"
         matTooltip="APPLY UPCOMING CHANGES AND SEND TO BOARD"

@@ -42,7 +42,7 @@
     [actions]="true"
     [disableEdit]="!isAdmin()"
     [disableRemove]="true"
-    [disableUpdate]="!isAdmin()"
+    [disableUpdate]="!(isAdmin() && boardStatus[item._id])"
     [hideAdd]="true"
     [hideUpdate]="!hasUpcomingChanges(item)"
     (goTo)="goTo(item)"
@@ -51,6 +51,14 @@
     (update)="applyUpcomingChanges(item)"
   >
     <div class="card-body">
+      <div class="item">
+        <div>
+          <mat-icon>{{ boardStatus[item._id] ? 'developer_board' : 'developer_board_off' }}</mat-icon>
+          <h4>STATUS</h4>
+          <span>{{ boardStatus[item._id] ? 'CONNECTED' : 'DISCONNECTED' }}</span>
+        </div>
+      </div>
+
       <div class="item">
         <div>
           <mat-icon>today</mat-icon>

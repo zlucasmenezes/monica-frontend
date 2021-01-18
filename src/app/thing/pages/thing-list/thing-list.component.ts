@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ReplaySubject, Subject, Subscription } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { IProjectPopulated } from 'src/app/project/project.model';
@@ -25,7 +25,8 @@ export class ThingListComponent implements OnInit, OnDestroy {
   public thingsFiltered$: ReplaySubject<IThingPopulated[]> = new ReplaySubject<IThingPopulated[]>(1);
   public thingsFilter = new FormControl();
 
-  private socketIOEventsSubscription: Subscription[] = [];
+  public boardStatus: { [boardId: string]: boolean } = {};
+
   private onDestroy$: Subject<void> = new Subject<void>();
 
   constructor(
@@ -41,13 +42,16 @@ export class ThingListComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     this.project = await this.getProject();
     this.thingsFiltered$.next((this.things = arrayUtils.orderBy(await this.getThings(this.project._id), 'DESC', 'updatedAt')));
+
     this.subscribeForm();
+
+    this.joinRooms();
+    this.subscribeBoardStatus();
     this.subscribeUpcomingChanges();
   }
 
   ngOnDestroy() {
     this.socketIOService.leaveAll();
-    this.socketIOEventsSubscription.forEach(sub => sub.unsubscribe());
     this.onDestroy$.next();
     this.onDestroy$.complete();
   }
@@ -68,33 +72,49 @@ export class ThingListComponent implements OnInit, OnDestroy {
     return await this.thingService.getThings(projectId);
   }
 
+  private joinRooms() {
+    this.things.forEach(thing => {
+      this.socketIOService.join(`thing:${thing._id}`);
+    });
+  }
+
   private async subscribeForm() {
     this.thingsFilter.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((value: string) => {
       this.filterThings(value);
     });
   }
 
-  private async subscribeUpcomingChanges() {
-    this.thingsFiltered$.pipe(takeUntil(this.onDestroy$)).subscribe(things => {
-      things.forEach(thing => {
-        this.socketIOService.join(`thing:${thing._id}`);
+  public async subscribeBoardStatus(): Promise<void> {
+    this.things.forEach(async thing => {
+      const boardStatus$ = await this.thingService.getBoardStatus(this.getProjectId(), thing._id);
+
+      boardStatus$.pipe(takeUntil(this.onDestroy$)).subscribe(boardStatus => {
+        this.boardStatus[boardStatus.board] = boardStatus.status;
       });
-
-      const updateThing = async (thingId: string) => {
-        const updated = await this.getThing(this.getProjectId(), thingId);
-        this.thingsFiltered$.next(things.map(original => (original._id === updated._id ? updated : original)));
-      };
-
-      this.socketIOEventsSubscription.forEach(sub => sub.unsubscribe());
-      this.socketIOEventsSubscription = [
-        this.socketIOService.on('update_devices').subscribe(async data => {
-          updateThing(data.id);
-        }),
-        this.socketIOService.on('upcoming_changes').subscribe(async data => {
-          updateThing(data.id);
-        }),
-      ];
     });
+  }
+
+  private async subscribeUpcomingChanges() {
+    const updateThing = async (thingId: string) => {
+      const updated = await this.getThing(this.getProjectId(), thingId);
+      this.things = this.things.map(original => (original._id === updated._id ? updated : original));
+      this.filterThings(this.thingsFilter.value);
+    };
+
+    this.socketIOService
+      .on('update_devices')
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(async data => {
+        console.log('update_devices', data.id);
+        updateThing(data.id);
+      });
+    this.socketIOService
+      .on('upcoming_changes')
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe(async data => {
+        console.log('upcoming_changes', data.id);
+        updateThing(data.id);
+      });
   }
 
   public goTo(thing: IThingPopulated) {
@@ -113,15 +133,6 @@ export class ThingListComponent implements OnInit, OnDestroy {
     console.log(`${thing._id}`);
   }
 
-  public applyUpcomingChanges(thing: IThingPopulated) {
-    this.thingService
-      .applyUpcomingChanges(thing.project._id, thing._id)
-      .then(statusMessage => {
-        this.notificationService.show(statusMessage);
-      })
-      .catch(console.error);
-  }
-
   public isAdmin(): boolean {
     if (!this.project) {
       return false;
@@ -131,7 +142,16 @@ export class ThingListComponent implements OnInit, OnDestroy {
 
   public filterThings(filter: string) {
     const fields = ['name', 'type'];
-    this.thingsFiltered$.next(arrayUtils.filter(this.things, filter, fields));
+    this.thingsFiltered$.next(arrayUtils.filter(this.things, filter ? filter : '', fields));
+  }
+
+  public applyUpcomingChanges(thing: IThingPopulated) {
+    this.thingService
+      .applyUpcomingChanges(thing.project._id, thing._id)
+      .then(statusMessage => {
+        this.notificationService.show(statusMessage);
+      })
+      .catch(console.error);
   }
 
   public hasUpcomingChanges(thing: IThingPopulated): boolean {
