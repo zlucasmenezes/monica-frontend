@@ -32,6 +32,7 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
 
   public project: IProjectPopulated;
   public thing: IThingPopulated;
+  public sensor: ISensorPopulated;
 
   public sensorId: ISensor['_id'];
 
@@ -50,7 +51,7 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
     this.project = await this.getProject();
     this.thing = await this.getThing();
     this.filteredTypes$.next((this.types = arrayUtils.orderBy(await this.getTypes(), 'ASC', 'type')));
-    this.initForm(await this.getSensor(this.getProjectId(), this.getThingId(), (this.sensorId = this.getSensorId())));
+    this.initForm((this.sensor = await this.getSensor(this.getProjectId(), this.getThingId(), (this.sensorId = this.getSensorId()))));
     this.subscribeForm();
   }
 
@@ -180,7 +181,14 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
       save = this.sensorService.createSensor(this.getProjectId(), this.form.value as ISensor);
     }
 
-    save.finally(() => {
+    save.catch(() => {
+      this.loading = false;
+    });
+  }
+
+  public discardUpcomingChanges() {
+    this.loading = true;
+    this.sensorService.discardUpcomingChanges(this.getProjectId(), this.getThingId(), this.getSensorId()).catch(() => {
       this.loading = false;
     });
   }

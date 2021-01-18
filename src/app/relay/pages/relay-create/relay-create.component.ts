@@ -22,7 +22,7 @@ export class RelayCreateComponent implements OnInit {
 
   public project: IProjectPopulated;
   public thing: IThingPopulated;
-  private relay: IRelayPopulated;
+  public relay: IRelayPopulated;
 
   public relayId: IRelay['_id'];
 
@@ -113,7 +113,14 @@ export class RelayCreateComponent implements OnInit {
       save = this.relayService.createRelay(this.getProjectId(), this.form.value as IRelay);
     }
 
-    save.finally(() => {
+    save.catch(() => {
+      this.loading = false;
+    });
+  }
+
+  public discardUpcomingChanges() {
+    this.loading = true;
+    this.relayService.discardUpcomingChanges(this.getProjectId(), this.getThingId(), this.getRelayId()).catch(() => {
       this.loading = false;
     });
   }

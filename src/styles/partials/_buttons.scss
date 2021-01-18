@@ -2,29 +2,13 @@
   display: flex;
   justify-content: center;
   margin-top: 20px;
-
-  .mat-button {
-    .mat-button-wrapper {
-      color: $m-orange;
-      font-size: 14px;
-      font-weight: 400;
-    }
-  }
 }
 
 .m-multi-btn-area {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+  @extend .m-btn-area;
 
   .mat-button {
     margin: 0 10px;
-
-    .mat-button-wrapper {
-      color: $m-orange;
-      font-size: 14px;
-      font-weight: 400;
-    }
   }
 }
 
@@ -47,6 +31,10 @@
     color: $m-orange;
     font-size: 14px;
     font-weight: 400;
+  }
+
+  &.m-highlight {
+    border: 1px solid $m-orange;
   }
 
   &.m-alert {

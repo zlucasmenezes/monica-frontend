@@ -57,6 +57,15 @@ export class RelayService extends BaseService {
     }
   }
 
+  public async discardUpcomingChanges(projectId: string, thingId: string, relayId: string): Promise<void> {
+    try {
+      await this.http.patch<IResponse>(`${this.getUrl(projectId, thingId)}/${relayId}/discardUpcomingChanges`, null).toPromise();
+      this.router.navigate([`project/${projectId}/thing/${thingId}`]);
+    } catch (e) {
+      throw e;
+    }
+  }
+
   public async getValue(projectId: string, thingId: string, relayId: string): Promise<Observable<ITSValue>> {
     const value = await this.http.get<IResponse>(`${this.getUrl(projectId, thingId)}/${relayId}/value`).toPromise();
 

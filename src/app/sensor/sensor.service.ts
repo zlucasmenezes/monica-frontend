@@ -66,6 +66,15 @@ export class SensorService extends BaseService {
     }
   }
 
+  public async discardUpcomingChanges(projectId: string, thingId: string, sensorId: string): Promise<void> {
+    try {
+      await this.http.patch<IResponse>(`${this.getUrl(projectId, thingId)}/${sensorId}/discardUpcomingChanges`, null).toPromise();
+      this.router.navigate([`project/${projectId}/thing/${thingId}`]);
+    } catch (e) {
+      throw e;
+    }
+  }
+
   public async getValue(projectId: string, thingId: string, sensorId: string): Promise<Observable<ITSValue>> {
     const value = await this.http.get<IResponse>(`${this.getUrl(projectId, thingId)}/${sensorId}/value`).toPromise();
 
