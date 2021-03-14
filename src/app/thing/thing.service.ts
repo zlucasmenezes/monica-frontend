@@ -59,7 +59,7 @@ export class ThingService extends BaseService {
     }
   }
 
-  public async getCredentials(projectId: string, thingId: string): Promise<MatDialogRef<BoardCredentialsDialogComponent>> {
+  public async getBoardCredentials(projectId: string, thingId: string): Promise<MatDialogRef<BoardCredentialsDialogComponent>> {
     try {
       if (!thingId) {
         return;

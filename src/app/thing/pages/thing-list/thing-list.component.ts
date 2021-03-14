@@ -133,8 +133,8 @@ export class ThingListComponent implements OnInit, OnDestroy {
     console.log(`${thing._id}`);
   }
 
-  public showCredentials(thing: IThingPopulated) {
-    this.thingService.getCredentials(this.getProjectId(), thing._id);
+  public showBoardCredentials(thing: IThingPopulated) {
+    this.thingService.getBoardCredentials(this.getProjectId(), thing._id);
   }
 
   public isAdmin(): boolean {

@@ -217,6 +217,10 @@ export class ThingDetailsComponent implements OnInit, OnDestroy {
     this.thingService.applyUpcomingChanges(this.getProjectId(), this.getThingId()).catch(console.error);
   }
 
+  public showBoardCredentials() {
+    this.thingService.getBoardCredentials(this.getProjectId(), this.getThingId());
+  }
+
   public addSensor(): void {
     this.router.navigate([`project/${this.getProjectId()}/thing/${this.getThingId()}/sensor/create`]);
   }

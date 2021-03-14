@@ -27,6 +27,16 @@
       >
         <mat-icon>publish</mat-icon>
       </button>
+      <button
+        *ngIf="isAdmin()"
+        mat-button
+        class="m-btn-secondary"
+        matTooltip="GET BOARD CREDENTIALS"
+        matTooltipClass="m-tooltip"
+        (click)="showBoardCredentials()"
+      >
+        <mat-icon>vpn_key</mat-icon>
+      </button>
     </div>
   </div>
 
