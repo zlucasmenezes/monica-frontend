@@ -109,11 +109,11 @@
       <m-sensor-config *ngIf="form.get('type').value" [form]="form" [type]="getType(form.get('type').value)"></m-sensor-config>
 
       <div class="m-multi-btn-area">
-        <button *ngIf="!loading" mat-button class="m-btn-secondary" [ngClass]="{ 'm-highlight': sensor.upcomingChanges }" type="submit">
+        <button *ngIf="!loading" mat-button class="m-btn-secondary" [ngClass]="{ 'm-highlight': sensor?.upcomingChanges }" type="submit">
           {{ sensorId ? 'EDIT' : 'ADD' }}
         </button>
         <button
-          *ngIf="!loading && sensor.upcomingChanges"
+          *ngIf="!loading && sensor?.upcomingChanges"
           mat-button
           class="m-btn-secondary"
           type="button"

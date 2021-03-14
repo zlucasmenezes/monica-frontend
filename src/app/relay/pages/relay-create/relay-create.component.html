@@ -63,11 +63,11 @@
       </div> -->
 
       <div class="m-multi-btn-area">
-        <button *ngIf="!loading" mat-button class="m-btn-secondary" [ngClass]="{ 'm-highlight': relay.upcomingChanges }" type="submit">
+        <button *ngIf="!loading" mat-button class="m-btn-secondary" [ngClass]="{ 'm-highlight': relay?.upcomingChanges }" type="submit">
           {{ relayId ? 'EDIT' : 'ADD' }}
         </button>
         <button
-          *ngIf="!loading && relay.upcomingChanges"
+          *ngIf="!loading && relay?.upcomingChanges"
           mat-button
           class="m-btn-secondary"
           type="button"
