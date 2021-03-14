@@ -16,7 +16,8 @@ $m-orange-gradient-270: linear-gradient(270deg, $m-orange, $m-dark-orange);
 $m-red-gradient-60: linear-gradient(60deg, $m-red, darken($m-red, 5));
 
 $m-gray: #333333;
-$m-gray-gradient-270: linear-gradient(270deg, rgba($m-gray, 0.5), rgba($m-gray, 0.3));
+$m-gray-gradient: linear-gradient(0deg, rgba($m-gray, 1), rgba($m-gray, 0.9));
+$m-light-gray-gradient-270: linear-gradient(270deg, rgba($m-gray, 0.5), rgba($m-gray, 0.3));
 
 $m-shadow-1: 0px 10px 15px 0px rgba($m-gray, 0.5);
 $m-shadow-2: 0 1px 3px 0 rgba($m-gray, 0.35);

@@ -6,22 +6,26 @@
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 20px;
-  background: $m-orange-gradient-60;
+  background: $m-gray-gradient;
 
   .back {
     cursor: pointer;
     font-size: 20px;
     font-weight: 300;
     color: $m-marley;
-    margin: 0 -10px 0 20px;
+    margin: 0 -10px 0 10px;
     -webkit-tap-highlight-color: transparent;
   }
 
-  .name {
-    font-size: 20px;
-    font-weight: 300;
-    color: $m-marley;
-    padding: 30px 20px;
+  .logo {
+    padding: 10px;
+    display: flex;
+    max-width: 150px;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
   }
 
   .spacer {
