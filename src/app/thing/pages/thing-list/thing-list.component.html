@@ -45,10 +45,12 @@
     [disableUpdate]="!(isAdmin() && boardStatus[item._id])"
     [hideAdd]="true"
     [hideUpdate]="!hasUpcomingChanges(item)"
+    [hideShowCredentials]="!isAdmin()"
     (goTo)="goTo(item)"
     (edit)="edit(item)"
     (remove)="remove(item)"
     (update)="applyUpcomingChanges(item)"
+    (showCredentials)="showCredentials(item)"
   >
     <div class="card-body">
       <div class="item">

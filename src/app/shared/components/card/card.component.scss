@@ -55,23 +55,27 @@
       div {
         &.go-to {
           color: $m-purple;
-          order: 4;
+          order: 5;
         }
         &.add {
           color: $m-blue;
-          order: 3;
+          order: 4;
         }
         &.edit {
           color: $m-green;
-          order: 2;
+          order: 3;
         }
         &.delete {
-          order: 1;
+          order: 2;
           color: $m-dark-orange;
         }
         &.update {
-          order: 0;
+          order: 1;
           color: $m-dark-orange;
+        }
+        &.show-credentials {
+          order: 0;
+          color: $m-orange;
         }
       }
     }
@@ -86,7 +90,6 @@
             order: 1;
           }
           &.add {
-            color: $m-blue;
             order: 2;
           }
           &.edit {
@@ -94,6 +97,9 @@
           }
           &.delete {
             order: 4;
+          }
+          &.show-credentials {
+            order: 5;
           }
         }
       }

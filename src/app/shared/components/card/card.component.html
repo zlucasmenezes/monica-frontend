@@ -70,6 +70,17 @@
         </button>
       </div>
 
+      <div class="show-credentials" *ngIf="!hideShowCredentials">
+        <button
+          mat-icon-button
+          (click)="showCredentials()"
+          matTooltip="SEE CREDENTIALS"
+          matTooltipClass="m-tooltip"
+        >
+          <mat-icon>vpn_key</mat-icon>
+        </button>
+      </div>
+
       <mat-menu #editMatMenu="matMenu">
         <ng-container *ngFor="let item of editMenuItems">
           <ng-container *ngIf="item.items">

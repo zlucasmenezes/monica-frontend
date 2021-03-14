@@ -23,6 +23,7 @@ export class CardComponent implements OnInit {
   @Input() hideEdit = false;
   @Input() hideRemove = false;
   @Input() hideUpdate = true;
+  @Input() hideShowCredentials = true;
 
   @Input() showEditMenu = false;
   @Input() editMenuItems: ICardMenuItem[] = [];
@@ -35,6 +36,7 @@ export class CardComponent implements OnInit {
   @Output('edit') editEmitter = new EventEmitter<void>();
   @Output('remove') removeEmitter = new EventEmitter<void>();
   @Output('update') updateEmitter = new EventEmitter<void>();
+  @Output('showCredentials') showCredentialsEmitter = new EventEmitter<void>();
 
   @Output('editMenu') editMenuEmitter = new EventEmitter<string>();
 
@@ -60,6 +62,10 @@ export class CardComponent implements OnInit {
 
   public update() {
     this.updateEmitter.emit();
+  }
+
+  public showCredentials() {
+    this.showCredentialsEmitter.emit();
   }
 
   public editMenu(id: string) {

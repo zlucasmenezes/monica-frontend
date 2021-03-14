@@ -41,7 +41,7 @@ export class ThingListComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.project = await this.getProject();
-    this.thingsFiltered$.next((this.things = arrayUtils.orderBy(await this.getThings(this.project._id), 'DESC', 'updatedAt')));
+    this.thingsFiltered$.next((this.things = arrayUtils.orderBy(await this.getThings(this.getProjectId()), 'DESC', 'updatedAt')));
 
     this.subscribeForm();
 
@@ -118,19 +118,23 @@ export class ThingListComponent implements OnInit, OnDestroy {
   }
 
   public goTo(thing: IThingPopulated) {
-    this.router.navigate([`project/${this.project._id}/thing/${thing._id}`]);
+    this.router.navigate([`project/${this.getProjectId()}/thing/${thing._id}`]);
   }
 
   public add() {
-    this.router.navigate([`project/${this.project._id}/thing/create`]);
+    this.router.navigate([`project/${this.getProjectId()}/thing/create`]);
   }
 
   public edit(thing: IThingPopulated) {
-    this.router.navigate([`project/${this.project._id}/thing/edit/${thing._id}`]);
+    this.router.navigate([`project/${this.getProjectId()}/thing/edit/${thing._id}`]);
   }
 
   public remove(thing: IThingPopulated) {
     console.log(`${thing._id}`);
+  }
+
+  public showCredentials(thing: IThingPopulated) {
+    this.thingService.getCredentials(this.getProjectId(), thing._id);
   }
 
   public isAdmin(): boolean {

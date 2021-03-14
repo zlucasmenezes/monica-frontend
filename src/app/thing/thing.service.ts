@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
@@ -54,6 +54,24 @@ export class ThingService extends BaseService {
 
       const thing = await this.http.get<IResponse>(`${this.getUrl(projectId)}/${thingId}`).toPromise();
       return thing.data as IThingPopulated;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  public async getCredentials(projectId: string, thingId: string): Promise<MatDialogRef<BoardCredentialsDialogComponent>> {
+    try {
+      if (!thingId) {
+        return;
+      }
+
+      const credentials = await this.http.get<IResponse>(`${this.getUrl(projectId)}/${thingId}/credentials`).toPromise();
+
+      return this.dialog.open(BoardCredentialsDialogComponent, {
+        data: credentials?.data as IBoard,
+        panelClass: 'm-dialog',
+        disableClose: true,
+      });
     } catch (e) {
       throw e;
     }
