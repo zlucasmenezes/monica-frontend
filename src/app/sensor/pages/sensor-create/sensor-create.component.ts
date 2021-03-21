@@ -50,8 +50,10 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     this.project = await this.getProject();
     this.thing = await this.getThing();
-    this.filteredTypes$.next((this.types = arrayUtils.orderBy(await this.getTypes(), 'ASC', 'type')));
-    this.initForm((this.sensor = await this.getSensor(this.getProjectId(), this.getThingId(), (this.sensorId = this.getSensorId()))));
+    this.sensor = await this.getSensor(this.getProjectId(), this.getThingId(), (this.sensorId = this.getSensorId()));
+
+    this.filteredTypes$.next((this.types = arrayUtils.orderBy(await this.getTypes(this.sensor ? false : true), 'ASC', 'type')));
+    this.initForm(this.sensor);
     this.subscribeForm();
   }
 
@@ -147,8 +149,14 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
     return await this.sensorService.getSensor(projectId, thingId, sensorId);
   }
 
-  private async getTypes(): Promise<ISensorType[]> {
-    return await this.sensorTypeService.getTypes();
+  private async getTypes(filter = true): Promise<ISensorType[]> {
+    const types = await this.sensorTypeService.getTypes();
+
+    if(filter) {
+      return types.filter(type => type.status);
+    }
+
+    return types;
   }
 
   public getTypeName(id: string): string {

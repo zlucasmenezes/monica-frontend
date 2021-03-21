@@ -31,6 +31,7 @@ export type ISensorPopulated = Pick<ISensor, Exclude<keyof ISensor, 'type' | 'th
 export interface ISensorType extends IDocument {
   type: string;
   input: InputType;
+  status: boolean;
   function: string;
   config: ISensorConfig[];
 }
