@@ -1,5 +1,5 @@
 <form *ngIf="form" [formGroup]="form">
-  <h4>CONFIGURATION</h4>
+  <h4 *ngIf="(type.config.length === 0 && (type.library | typeof) !== 'number') || type.config.length > 0">CONFIGURATION</h4>
 
   <div class="m-form-field" formArrayName="config" *ngFor="let control of getFormArray().controls; let i = index">
     <mat-icon class="m-field-icon">settings</mat-icon>
@@ -15,7 +15,7 @@
     </mat-form-field>
   </div>
 
-  <div *ngIf="form && type.config.length === 0">
+  <div *ngIf="type.config.length === 0 && (type.library | typeof) !== 'number'">
     function getValue(value, resolution) {{ ' {' }}
     <m-code [code]="form.get('function')"></m-code>
     {{ '}' }}

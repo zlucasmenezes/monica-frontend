@@ -106,7 +106,7 @@
         </mat-form-field>
       </div>
 
-      <m-sensor-config *ngIf="form.get('type').value" [form]="form" [type]="getType(form.get('type').value)"></m-sensor-config>
+      <m-sensor-config *ngIf="getType(form.get('type').value) as sensorType" [form]="form" [type]="sensorType"></m-sensor-config>
 
       <div class="m-multi-btn-area">
         <button *ngIf="!loading" mat-button class="m-btn-secondary" [ngClass]="{ 'm-highlight': sensor?.upcomingChanges }" type="submit">

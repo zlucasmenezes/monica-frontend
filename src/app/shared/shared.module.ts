@@ -13,6 +13,7 @@ import { PageContainerComponent } from './components/page-container/page-contain
 import { AngularMaterialModule } from './modules/material.module';
 import { FormatMillisPipe } from './pipes/format-millis.pipe';
 import { GetNameFromListPipe } from './pipes/get-name-from-list.pipe';
+import { TypeofPipe } from './pipes/typeof.pipe';
 import { UserInitialsPipe } from './pipes/user-initials.pipe';
 
 @NgModule({
@@ -26,6 +27,7 @@ import { UserInitialsPipe } from './pipes/user-initials.pipe';
     GetNameFromListPipe,
     UserInitialsPipe,
     FormatMillisPipe,
+    TypeofPipe,
   ],
   imports: [CommonModule, AngularMaterialModule, FormsModule],
   exports: [
@@ -43,6 +45,7 @@ import { UserInitialsPipe } from './pipes/user-initials.pipe';
     GetNameFromListPipe,
     UserInitialsPipe,
     FormatMillisPipe,
+    TypeofPipe,
   ],
   entryComponents: [ErrorDialogComponent],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }],

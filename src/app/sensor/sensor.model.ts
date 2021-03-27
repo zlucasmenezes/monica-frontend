@@ -32,6 +32,7 @@ export interface ISensorType extends IDocument {
   type: string;
   input: InputType;
   status: boolean;
+  library?: number;
   function: string;
   config: ISensorConfig[];
 }

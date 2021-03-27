@@ -103,6 +103,10 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
   private initConfigForm(sensorType: ISensorType) {
     this.resetConfigForm();
 
+    if (!sensorType) {
+      return;
+    }
+
     sensorType.config.forEach(config => {
       (this.form.get('config') as FormArray).push(
         this.fb.group({
@@ -112,7 +116,7 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
       );
     });
 
-    if (sensorType.config.length === 0) {
+    if (sensorType.config.length === 0 && typeof sensorType.library !== 'number') {
       this.form.get('function').setValue(sensorUtils.getDefaultCode());
       this.form.get('function').setValidators([Validators.required, codeValidator]);
     }
@@ -152,7 +156,7 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
   private async getTypes(filter = true): Promise<ISensorType[]> {
     const types = await this.sensorTypeService.getTypes();
 
-    if(filter) {
+    if (filter) {
       return types.filter(type => type.status);
     }
 
@@ -166,9 +170,8 @@ export class SensorCreateComponent implements OnInit, OnDestroy {
   }
 
   public getType(id: string): ISensorType {
-    const type = this.types.filter(t => t._id === id);
-
-    return type[0] ? type[0] : null;
+    const types = this.types.filter(t => t._id === id);
+    return types[0] ? types[0] : null;
   }
 
   public getTime(milliseconds: number): string {
